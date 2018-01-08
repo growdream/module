@@ -1,0 +1,316 @@
+<?php
+$tab=1;
+if(!empty($error)){
+    $tab=2;
+}
+else if(!empty($error1)){
+    $tab=3;
+}
+?>
+
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading tab-bg-info">
+                <ul class="nav nav-tabs">
+                    
+                    <li class="<?= $tab==1?"active":""; ?>">
+                        <a data-toggle="tab" href="#profile">
+                            <i class="icon-home"></i>
+                            Profile
+                        </a>
+                    </li>
+                    <li class="<?= $tab==2?"active":""; ?>">
+                        <a data-toggle="tab" href="#changepassword">
+                            <i class="icon-user"></i>
+                            Change Password
+                        </a>
+                    </li>
+                    <?php if($ulogin->Id==1){ ?>
+                    <li class="<?= $tab==3?"active":""; ?>">
+                        <a data-toggle="tab" href="#changeUserPassword">
+                            <i class="icon-envelope"></i>
+                            Change User Password
+                        </a>
+                    </li>
+                    <?php } ?>
+                </ul>
+            </header>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <!-- profile -->
+                    <div id="profile" class="tab-pane <?= $tab==1?"active":""; ?>">
+                        <section class="panel">
+                            <div class="bio-graph-heading">
+                                
+                            </div>
+                            <div class="panel-body bio-graph-info">
+                                <h1>Bio Graph</h1>
+                                <div class="row">
+                                    <div class="bio-row">
+                                        <p><span>Name </span>: <?php echo $userProfile[0]['firstName'].' '.$userProfile[0]['middleName'].' '.$userProfile[0]['lastName']; ?> </p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span></span></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Birthday</span>: <?= $userProfile[0]['birth_date']; ?></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Gender </span>:<?php if($userProfile[0]['gender'] == 1) echo ' Male'; else echo ' Female'; ?></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Joined With </span>:  <?= $userProfile[0]['productName']." (".$userProfile[0]['baseValue']." BV)"; ?></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Email </span>: <?= $userProfile[0]['email']; ?></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Joined On </span>: <?= $userProfile[0]['created_at']; ?></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Mobile </span>:  <?= $userProfile[0]['mobileNo']; ?></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Parent Id </span>:  <?= $userProfile[0]['parent']; ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-info btn-lg" onclick="getProfile()">Edit</button>
+                        </section>
+                        <section>
+                            <div class="row">
+                            </div>
+                        </section>
+                    </div>
+                    
+                    <div id="changepassword" class="tab-pane <?= $tab==2?"active":""; ?>">
+                            <section class="panel">
+                            <div class="panel-body bio-graph-info">
+                                <h1>Change Password</h1>
+                                <?php
+                                if(isset($error['notsame']))
+    {
+        echo "<div class='alert alert-danger'>".$error['notsame'].".</div>";
+    }
+                                $form = $this->changepassword;
+                $form->prepare();
+                $form->setAttribute('class',"form-horizontal");
+                $form->get('otp')->setAttributes(['type'=>"password",'placeholder'=>'old password']);
+                $form->get('submit')->setAttributes(['class'=>"btn btn-primary",
+                                                    'name'=>"selfpass",
+                                                    'value'=>"Save"]);
+                echo $this->form()->openTag($form);
+                ?>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Old Password</label>
+                                        <div class="col-lg-6">
+                                            <?php	echo $this->formRow($form->get('otp')); ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">New Password</label>
+                                        <div class="col-lg-6">
+                                            <?php	echo $this->formRow($form->get('pass')); ?>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Confirm Password</label>
+                                        <div class="col-lg-6">
+                                            <?php echo $this->formRow($form->get('cpass')); ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <input type="reset" value="Cancel" class="btn btn-danger"> <?php	echo $this->formRow($form->get('submit')); ?>
+<!--                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn btn-danger">Cancel</button>-->
+                                        </div>
+                                    </div>
+                                 <?php echo $this->form()->closeTag($form); ?>
+                            </div>
+                        </section>
+                    </div>
+                                        <?php if($ulogin->Id==1){ ?>
+
+                    <!-- edit-profile -->
+                    <div id="changeUserPassword" class="tab-pane <?= $tab==3?"active":""; ?>">
+                        <section class="panel">
+                            <div class="panel-body bio-graph-info">
+                                <h1>Change User Password</h1>
+                                <?php
+                                if(isset($error1['notsame']))
+    {
+        echo "<div class='alert alert-danger'>".$error1['notsame'].".</div>";
+    }
+                                $form = $this->ChangeUserPassword;
+                $form->prepare();
+                $form->setAttribute('class',"form-horizontal");
+                $form->get('otp')->setAttributes(['placeholder'=>'User Id']);
+                $form->get('submit')->setAttributes(['class'=>"btn btn-primary",
+                                                    'name'=>"userpass",
+                                                    'value'=>"Save"]);
+                echo $this->form()->openTag($form);
+                ?>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">User Id</label>
+                                        <div class="col-lg-6">
+                                            <?php	echo $this->formRow($form->get('otp')); ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">New Password</label>
+                                        <div class="col-lg-6">
+                                            <?php	echo $this->formRow($form->get('pass')); ?>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Confirm Password</label>
+                                        <div class="col-lg-6">
+                                            <?php echo $this->formRow($form->get('cpass')); ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <input type="reset" value="Cancel" class="btn btn-danger"> <?php	echo $this->formRow($form->get('submit')); ?>
+<!--                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn btn-danger">Cancel</button>-->
+                                        </div>
+                                    </div>
+                                 <?php echo $this->form()->closeTag($form); ?>
+                            </div>
+                        </section>
+                    </div>
+                                        <?php } ?>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Profile</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row1">
+                <?php
+                $form = $this->userform;
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                ?>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <?php echo $this->formHidden($form->get('refral_Id')); ?>
+                            <label>First Name</label>
+                            <?php echo $this->formRow($form->get('firstName')->setAttribute("id","firstName")); ?>
+                            <input type="hidden" name="id" id="id" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            <?php echo $this->formRow($form->get('middleName')->setAttribute("id","middleName")); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <?php echo $this->formRow($form->get('lastName')->setAttribute("id","lastName")); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <?php echo $this->formRow($form->get('gender')); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Birth Date</label>
+                            <?php echo $this->formRow($form->get('birth_date')->setAttribute("id","birth_date")); ?>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Mobile No</label>
+                            <?php echo $this->formRow($form->get('mobileNo')->setAttribute("id","mobileNo")); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <?php echo $this->formRow($form->get('email')->setAttribute("id","email")); ?>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <?php echo $this->formSubmit($form->get('submit')); ?>
+                </div>
+                <div class="clearfix"></div>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#birth_date').datepicker({
+            format: "yyyy-mm-dd",
+//    maxDate : 'now',
+            startView: 0,
+            minViewMode: 0,
+            maxViewMode: 3,
+            autoclose: true,
+        })
+                .datepicker('update', new Date());
+    });
+    
+    function getProfile(){
+        
+        $.ajax({
+                url: "/dashboard/dashboard/getprofile",
+                type: 'POST',
+                data:{editid:'<?= $editid; ?>'},
+                success: function (data, textStatus, jqXHR) {
+                    data = $.parseJSON(data);
+        $.each(data[0],function(key,val){
+//             console.log(key+ " - " + val);
+             $("#"+key).val(val);
+                        
+                    });            
+        $("#myModal").modal("show");
+                }
+            })
+    }
+    <?php if(!empty($profileError)) { ?>
+        $("#myModal").modal("show");
+    <?php } ?>
+</script>

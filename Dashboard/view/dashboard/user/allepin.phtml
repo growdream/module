@@ -1,0 +1,38 @@
+<?php
+$title = 'All E-Pins';
+$this->headTitle($title);
+?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <div class="row" style="padding: 20px;">
+                        <table class="table table-bordered">
+                            <legend>All E-Pins</legend>
+                            <thead>
+                                <tr>
+                                    <th>Sr</th>
+                                    <th>User Id</th>
+                                    <th>E-Pin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $r = 0;
+                                for ($i = 0; $i < count($userdata); $i++) {
+                                    echo('<tr>');
+                                    echo('<td>' . ++$r . '</td>');
+                                    echo('<td>' . $userdata[$i]['userId'] . '</td>');
+                                    echo('<td>' . $userdata[$i]['pinId'] . '</td>');
+                                    echo('</tr>');
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

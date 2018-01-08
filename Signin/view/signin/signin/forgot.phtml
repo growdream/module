@@ -1,0 +1,82 @@
+<?php
+// module/Registration/view/registration/registration/registration.phtml:
+$title = 'Register with us';
+$this->headTitle($title);
+//print_r($this->flashMessages);
+
+if(!isset($mailLink))
+{
+?>
+
+<center>
+                    <div style="width: 50%; font-size: 1.6em; margin-bottom: 60px;">
+                                            </div>
+                    <div class="middle">
+                        <div id="login">
+  
+  <?php $form->setAttribute('action', $this->url('signin',array("action"=>"forgot")));
+ $form->prepare();
+ echo $this->form()->openTag($form);?>
+                            
+        <fieldset class="clearfix">
+                                    
+                                    <p><span class="fa fa-user"></span>
+                                        <?php echo $this->formRow($form->get('user_id')); ?>
+                                 </p>
+                                
+                                    <div>
+                                       <?php   echo isset($errEmail)?"<span class='alert alert-danger'>$errEmail</span></br></br>":"";
+echo isset($successEmail)?"<div>Request Send Please Check Your Mail</br><a href='$mailLink'>change password link</a></br></div>":""; 
+
+?>
+                                        <span class="pull-right" style="text-align:right;  display: inline-block;">
+                                            <input type="reset" value="Cancel"> <?php echo $this->formSubmit($form->get('Submit')); ?>                                           
+                                        </span>
+                                    </div>
+
+                                </fieldset>
+     
+        
+          
+         
+        
+               
+    <?php echo $this->form()->closeTag();?>
+  
+  <div class="clearfix"></div>
+
+                        </div> <!-- end login -->
+                        <div class="logo">
+                            <img class="img img-responsive" src="/images/GDM-LOGO.png" alt="LOGO" style="height: 3em;"/>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </div>
+                </center>
+
+<?php } else {?>
+
+<div class="SignupHeader"> 
+    <div class="welcomeTitleDiv">Forgot Your Password ? <br><span class="welcomeTitleTxt">Don't worry, we will reset it for you.
+</span></div>      
+</div> 
+<div class="signUpDtlsContainer">
+  <div class="signUpOuterDiv">
+<div class="signUpDtlsDiv">
+  
+  <div class="form-signin">
+  <p class="form-signin-txt">To sign into your CabSaaS account, please follow these steps in the next <b class="blue">24 hours</b>:<br><br>
+   1.  Open the e-mail we just sent to <b class="blue"><?php echo $mailid;?></b><br><br>
+
+2.  Click on the link in the e-mail to reset your password 
+  
+   </p>
+         
+         
+               
+      </div>
+  
+  </div>
+  </div>
+  </div>
+<?php } ?>

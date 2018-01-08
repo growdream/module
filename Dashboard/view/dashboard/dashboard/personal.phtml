@@ -1,0 +1,233 @@
+<div class="row">
+    <div class="col-lg-10">
+        <section class="panel">
+            <div class="panel-body">
+                <?php
+                $form = $this->form;
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                ?>
+
+                <!--                    <div class="col-sm-12">
+                                        <label class="alert-warning text-warning col-sm-12 col-xs-12" style="line-height: 1em;"> <h3>Introducer </h3></label>
+                                        <p class="help-block"></p>
+                                        <div class="form-group col-sm-6">
+                                            <label>Direct ID :</label>
+                                            <input type="email" class="form-control" id="" placeholder="Direct Id">
+                                            <p class="help-block">Fill Properly Do not make mistake in Id</p>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>Parent ID :</label>
+                                            <input type="text" class="form-control" id="" placeholder="Auto ID">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>Position</label>
+                                            <select class="form-control input-sm m-bot15">
+                                                <option>Left</option>
+                                                <option>Right</option>
+                                            </select>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>-->
+
+                <div class="col-sm-12 col-xs-12">
+                    <label class="alert-info text-danger col-sm-12 col-xs-12" style="line-height: 1em;"> <h3>Personal Details </h3></label>
+                    <p class="help-block"></p>
+
+     <!--<input type="text" name="uId" class="form-control" id="uId" placeholder="uID">--> 
+<!--                            <select name="uId" id="uId" class="form-control input-sm m-bot15">
+         
+     </select>-->
+
+                    <div class="form-group col-sm-6">
+                        <label>User Id :</label>
+<!--                            <input type="text" class="form-control" id="" placeholder="Auto ID">-->
+                        <?php echo $this->formRow($form->get('user_id')); ?>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <label>Father/Husband Name :</label>
+<!--                            <input type="text" class="form-control" id="" placeholder="Auto ID">-->
+                        <?php echo $this->formRow($form->get('fatherName')); ?>
+
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Marital Status</label>
+<!--                        <select name="maritalStatus" class="form-control">
+                            <option value="0">Unmarried</option>
+                            <option value="1">Married</option>
+                            <option value="2">Other</option>
+                        </select>-->
+                        
+                         <?php echo $this->formRow($form->get('maritalStatus')); ?>
+
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <label>Address :</label>
+<!--                            <input type="text" class="form-control input-lg" id="" placeholder="Auto ID">-->
+                        <?php echo $this->formRow($form->get('address')); ?>
+                        <?php echo $this->formElementErrors($form->get('address')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>City :</label>
+<!--                            <input type="text" class="form-control" id="" placeholder="Auto ID">-->
+                        <?php echo $this->formRow($form->get('city')); ?>
+                        <?php echo $this->formElementErrors($form->get('city')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Postal Code :</label>
+<!--                            <input type="text" class="form-control" id="" placeholder="Auto ID">-->
+                        <?php echo $this->formRow($form->get('postalCode')); ?>
+                        <?php echo $this->formElementErrors($form->get('postalCode')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label> State :</label>
+<!--                            <input type="text" class="form-control" id="" placeholder="Auto ID">-->
+ 
+                        <?php echo $this->formRow($form->get('state')); ?>
+                        <?php echo $this->formElementErrors($form->get('state')); ?>  
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <label class="alert-danger text-danger col-sm-12 col-xs-12" style="line-height: 1em;"> <h3>Bank Details </h3></label>
+                    <p class="help-block"></p>
+                    <div class=" col-sm-6">
+                        <label>Bank Name :</label>
+                        <!--<input type="text" class="form-control" id="" placeholder="Name of Bank">-->
+                        <?php echo $this->formRow($form->get('bankName')); ?>
+                        <?php echo $this->formElementErrors($form->get('bankName')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Account No :</label>
+<!--                            <input type="text" class="form-control" id="" placeholder="Account No">-->
+                        <?php echo $this->formRow($form->get('accountNo')); ?>
+                        <?php echo $this->formElementErrors($form->get('accountNo')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Branch Name :</label>
+                        <!--<input type="text" class="form-control" id="" placeholder="Name of Branch">-->
+                        <?php echo $this->formRow($form->get('branchName')); ?>
+                        <?php echo $this->formElementErrors($form->get('branchName')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Account Type</label>
+<!--                        <select name="accountType" class="form-control input-sm m-bot15">
+                            <option>Saving</option>
+                            <option>Current</option>
+                        </select>-->
+                        <?php echo $this->formRow($form->get('accountType')); ?>                 
+                        <?php echo $this->formElementErrors($form->get('accountType')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>IFSC Code :</label>
+<!--                            <input type="text" class="form-control" id="" placeholder="Branch IFSC Code">-->
+                        <?php echo $this->formRow($form->get('ifsc')); ?>
+                        <?php echo $this->formElementErrors($form->get('ifsc')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Branch City :</label>
+                        <!--<input type="text" class="form-control" id="" placeholder="Branch City">-->
+                        <?php echo $this->formRow($form->get('bankCity')); ?>
+                        <?php echo $this->formElementErrors($form->get('bankCity')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Account Holder Name :</label>
+                        <!--<input type="text" class="form-control" id="" placeholder="Account Holder Name">-->
+                        <?php echo $this->formRow($form->get('accountHolder')); ?>
+                        <?php echo $this->formElementErrors($form->get('accountHolder')); ?>  
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <label>PAN CARD No :</label>
+                        <!--<input type="text" class="form-control" id="" placeholder="PAN Card No">-->
+                        <?php echo $this->formRow($form->get('panCard')); ?>
+                        <?php echo $this->formElementErrors($form->get('panCard')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Name PAN CARD :</label>
+                        <!--<input type="text" class="form-control" id="" placeholder="Name PAN Card">-->
+                        <?php echo $this->formRow($form->get('panName')); ?>
+                        <?php echo $this->formElementErrors($form->get('panName')); ?>  
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <label class="alert-success text-danger col-sm-12 col-xs-12" style="line-height: 1em;"> <h3>Nominee Details </h3></label>
+                    <p class="help-block"></p>
+                    <div class="form-group col-sm-6">
+                        <label>Nominee Name :</label>
+                        <!--<input type="text" class="form-control" id="" placeholder="Name of Bank">-->
+                        <?php echo $this->formRow($form->get('nomineeName')); ?>
+                        <?php echo $this->formElementErrors($form->get('nomineeName')); ?>  
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Relation With Nominee :</label>
+                          <?php echo $this->formRow($form->get('relation')); ?>
+                        <?php echo $this->formElementErrors($form->get('relation')); ?>  
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <input type="reset" id="reset" value="reset" style="display:none" >
+                <button type="submit" class="btn btn-danger">Submit</button>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </section>
+    </div>
+</div> 
+<script>
+    var msg = "<?= $msg ?>";
+    if (msg != "") {
+        alert("successfully updated");
+    }
+    var uId = "<?= $uId ?>";
+    var user_id = "<?= $user_id ?>";
+
+    if (uId > 1) {
+        $('#user_id').val(user_id).attr('readonly', true);
+    }
+
+
+    $(function () {
+        $("#user_id").autocomplete({
+            source: '/dashboard/product/finduserbyuserid/' + $(this).val(),
+        });
+
+        $("#user_id").blur(function () {
+            var ui= $(this).val();
+            $('#reset').trigger("click");
+            $("#user_id").val(ui);
+            $.ajax({
+                url: "getpersonaldetails",
+                data: {user_id: $(this).val()},
+                type: 'POST',
+                success: function (data, textStatus, jqXHR) {
+                    data = $.parseJSON(data);
+                    $.each(data[0], function (key, val) {
+                        console.log(key + " - " + val);
+                        $("#" + key).val(val);
+
+                    });
+                }
+            })
+        });
+
+    });
+
+
+</script>
+
+<style>
+    .trselected{
+        background: #efefef;
+    }
+    .ui-autocomplete{
+        overflow: auto;
+        background: #fafafa !important;
+        border: 1px solid #d4d4d4 !important;
+        max-height: 135px;
+        margin-top: 2px !important;
+        border-radius: 0 !important;
+    }
+</style>

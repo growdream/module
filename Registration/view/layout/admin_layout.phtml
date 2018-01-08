@@ -1,0 +1,331 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php
+        echo $this->headTitle($this->translate('GDM PVT.LTD.'))->setSeparator(' - ')->setAutoEscape(false)
+        ?>
+
+        <?php
+        echo $this->headMeta()
+                ->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+                ->appendName('keywords', 'GDM, Grow Dream Maker, growdreammaker, MLM');
+        ?>
+
+        <!-- styles -->
+        <?php
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                ->prependStylesheet($this->basePath('admin/css/jquery-ui-1.10.4.min.css'))
+//                ->prependStylesheet($this->basePath('admin/css/xcharts.min.css'))
+                ->prependStylesheet($this->basePath('admin/css/style-responsive.css'))
+                ->prependStylesheet($this->basePath('admin/css/style.css'))
+                ->prependStylesheet($this->basePath('admin/css/widgets.css'))
+                ->prependStylesheet($this->basePath('admin/css/fullcalendar.css'))
+                ->prependStylesheet($this->basePath('admin/css/jquery-jvectormap-1.2.2.css'))
+                ->prependStylesheet($this->basePath('admin/css/owl.carousel.css'))
+//                ->prependStylesheet($this->basePath('admin/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css'))
+                ->prependStylesheet($this->basePath('admin/assets/fullcalendar/fullcalendar/fullcalendar.css'))
+                ->prependStylesheet($this->basePath('admin/assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css'))
+                ->prependStylesheet($this->basePath('admin/css/font-awesome.min.css'))
+                ->prependStylesheet($this->basePath('admin/css/elegant-icons-style.css'))
+                ->prependStylesheet($this->basePath('admin/css/bootstrap-theme.css'))
+                ->prependStylesheet($this->basePath('admin/css/bootstrap.min.css'))
+        ;
+        ?>
+
+        <!-- Scripts -->
+        <?php
+        echo $this->headScript()
+                /* custom script for this page */
+ //               ->prependFile($this->basePath('admin/js/jquery.slimscroll.min.js'))
+//            ->prependFile($this->basePath('admin/js/charts.js'))
+//                ->prependFile($this->basePath('admin/js/sparklines.js'))
+//                ->prependFile($this->basePath('admin/js/morris.min.js'))
+//                ->prependFile($this->basePath('admin/js/gdp-data.js'))
+//                ->prependFile($this->basePath('admin/js/jquery.placeholder.min.js'))
+//                ->prependFile($this->basePath('admin/js/jquery.autosize.min.js'))
+//            ->prependFile($this->basePath('admin/js/xcharts.min.js'))
+//                ->prependFile($this->basePath('admin/js/jquery-jvectormap-world-mill-en.js'))
+//                ->prependFile($this->basePath('admin/js/jquery-jvectormap-1.2.2.min.js'))
+//            ->prependFile($this->basePath('admin/js/easy-pie-chart.js'))
+//                ->prependFile($this->basePath('admin/js/sparkline-chart.js'))
+                ->prependFile($this->basePath('admin/js/scripts.js'))
+//            ->prependFile($this->basePath('admin/assets/chart-master/Chart.js'))
+                ->prependFile($this->basePath('admin/js/jquery.customSelect.min.js'))
+                ->prependFile($this->basePath('admin/js/jquery.rateit.min.js'))
+                ->prependFile($this->basePath('admin/js/calendar-custom.js'))
+                ->prependFile($this->basePath('admin/assets/fullcalendar/fullcalendar/fullcalendar.js'))
+                ->prependFile($this->basePath('admin/js/fullcalendar.min.js'))
+                ->prependFile($this->basePath('admin/js/owl.carousel.js'))
+//            ->prependFile($this->basePath('admin/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js.js'))
+                ->prependFile($this->basePath('admin/js/jquery.sparkline.js'))
+                ->prependFile($this->basePath('admin/assets/jquery-knob/js/jquery.knob.js'))
+                ->prependFile($this->basePath('admin/js/jquery.nicescroll.js'))
+                ->prependFile($this->basePath('admin/js/jquery.scrollTo.min.js'))
+                ->prependFile($this->basePath('admin/js/bootstrap.min.js'))
+                ->prependFile($this->basePath('admin/js/jquery-ui-1.9.2.custom.min.js'))
+                ->prependFile($this->basePath('admin/js/jquery-1.8.3.min.js'))
+                ->prependFile($this->basePath('admin/js/jquery-ui-1.10.4.min.js'))
+                ->prependFile($this->basePath('admin/js/jquery.js'))
+        ;
+        ?>
+
+    </head>
+    <body>
+        <!-- container section start -->
+        <section id="container" class="">
+            <!--header start-->
+
+            <header class="header dark-bg">
+                <div class="toggle-nav">
+                    <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+                </div>
+
+                <!--logo start-->
+                <a href="http://growdreammaker.com" class="logo">Grow Dream <span class="lite">Maker</span></a>
+                <!--logo end-->
+
+                <div class="nav search-row" id="top_menu">
+                    <!--  search form start -->
+<!--                    <ul class="nav top-menu">
+                        <li>
+                            <form class="navbar-form">
+                                <input class="form-control" placeholder="Search" type="text">
+                            </form>
+                        </li>
+                    </ul>-->
+                    <!--  search form end -->
+                </div>
+
+                <div class="top-nav notification-row">
+                    <!-- notificatoin dropdown start-->
+                    <ul class="nav pull-right top-menu">
+                        <!-- user login dropdown start-->
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="profile-ava">
+                                    <img alt="" src="/admin/img/avatar1_small1.jpg">
+                                </span>
+                                <span class="username"><?php echo $UserSession->user_id; ?></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu extended logout">
+                                <div class="log-arrow-up"></div>
+                                <li class="eborder-top">
+                                    <a href="#"><i class="icon_profile"></i><b><?php echo $UserSession->firstName; ?></b> Profile</a>
+                                </li>
+<!--                                <li>
+                                    <a href="#"><i class="icon_mail_alt"></i> My Inbox</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon_clock_alt"></i> Timeline</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon_chat_alt"></i> Chats</a>
+                                </li>-->
+                                <li>
+                                    <a href="/signin/logout"><i class="icon_key_alt"></i> Log Out</a>
+                                </li>
+<!--                                <li>
+                                    <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
+                                </li>
+                                <li>
+                                    <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
+                                </li>-->
+                            </ul>
+                        </li>
+                        <!-- user login dropdown end -->
+                    </ul>
+                    <!-- notificatoin dropdown end-->
+                </div>
+            </header>
+            <!--header end-->
+
+            <!--sidebar start-->
+            <aside>
+                <?php if($UserSession->Id == 1) { ?>
+                <div id="sidebar" class="nav-collapse ">
+                    <!-- sidebar menu start-->
+                    <ul class="sidebar-menu">
+                        <li class="">
+                            <a class="" href="/dashboard">
+                                <i class="icon_house_alt"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a class="" href="/dashboard/dashboard/profile">
+                                <i class="icon_profile"></i>
+                                <span>User Profile</span>
+                            </a>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <i class="icon_desktop"></i>
+                                <span>Members</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="/registration">New Registration</a></li>
+                                <li class=""><a class="" href="/dashboard/dashboard/personal"><i class=""></i><span>Personal Details</span></a></li>
+                                <li><a class="" href="/dashboard/user/alluser">All Member</a></li>
+                                <li><a class="" href="/dashboard/user/users">Users</a></li>
+                                <li><a class="" href="/dashboard/user/topup">Make Topup</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <i class="fa fa-cubes"></i>
+                                <span>Genealogy</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <!--<li><a class="" href="/dashboard/dashboard/downtree">Binary Tree</a></li>-->
+                                <li><a class="" href="/dashboard/dashboard/maintree">Binary Tree</a></li>
+<!--                                <li><a class="" href="/dashboard/user/alluser">All Member</a></li>-->
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <i class="icon_cart"></i>
+                                <span>Cart</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="/registration/product/product">Add Product</a></li>
+                                <li><a class="" href="/dashboard/product/allproduct">All Products</a></li>
+                            </ul>
+                        </li>
+                         <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <i class="icon_bag"></i>
+                                <span>Payment</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="/payment/payment/index">View Payments</a></li>
+                                <li><a class="" href="/payment/payment/paymentreleased">Paid Payments</a></li>
+                               
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <i class="icon_key"></i>
+                                <span>E-Pin</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="/registration/product/epin">Create E-Pin</a></li>
+                                <li><a class="" href="/dashboard/product/allepin">All E-Pin</a></li>
+                                <li><a class="" href="/dashboard/product/transferpin">Transfer E-Pin</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- sidebar menu end-->
+                </div>
+                <?php } else { ?>
+                            <div id="sidebar" class="nav-collapse ">
+                    <!-- sidebar menu start-->
+                    <ul class="sidebar-menu">
+                        <li class="">
+                            <a class="" href="/dashboard">
+                                <i class="icon_house_alt"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sub-menu">
+                                <a href="javascript:;" class="">
+                                    <i class="icon_profile"></i>
+                                    <span>My Profile</span>
+                                    <span class="menu-arrow arrow_carrot-right"></span>
+                                </a>
+                                <ul class="sub">
+                                    <li class="">
+                                        <a class="" href="/dashboard/dashboard/profile">
+                                            <i class=""></i>
+                                            <span>Profile</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" href="/dashboard/dashboard/personal">
+                                            <i class=""></i>
+                                            <span>Personal Details</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+  <!--                      <li class="">
+                            <a class="" href="/dashboard/dashboard/profile">
+                                <i class="icon_profile"></i>
+                                <span>User Profile</span>
+                            </a>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <i class="icon_desktop"></i>
+                                <span>Members</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="/registration">New Registration</a></li>
+                                <li><a class="" href="/dashboard/user/alluser">All Member</a></li>
+                            </ul>
+                        </li>-->
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <i class="fa fa-cubes"></i>
+                                <span>Genealogy</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="/dashboard/dashboard/maintree">Binary Tree</a></li>
+                                <li><a class="" href="/dashboard/user/alluser">All Members</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <i class="icon_key"></i>
+                                <span>E-Pin</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="/dashboard/product/userepin">All E-Pin</a></li>
+                                 <li><a class="" href="/dashboard/product/transferpin">Transfer E-Pin</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- sidebar menu end-->
+                </div>
+                      <?php  } ?>
+            </aside>
+            <!--sidebar end-->
+
+            <!--main content start-->
+            <section id="main-content">
+                <section class="wrapper">
+                    <!--                    <div class="row">
+                                            <div class="col-lg-12">
+                                                <h3 class="page-header"><i class="fa fa fa-bars"></i> Pages</h3>
+                                            </div>
+                                        </div>-->
+                    <!-- page start-->
+                    <div class="panel"> 
+                        <section class="panel">
+                            <?php echo $this->content; ?>
+                            <!-- page end-->
+                        </section>
+                    </div>
+                </section>
+            </section>
+            <!--main content end-->
+            <div class="text-right">
+                <div class="credits">
+                    <a href="#">Grow Dream Maker Pvt. Ltd.</a> by <a href="#">growdreammaker</a>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

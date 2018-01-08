@@ -1,0 +1,842 @@
+<?php
+
+function getview($data) {
+    $icnon = array('yellow.png', 'twopv.png','user-red.png');
+    $result = [];
+    if ($data == 0) {
+        $result['icon'] = "vacant.png";
+        $result['id'] = 0;
+        $result['userId'] = 'Add New';
+        $result['status'] = null;
+        $result['firstName'] = "";
+    } else {
+        $result['icon'] = $icnon[$data[4]];
+        $result['id'] = $data[0];
+        $result['userId'] = $data[1];
+        $result['status'] = $data[4];
+        $result['firstName'] = $data[3];
+        $result['lastName'] = $data[5];
+        $result['created_at'] = $data[6];
+        $result['sponserId'] = $data[7];
+        $result['left'] = $data['left'];
+        $result['right'] = $data['right'];
+        // print_r($result); die("result");
+    }
+    return $result;
+}
+?>
+
+<table align="center" style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 10px;
+       font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal;
+       line-height: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal;
+       widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);
+       width: 100%;">
+    <tbody>
+        <tr class="" style="border-bottom: 4px ridge gray;">
+            <td style="width: 20%" align="left">
+               <!--  <input type="submit" name="back" value="< Back" onclick="treeBack('<?= $treedata[0]; ?>')" title="Previous" class="btn btn-danger" style="font-size:Small;font-weight:bold;"> -->
+            </td>
+             <?php
+             //print_r($UserSession); die("Hello");
+            // if($UserSession->Id == 2) { ?>
+            <td valign="top" style="width: 27%; padding-right: 5%" align="right">
+    <lable> Enter User ID :</lable>
+    <input name="searchUserId" type="text" id="searchUserId" class="txtBox input-lg" placeholder="Search User ID">
+                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator1" style="color:Red;visibility:hidden;">*</span>
+             </td> 
+                 <?php // } ?>
+            <td style="width: 27%" align="left">
+                <input type="submit" name="submit" id="Search" value="Search" class="btn btn-primary" style="font-weight:bold;width:148px;">
+
+            </td>
+            <td style="width: 25%" align="right">
+                <input type="button" value="^ Top" id="treeTop" title="Up" class="btn btn-danger" style="font-size:Small;font-weight:bold;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel4">
+                    <a id="" class="style89"></a>
+                    <br>
+                    <a id="" class="style89"></a>
+                    <br>
+                </span>
+            </td>
+        </tr>
+        <tr align="center">
+            <td colspan="4" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="100%">
+
+                <?php
+                $node = getview($treedata[0]);
+                // print_r($node); die("Hi");
+                $id = "0-0-null";
+                ?>
+                 <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings   </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">                    
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                    <img id="" onclick="ImageButton1_Click" src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                <br>
+                <span class="style89">
+                    <a id=""><?= $node['userId']; ?></a>
+                    <br>
+                    <a id=""><?= $node['firstName']; ?></a>
+                    <br>                    
+                </span>
+            </b>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="center" colspan="4" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img src="/images/tree/tree.png" height="35" width="510">
+            </td>
+        </tr>
+
+        <tr>
+            <?php
+            $node = getview($treedata[1]);
+
+            $parentNode = getview($treedata[0]);
+            $id = "0-0-0";
+            if ($parentNode['id'] > 0)
+                $id = $parentNode['userId'] . "-0";
+            ?>
+
+            <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                 <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                       <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+
+                <span class="Apple-converted-space"></span><br>
+                <a id="" class="style89"><?= $node['userId']; ?></a>
+                <br>
+                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+            </b>
+            </td>
+
+             <?php
+                            $node = getview($treedata[2]);
+
+                            $parentNode = getview($treedata[0]);
+                            $id = "0-0-1";
+                            if ($parentNode['id'] > 0)
+                                $id = $parentNode['userId'] . "-1";
+                            ?>
+
+            <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+               <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+
+                <span class="Apple-converted-space"></span><br>
+                <a id="" class="style89"><?= $node['userId']; ?></a>
+                <br>
+                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+            </b>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l2" src="/images/tree/tree.png" height="30" width="270">
+            </td>
+            <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l3" src="/images/tree/tree.png" height="30" width="270" style="padding-left: 12px">
+            </td>
+        </tr>
+        <tr>
+            <?php
+                                    $node = getview($treedata[3]);
+
+                                    $parentNode = getview($treedata[1]);
+                                    $id = "0-1-0";
+                                    if ($parentNode['id'] > 0)
+                                        $id = $parentNode['userId'] . "-0";
+                                    ?>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
+                <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                </a>
+                <span class="Apple-converted-space"></span><br>
+                <a id="" class="style89"><?= $node['userId']; ?></a>
+                <br>
+
+                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel4">
+                    <a id="" class="style89"></a>
+                    <br>
+                    <a id="" class="style89"></a>
+                    <br>
+                </span>
+            </b>
+            </td>
+            <?php
+                $node = getview($treedata[4]);
+                $parentNode = getview($treedata[1]);
+                $id = "0-1-1";
+                if ($parentNode['id'] > 0)
+                $id = $parentNode['userId'] . "-1";
+            ?>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
+                <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">                 
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                </a>
+                <span class="Apple-converted-space"></span><br>
+                <span class="Apple-converted-space">
+                    <a id="" class="style89"><?= $node['userId']; ?></a>
+                    <br>
+                    <a id="" class="style89"><?= $node['firstName']; ?></a>
+                    <br>
+                </span>
+                <br>
+            
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel5">
+                    <a id="" class="style89"></a>
+                    <br>
+                    <a id="" class="style89"></a>
+                    <br>
+
+                </span>
+            </b>
+            </td>
+<?php
+                                    $node = getview($treedata[9]);
+
+                                    $parentNode = getview($treedata[2]);
+                                    $id = "0-2-0";
+                                    if ($parentNode['id'] > 0)
+                                        $id = $parentNode['userId'] . "-0";
+                                    ?>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
+                <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                       <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                </a>
+                <span class="Apple-converted-space"></span><br>
+                <a id="" class="style89"><?= $node['userId']; ?></a>
+                <br>
+
+                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel6">
+                    <a id="" class="style89"></a>
+                    <br>
+                    <a id="" class="style89"></a>
+                    <br>
+                </span>
+            </b>
+            </td>
+            <?php
+                                    $node = getview($treedata[10]);
+
+                                    $parentNode = getview($treedata[2]);
+                                    $id = "0-2-1";
+                                    if ($parentNode['id'] > 0)
+                                        $id = $parentNode['userId'] . "-1";
+                                    ?>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
+               <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>"> 
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                <span class="Apple-converted-space"></span><br>
+                <a id="" class="style89"><?= $node['userId']; ?></a>
+                <br>
+                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                <br>                
+
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel7">
+                    <a id="" class="style89"></a>
+                    <br>
+                    <a id="" class="style89"></a>
+                    <br>
+                </span>
+            </b>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l4" src="/images/tree/tree.png" height="25" width="150">
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l5" src="/images/tree/tree.png" height="25" width="150">
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l6" src="/images/tree/tree.png" height="25" width="150">
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l7" src="/images/tree/tree.png" height="25" width="150" style="padding-left: -10px">
+            </td>
+        </tr>
+        <tr>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <table width="100%">
+                    <tbody><tr>
+                        <?php
+                                            $node = getview($treedata[5]);
+
+                                            $parentNode = getview($treedata[3]);
+                                            $id = "0-3-0";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-0";
+                                            ?>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                       <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                                </a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel8">
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                </span>
+                            </b>
+                            </td> 
+                            <?php
+                                            $node = getview($treedata[6]);
+
+                                            $parentNode = getview($treedata[3]);
+                                            $id = "0-3-1";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-1";
+                                            ?>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                               <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                                </a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+                                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel9">
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                </span>
+                            </b>
+                            </td>
+
+                        </tr>
+                    </tbody></table>
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <?php
+                                            $node = getview($treedata[7]);
+                                            $parentNode = getview($treedata[4]);
+                                            $id = "0-4-0";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-0";
+                                            ?>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                                </a>
+
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                                <br>                               
+
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel10">
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                </span>
+                            </b>
+                            </td>
+                             <?php
+                                            $node = getview($treedata[8]);
+                                            $parentNode = getview($treedata[4]);
+                                            $id = "0-4-1";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-1";
+                                            ?>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                              <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                                </a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+                                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel11">
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                </span>
+                            </b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <table width="100%">
+                    <tbody>
+                        <tr> 
+                            <?php
+                                            $node = getview($treedata[11]);
+
+                                            $parentNode = getview($treedata[9]);
+                                            $id = "0-9-0";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-0";
+                                            ?>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                              <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" 
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                                </a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                                <br>                                
+
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel12">
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                </span>
+                            </b>
+                            </td>
+                            <?php
+                                            $node = getview($treedata[12]);
+
+                                            $parentNode = getview($treedata[9]);
+                                            $id = "0-9-1";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-1";
+                                            ?>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                                </a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel13">
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                </span>
+                            </b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <table width="100%">
+                    <tbody><tr>
+                        <?php
+                                            $node = getview($treedata[13]);
+
+                                            $parentNode = getview($treedata[10]);
+                                            $id = "0-10-0";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-0";
+                                            ?>
+                            <td align="left" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                                </a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel14">
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                </span>
+                            </b>
+                            </td>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <?php
+                                            $node = getview($treedata[14]);
+
+                                            $parentNode = getview($treedata[10]);
+                                            $id = "0-10-1";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-1";
+                                            ?>
+                                           <b                     
+                    data-html="true" 
+                    data-toggle="popover" 
+                    data-trigger="focus" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" 
+                    data-content="<div><table class='table'>
+                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
+                        <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
+                        <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
+                        <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
+                    </table></div>">
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                                    <img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;">
+                                </a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="" class="style89"><?= $node['firstName']; ?></a>
+                                <br>                                
+
+                                <span class="Apple-converted-space"><br>
+                                    <a id="" style="font-size: medium"></a>
+                                    <br>
+                                    <a id="" class="style89"></a>
+                                    <br>
+                                </span>
+                            </b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<div id="">
+
+    <table class="nav-justified" >
+        <tbody><tr>
+                <td>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table width="100%" style="background: #FFFFFF;">
+                        <tbody><tr>
+                                <td align="center">
+                                    <img height="36" width="36" src="/images/tree/twopv.png">
+                                    <br>
+                                    Paid Pin
+                                </td>
+                                <td align="center">
+<!--                                    <img height="36" width="36" src="/images/tree/zeropv.png">
+                                    <br>
+                                    UnPaid Pin-->
+                                </td>
+                                <td align="center">
+                                    <img height="36" width="36" src="/images/tree/user-red.png">
+                                    <br>
+                                    UnPaid Pin
+                                </td>
+                                <td align="center">
+                                    <img height="36" width="36" src="/images/tree/yellow.png">
+                                    <br>
+                                    Block
+                                </td>
+                                <td align="center">
+                                    <img height="36" width="36" src="/images/tree/vacant.png">
+                                    <br>
+                                    vacant
+                                </td>
+                            </tr>
+                        </tbody></table>
+                </td>
+            </tr>
+            <tr>
+<!--                <td style="color: #FF0000">
+                    Note.: Please do not refresh the page again and again and do not press back.
+                    <br>
+                </td>-->
+            </tr>
+        </tbody></table>
+
+</div>
+<div id="frm"></div>
+<script>
+     $(document).ready(function(){
+    $('[data-toggle="popover"]').popover({
+        placement : 'left',
+        trigger : 'hover'
+    });
+});
+        function getnextTree(id, pid) {
+        var action = (id == 0) ? "/registration/registration/registration" : "/dashboard/dashboard/maintree";
+        var trgt = (id == 0) ? '_blank' : '_self';
+
+        var newForm = $('<form>', {
+            'action': action,
+            'target': trgt,
+            'method': 'post'
+        }).append($('<input>', {
+            'name': 'id',
+            'value': id,
+            'type': 'hidden'
+        }));
+        $("#frm").append(newForm);
+
+        var parent = pid.split("-");
+        if (parent[0] == '0') {
+            console.log("no parent");
+            return false;
+        } else {
+            newForm.append($('<input>', {
+                'name': 'pid',
+                'value': parent[0],
+                'type': 'hidden'
+            }));
+            newForm.append($('<input>', {
+                'name': 'ChildNode',
+                'value': parent[1],
+                'type': 'hidden'
+            }));
+        }
+
+        newForm.submit();
+    }
+    
+    $("#treeTop").click(function(){
+    window.location="/dashboard/dashboard/maintree";
+    });
+    
+    function treeBack(id){
+         var newForm = $('<form>', {
+            'action': "/dashboard/dashboard/maintree",
+            'target': '_self',
+            'method': 'post'
+        }).append($('<input>', {
+            'name': 'backId',
+            'value': id,
+            'type': 'hidden'
+        }));
+        $("#frm").append(newForm);
+         newForm.submit();
+    }
+   $("#Search").click(function(){
+       
+       var searchUserId= $("#searchUserId").val();
+   if(searchUserId!=""){ 
+         var newForm = $('<form>', {
+            'action': "/dashboard/dashboard/maintree",
+            'target': '_self',
+            'method': 'post'
+        }).append($('<input>', {
+            'name': 'searchUserId',
+            'value': searchUserId,
+            'type': 'hidden'
+        }));
+        $("#frm").append(newForm);
+         newForm.submit();
+         }
+    })
+</script>
+<style type="text/css">
+    .popover  {
+background: #F1F2F7 !important;
+}
+.popover.bottom .arrow:after {
+  border-bottom-color:#F1F2F7;
+}
+</style>

@@ -1,0 +1,87 @@
+<?php
+// module/Registration/view/registration/registration/registration.phtml:
+
+$title = 'Register | Epin';
+$this->headTitle($title);
+?>
+<header class="panel-heading">
+    Registration Product
+</header>
+<div class="panel-body"> 
+<div class="signUpDtlsContainer">
+    <div class="signUpOuterDiv">
+        <div class="signUpDtlsDiv">
+            <div class="col-sm-6">
+                <!--start-->
+                <div class="card">
+                    <div class="content">
+                        <?php
+                        $form = $this->form;
+                        $form->prepare();
+                        echo $this->form()->openTag($form);
+                        ?>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label>User ID</label>
+                                    <?php echo $this->formRow($form->get('userId')); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label>Product Name</label>
+                                    <?php echo $this->formRow($form->get('productId')); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label>Number Of Pins</label>
+                                    <?php echo $this->formRow($form->get('count')); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <?php echo $this->formSubmit($form->get('submit')); ?>
+                        </div>
+                        <div class="clearfix"></div>
+                        <?php echo $this->form()->closeTag(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end-->
+    </div>
+</div></div>
+</div>
+
+<!--Charts Plugin--> 
+<script src="/js/chartist.min.js"></script>
+
+<!--<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>-->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#bday').datepicker({
+            format: "yyyy-mm-dd",
+//    maxDate : 'now',
+            startView: 1,
+            minViewMode: 1,
+            maxViewMode: 3,
+            autoclose: true,
+        })
+                .datepicker('update', new Date());
+<?php if ($msg != "") { ?>
+            alert("Registerd Successfully");
+<?php } ?>
+    });
+</script>

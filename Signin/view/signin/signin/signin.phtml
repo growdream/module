@@ -1,0 +1,47 @@
+<center>
+                    <div style="width: 50%; font-size: 1.6em; margin-bottom: 60px;">
+                                            </div>
+                    <div class="middle">
+                        <div id="login">
+<?php
+$form = $this->form;
+$form->prepare();
+ echo $this->form()->openTag($form);
+ ?>
+                                <fieldset class="clearfix">
+                                     <?php echo $this->formRow($form->get('security')); ?>
+                                    <p><span class="fa fa-user"></span>
+                                        <?php	echo $this->formRow($form->get('user_id')); ?>
+                                 </p>
+                                 <!-- JS because of IE support; better: placeholder="Username" -->
+                                    <p><span class="fa fa-lock"></span><?php	echo $this->formRow($form->get('password')); ?></p> <!-- JS because of IE support; better: placeholder="Password" -->
+
+                                    <div>
+                                       <!-- <span class="pull-left" style="display: inline-block;"><a class="small-text" href="#">Forgot password?</a></span>-->
+                                        <span class="pull-right" style="text-align:right;  display: inline-block;">
+                                            <input type="reset" value="Cancel"> <?php	echo $this->formRow($form->get('signin')); ?>                                           
+                                        </span>
+                                    </div>
+
+                                </fieldset>
+                                <div class="clearfix"></div>
+                                
+                                        
+        <br> 
+       <div class="checkbox">
+        
+         <a href="/signin/forgot">Forgot password</a> </div>
+ 
+                                
+                            <?php echo $this->form()->closeTag();?>
+
+                            <div class="clearfix"></div>
+
+                        </div> <!-- end login -->
+                        <div class="logo">
+                            <img class="img img-responsive" src="/images/GDM-LOGO.png" alt="LOGO" style="height: 3em;"/>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </div>
+                </center>

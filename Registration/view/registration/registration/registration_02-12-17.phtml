@@ -1,0 +1,173 @@
+<?php
+// module/Registration/view/registration/registration/registration.phtml:
+
+$title = 'Register with us';
+$this->headTitle($title);
+?>
+
+        <header class="panel-heading">
+            Registration Form
+        </header>
+        <div class="panel-body">     
+            <div class="signUpDtlsContainer">
+                <div class="signUpOuterDiv">
+                    <div class="signUpDtlsDiv">
+                        <!--start-->
+                        <div class="card">
+                            <!--<div class="header"> <h4 class="title">registration</h4></div>-->
+                            <div class="content">
+                                <?php
+                                $form = $this->form;
+                                $form->prepare();
+                                echo $this->form()->openTag($form);
+                                ?>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Product</label>
+                                            <?php echo $this->formRow($form->get('product')); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>E-Pin</label>
+                                        <div class="form-group">
+                                            <?php echo $this->formRow($form->get('epin')); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <?php echo $this->formHidden($form->get('refral_Id')); ?>
+                                            <label>First Name</label>
+                                            <?php echo $this->formRow($form->get('firstName')); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Middle Name</label>
+                                            <?php echo $this->formRow($form->get('middleName')); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <?php echo $this->formRow($form->get('lastName')); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            <?php echo $this->formRow($form->get('gender')); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Birth Date</label>
+                                            <?php echo $this->formRow($form->get('birth_date')); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Sponsor</label>
+                                            <?php echo $this->formRow($form->get('parent')); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Side</label>
+                                            <?php echo $this->formRow($form->get('node')); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Mobile No</label>
+                                            <?php echo $this->formRow($form->get('mobileNo')); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <?php echo $this->formRow($form->get('email')); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <?php echo $this->formRow($form->get('password')); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <?php echo $this->formSubmit($form->get('submit')); ?>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php echo $this->form()->closeTag(); ?>
+                            </div>
+                        </div>
+                        <!--end-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!--Charts Plugin--> 
+<script src="/js/chartist.min.js"></script>
+
+<!--<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>-->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#bday').datepicker({
+            format: "yyyy-mm-dd",
+//    maxDate : 'now',
+            startView: 0,
+            minViewMode: 0,
+            maxViewMode: 3,
+            autoclose: true,
+        })
+                .datepicker('update', new Date());
+
+                    
+         $("#product").change(function(){
+//         alert("start");
+         var val=$(this).val();
+//         console.log(val);
+//         alert(val);
+         var uid=<?= $uid ?>;
+//         if(val>=1){
+         $.ajax({
+         url: "/registration/registration/getepin",
+         data: {productId:val,uid:uid},
+         type: 'POST',
+         success: function (data, textStatus, jqXHR) {
+         $("#epin").empty();
+         data=$.parseJSON(data);
+         for(var i=0;i<data.length;i++)
+         {
+//             alert(data[i]['pinId']);
+var selected="";
+if(i==0){selected="selected='selected'";}
+             $("#epin").append("<option value='"+data[i]['id']+"' "+selected+" >"+ data[i]['pinId']+"</option>");
+    }
+         }
+         })
+//         }
+         })       
+
+<?php if ($msg != "") { ?>
+            alert("Registerd Successfully");
+<?php } ?>
+    });
+</script>

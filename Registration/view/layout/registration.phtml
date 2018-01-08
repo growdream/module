@@ -1,0 +1,218 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('GDM'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php
+        echo $this->headMeta()
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                ->prependStylesheet($this->basePath('css/paper-dashboard.css'))
+                ->prependStylesheet($this->basePath('css/animate.min.css'))
+//                        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                ->prependStylesheet('http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
+                ->prependStylesheet('https://fonts.googleapis.com/css?family=Muli:400,300')
+                ->prependStylesheet($this->basePath('css/themify-icons.css'))
+        ?>
+
+        <!-- Scripts -->
+    </head>
+    <body>
+<?php // print_r($user);?>
+        <div class="wrapper">
+            <div class="sidebar" data-background-color="black" data-active-color="danger">
+
+                <!--
+                            Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+                            Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+                -->
+
+                <div class="sidebar-wrapper">
+                    <div class="logo">
+                        <a href="http://www.growdreammaker.com" class="simple-text">
+                            Grow Dream Maker Pvt. Ltd.
+                        </a>
+                    </div>
+
+                    <ul class="nav">
+                        <li class="<?php if ($tab == 1) echo 'active'; ?>">
+                            <a href="/dashboard">
+                                <i class="ti-panel"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="<?php if ($tab == 2) echo 'active'; ?>">
+                            <a href="/registration">
+                                <i class="ti-pencil-alt"></i>
+                                <p>User Registration</p>
+                            </a>
+                        </li>
+                        <li class="<?php if ($tab == 3) echo 'active'; ?>">
+                            <a href="/dashboard/user/alluser">
+                                <i class="ti-user"></i>
+                                <p>All Users</p>
+                            </a>
+                        </li>
+                        <li class="<?php if ($tab == 4) echo 'active'; ?>">
+                            <a href="/dashboard/dashboard/downtree">
+                                <i class="ti-stats-up"></i>
+                                <p>Down link</p>
+                            </a>
+                        </li>
+                        <li class="<?php if ($tab == 5) echo 'active'; ?>">
+                            <a href="/registration/product/product">
+                                <i class="ti-user"></i>
+                                <p>Product Registration</p>
+                            </a>
+                        </li>
+                        <li class="<?php if ($tab == 6) echo 'active'; ?>">
+                            <a href="/registration/product/epin">
+                                <i class="ti-key"></i>
+                                <p>E-Pin Registration</p>
+                            </a>
+                        </li>
+                        <li class="<?php if ($tab == 7) echo 'active'; ?>">
+                            <a href="/dashboard/product/allepin">
+                                <i class="ti-key"></i>
+                                <p>All E-Pin</p>
+                            </a>
+                        </li>
+                        <li class="<?php if ($tab == 10) echo 'active'; ?>">
+                            <a href="/signin/logout">
+                                <i class="ti-user"></i>
+                                <p>Log Out</p>
+                            </a>
+                        </li>
+                        <!--            <li>
+                                        <a href="table.html">
+                                            <i class="ti-view-list-alt"></i>
+                                            <p>Table List</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="typography.html">
+                                            <i class="ti-text"></i>
+                                            <p>Typography</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="icons.html">
+                                            <i class="ti-pencil-alt2"></i>
+                                            <p>Icons</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="maps.html">
+                                            <i class="ti-map"></i>
+                                            <p>Maps</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="notifications.html">
+                                            <i class="ti-bell"></i>
+                                            <p>Notifications</p>
+                                        </a>
+                                    </li>
+                                    <li class="active-pro">
+                                        <a href="upgrade.html">
+                                            <i class="ti-export"></i>
+                                            <p>Upgrade to PRO</p>
+                                        </a>
+                                    </li>-->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main-panel">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar bar1"></span>
+                                <span class="icon-bar bar2"></span>
+                                <span class="icon-bar bar3"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">Dashboard</a>
+                        </div>
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="ti-panel"></i>
+                                        <p>Stats</p>
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="ti-bell"></i>
+                                        <p class="notification">5</p>
+                                        <p>Notifications</p>
+                                        <!--<b class="caret"></b>-->
+                                    </a>
+<!--                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Notification 1</a></li>
+                                        <li><a href="#">Notification 2</a></li>
+                                    </ul>-->
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="ti-settings"></i>
+                                        <p>Settings</p>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </nav>
+
+
+                <div class="content">
+<?php echo $this->content; ?>
+                </div>
+
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <nav class="pull-left">
+                            <ul>
+
+                                <li>
+                                    <a href="#">
+                                        Home
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="copyright pull-right">
+<!--                            &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>-->
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+
+
+    </body>
+    <?php
+        echo $this->headScript()
+                ->prependFile($this->basePath('js/paper-dashboard.js'))
+                ->prependFile($this->basePath('js/bootstrap-notify.js'))
+                ->prependFile($this->basePath('js/chartist.min.js'))
+                ->prependFile($this->basePath('js/bootstrap-checkbox-radio.js'))
+                ->prependFile($this->basePath('js/bootstrap.min.js'))
+                ->prependFile($this->basePath('js/jquery-1.10.2.js'))
+//            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+//            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+        ;
+        ?>
+</html>

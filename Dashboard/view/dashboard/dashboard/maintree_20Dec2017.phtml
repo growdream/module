@@ -1,0 +1,1299 @@
+<?php
+
+function getview($data) {
+    $icnon = array('yellow.png', 'twopv.png','user-red.png');
+    $result = [];
+    if ($data == 0) {
+        $result['icon'] = "vacant.png";
+        $result['id'] = 0;
+        $result['userId'] = 'Add New';
+        $result['status'] = null;
+        $result['firstName'] = "";
+    } else {
+        $result['icon'] = $icnon[$data[4]];
+        $result['id'] = $data[0];
+        $result['userId'] = $data[1];
+        $result['status'] = $data[4];
+        $result['firstName'] = $data[3];
+    }
+    return $result;
+}
+?>
+
+<table align="center" style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 10px;
+       font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal;
+       line-height: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal;
+       widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);
+       width: 100%;">
+    <tbody>
+        <tr class="" style="border-bottom: 4px ridge gray;">
+            <td style="width: 20%" align="left">
+                <!-- <input type="submit" name="back" value="< Back" onclick="treeBack('<?= $treedata[0]; ?>')" title="Previous" class="btn btn-danger" style="font-size:Small;font-weight:bold;"> -->
+            </td>
+             <?php
+             //print_r($UserSession); die("Hello");
+            // if($UserSession->Id == 2) { ?>
+            <td valign="top" style="width: 27%; padding-right: 5%" align="right">
+    <lable> Enter User ID :</lable>
+    <input name="searchUserId" type="text" id="searchUserId" class="txtBox input-lg" placeholder="Search User ID">
+                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator1" style="color:Red;visibility:hidden;">*</span>
+             </td> 
+                 <?php // } ?>
+            <td style="width: 27%" align="left">
+                <input type="submit" name="submit" id="Search" value="Search" class="btn btn-primary" style="font-weight:bold;width:148px;">
+
+            </td>
+            <td style="width: 25%" align="right">
+                <input type="button" value="^ Top" id="treeTop" title="Up" class="btn btn-danger" style="font-size:Small;font-weight:bold;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+        </tr>
+        <tr align="center">
+            <td colspan="4" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="100%">
+
+                <?php
+                $node = getview($treedata[0]);
+
+                $id = "0-0-null";
+                ?>
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
+                    <img id="ctl00_ContentPlaceHolder1_Image" onclick="ImageButton1_Click" src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                <br>
+                <span class="style89">
+                    <a id="ctl00_ContentPlaceHolder1_TopID"><?= $node['userId']; ?></a>
+                    <br>
+                    <a id="ctl00_ContentPlaceHolder1_Top"><?= $node['firstName']; ?></a>
+                    <br>
+
+                </span>
+                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender1_balloonPopup" class="ajax__balloon_popup" style="position: absolute; visibility: hidden; left: 270px; top: 477px; z-index: 1000; display: none;"><span class="rect" style="background-position: -450px -300px;"><span class=" large"><div class=""><div class="rect large bottom_left"><div class="ajax__content"><div id="ctl00_ContentPlaceHolder1_Panel3" style="display: block; width: 455px; height: 230px; position: absolute; left: 30px; top: 40px; overflow: auto;">
+
+                                            <table>
+                                                <tbody><tr>
+                                                        <td>
+                                                            <div id="ctl00_ContentPlaceHolder1_Div1" style="text-align: left; font-size: small; height: 175px">
+                                                                <div class="col-md-12" style="text-align: left">
+                                                                    Name = <span id="ctl00_ContentPlaceHolder1_Label1">BALASAHEB KARDULE  </span></div>
+                                                                <div class="col-md-6">
+                                                                    Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label6">As668355</span></div>
+                                                                <div class="col-md-6">
+                                                                    Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label7">4250</span></div>
+                                                                <div class="col-md-6">
+                                                                    Left Count</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label2">1</span>
+                                                                    (
+                                                                    <span id="ctl00_ContentPlaceHolder1_Label4">0.25</span>
+                                                                    )</div>
+                                                                <div class="col-md-6">
+                                                                    Right Count</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label3">0</span>(
+                                                                    <span id="ctl00_ContentPlaceHolder1_Label5">0</span>
+                                                                    )</div>
+
+                                                                <div class="col-md-6">
+                                                                    Left Point</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label106">1</span>
+                                                                    (<span id="ctl00_ContentPlaceHolder1_Label108">0.25</span>)
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    Right Point</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label107">0</span>
+                                                                    (<span id="ctl00_ContentPlaceHolder1_Label109">0</span>)
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    Registration Date</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label167">08/07/2017</span></div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <img id="ctl00_ContentPlaceHolder1_Image1" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+
+                                        </div></div></div></div></span></span></div></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="4" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img src="/images/tree/tree.png" height="35" width="510">
+            </td>
+        </tr>
+        <tr>
+            <?php
+            $node = getview($treedata[1]);
+
+            $parentNode = getview($treedata[0]);
+            $id = "0-0-0";
+            if ($parentNode['id'] > 0)
+                $id = $parentNode['userId'] . "-0";
+            ?>
+            <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                <span class="Apple-converted-space"></span><br>
+                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                <br>
+
+                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+
+                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender2_balloonPopup" class="ajax__balloon_popup" style="position: absolute; visibility: hidden; left: 575px; top: 580px; z-index: 1000; display: none;"><span class="rect" style="background-position: -450px 0px;"><span class=" large"><div class=""><div class="rect large bottom_right"><div class="ajax__content"><div id="ctl00_ContentPlaceHolder1_Panel4" style="display: block; width: 455px; height: 230px; position: absolute; left: 15px; top: 40px; overflow: auto;">
+
+                                            <table>
+                                                <tbody><tr>
+                                                        <td>
+                                                            <div id="ctl00_ContentPlaceHolder1_Div2" style="text-align: left; font-size: small;">
+
+                                                                <div class="col-md-12" style="text-align: left">
+                                                                    Name = <span id="ctl00_ContentPlaceHolder1_Label8">ARUN DHUMAL</span></div>
+                                                                <div class="col-md-6">
+                                                                    Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label13">As668355</span></div>
+                                                                <div class="col-md-6">
+                                                                    Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label14">2300</span></div>
+                                                                <div class="col-md-6">
+                                                                    Left Count</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label9">0</span>(<span id="ctl00_ContentPlaceHolder1_Label11">0</span>)</div>
+                                                                <div class="col-md-6">
+                                                                    Right Count</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label10">0</span>(<span id="ctl00_ContentPlaceHolder1_Label12">0</span>)</div>
+
+                                                                <div class="col-md-6">
+                                                                    Left Point</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label110">0</span>(<span id="ctl00_ContentPlaceHolder1_Label112">0</span>)</div>
+                                                                <div class="col-md-6">
+                                                                    Right Point</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label111">0</span>(<span id="ctl00_ContentPlaceHolder1_Label113">0</span>)</div>
+
+                                                                <div class="col-md-6">
+                                                                    Registration Date</div>
+                                                                <div class="col-md-6">
+                                                                    = <span id="ctl00_ContentPlaceHolder1_Label166">21/07/2017</span></div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <img id="ctl00_ContentPlaceHolder1_Image2" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+
+                                        </div></div></div></div></span></span></div></td>
+            <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <?php
+                            $node = getview($treedata[2]);
+
+                            $parentNode = getview($treedata[0]);
+                            $id = "0-0-1";
+                            if ($parentNode['id'] > 0)
+                                $id = $parentNode['userId'] . "-1";
+                            ?>
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                <span class="Apple-converted-space"></span><br>
+                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                <br>
+
+                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+
+                <div id="ctl00_ContentPlaceHolder1_Panel5" style="display: none; width: 455px; height: 230px; position: absolute; left: 30px; top: 40px; overflow: auto;">
+
+                    <table>
+                        <tbody><tr>
+                                <td>
+                                    <div id="ctl00_ContentPlaceHolder1_Div3" style="text-align: left; font-size: small;">
+
+                                        <div class="col-md-12" style="text-align: left">
+                                            Name = <span id="ctl00_ContentPlaceHolder1_Label15"></span></div>
+                                        <div class="col-md-6">
+                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label20"></span></div>
+                                        <div class="col-md-6">
+                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label21"></span></div>
+                                        <div class="col-md-6">
+                                            Left Count</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label16"></span>(<span id="ctl00_ContentPlaceHolder1_Label18"></span>)</div>
+                                        <div class="col-md-6">
+                                            Right Count
+                                        </div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label17"></span>(<span id="ctl00_ContentPlaceHolder1_Label19"></span>)</div>
+
+                                        <div class="col-md-6">
+                                            Current Left Count</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label114"></span>(<span id="ctl00_ContentPlaceHolder1_Label116"></span>)</div>
+                                        <div class="col-md-6">
+                                            Current Right Count</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label115"></span>(<span id="ctl00_ContentPlaceHolder1_Label117"></span>)</div>
+
+                                        <div class="col-md-6">
+                                            Registration Date</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label168"></span></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <img id="ctl00_ContentPlaceHolder1_Image3" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                </div>
+
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel3">
+                    <a id="ctl00_ContentPlaceHolder1_TopRight" class="style89"></a>
+                    <br>
+                    <a id="ctl00_ContentPlaceHolder1_HyperLink3" class="style89"></a>
+                    <br>
+
+                </span>
+                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender3_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_left_shadow"><div class="rect large bottom_left"><div class="ajax__content"></div></div></div></span></span></div></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l2" src="/images/tree/tree.png" height="30" width="270">
+            </td>
+            <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l3" src="/images/tree/tree.png" height="30" width="270" style="padding-left: 12px">
+            </td>
+        </tr>
+        <tr>
+            <?php
+                                    $node = getview($treedata[3]);
+
+                                    $parentNode = getview($treedata[1]);
+                                    $id = "0-1-0";
+                                    if ($parentNode['id'] > 0)
+                                        $id = $parentNode['userId'] . "-0";
+                                    ?>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                <span class="Apple-converted-space"></span><br>
+                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                <br>
+
+                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+
+
+                <div id="ctl00_ContentPlaceHolder1_Panel6" style="display: none; width: 455px; height: 230px; position: absolute; left: 15px; top: 40px; overflow: auto;">
+
+                    <table>
+                        <tbody><tr>
+                                <td>
+                                    <div id="ctl00_ContentPlaceHolder1_Div4" style="text-align: left; font-size: small;">
+
+                                        <div class="col-md-12" style="text-align: left">
+                                            Name = <span id="ctl00_ContentPlaceHolder1_Label22"></span></div>
+                                        <div class="col-md-6">
+                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label27"></span></div>
+                                        <div class="col-md-6">
+                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label28"></span></div>
+                                        <div class="col-md-6">
+                                            Left Count
+                                        </div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label23"></span>(<span id="ctl00_ContentPlaceHolder1_Label25"></span>)</div>
+                                        <div class="col-md-6">
+                                            Right Count
+                                        </div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label24"></span>(<span id="ctl00_ContentPlaceHolder1_Label26"></span>)</div>
+
+                                        <div class="col-md-6">
+                                            Left Point</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label118"></span>(<span id="ctl00_ContentPlaceHolder1_Label120"></span>)</div>
+                                        <div class="col-md-6">
+                                            Right Point</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label119"></span>(<span id="ctl00_ContentPlaceHolder1_Label121"></span>)</div>
+
+                                        <div class="col-md-6">
+                                            Registration Date</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label169"></span></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <img id="ctl00_ContentPlaceHolder1_Image4" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                </div>
+
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel4">
+                    <a id="ctl00_ContentPlaceHolder1_TopLeftLeft" class="style89"></a>
+                    <br>
+                    <a id="ctl00_ContentPlaceHolder1_HyperLink4" class="style89"></a>
+                    <br>
+
+                </span>
+                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender4_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_right_shadow"><div class="rect large bottom_right"><div class="ajax__content"></div></div></div></span></span></div></td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
+                <?php
+                                    $node = getview($treedata[4]);
+
+                                    $parentNode = getview($treedata[1]);
+                                    $id = "0-1-1";
+                                    if ($parentNode['id'] > 0)
+                                        $id = $parentNode['userId'] . "-1";
+                                    ?>
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                <span class="Apple-converted-space"></span><br>
+                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                <br>
+
+                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+
+                <div id="ctl00_ContentPlaceHolder1_Panel7" style="display: none; width: 455px; height: 230px; position: absolute; left: 15px; top: 40px; overflow: auto;">
+
+                    <table>
+                        <tbody><tr>
+                                <td>
+                                    <div id="ctl00_ContentPlaceHolder1_Div5" style="text-align: left; font-size: small;">
+
+                                        <div class="col-md-12" style="text-align: left">
+                                            Name = <span id="ctl00_ContentPlaceHolder1_Label29"></span></div>
+                                        <div class="col-md-6">
+                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label34"></span></div>
+                                        <div class="col-md-6">
+                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label35"></span></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        Left Count</div>
+                                    <div class="col-md-6">
+                                        = <span id="ctl00_ContentPlaceHolder1_Label30"></span>(<span id="ctl00_ContentPlaceHolder1_Label32"></span>)</div>
+                                    <div class="col-md-6">
+                                        Right Count
+                                    </div>
+                                    <div class="col-md-6">
+                                        = <span id="ctl00_ContentPlaceHolder1_Label31"></span>(<span id="ctl00_ContentPlaceHolder1_Label33"></span>)</div>
+
+                                    <div class="col-md-6">
+                                        Left Point
+                                    </div>
+                                    <div class="col-md-6">
+                                        = <span id="ctl00_ContentPlaceHolder1_Label122"></span>(<span id="ctl00_ContentPlaceHolder1_Label124"></span>)</div>
+                                    <div class="col-md-6">
+                                        Right Point</div>
+                                    <div class="col-md-6">
+                                        = <span id="ctl00_ContentPlaceHolder1_Label123"></span>(<span id="ctl00_ContentPlaceHolder1_Label125"></span>)</div>
+                                    <div class="col-md-6">
+                                        Registration Date</div>
+                                    <div class="col-md-6">
+                                        = <span id="ctl00_ContentPlaceHolder1_Label170"></span></div>
+
+                                </td>
+                                <td>
+                                    <img id="ctl00_ContentPlaceHolder1_Image5" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                </div>
+
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel5">
+                    <a id="ctl00_ContentPlaceHolder1_TopLeftRight" class="style89"></a>
+                    <br>
+                    <a id="ctl00_ContentPlaceHolder1_HyperLink5" class="style89"></a>
+                    <br>
+
+                </span>
+                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender5_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_right_shadow"><div class="rect large bottom_right"><div class="ajax__content"></div></div></div></span></span></div></td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
+                <?php
+                                    $node = getview($treedata[9]);
+
+                                    $parentNode = getview($treedata[2]);
+                                    $id = "0-2-0";
+                                    if ($parentNode['id'] > 0)
+                                        $id = $parentNode['userId'] . "-0";
+                                    ?>
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                <span class="Apple-converted-space"></span><br>
+                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                <br>
+
+                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+                <div id="ctl00_ContentPlaceHolder1_Panel8" style="display: none; width: 455px; height: 230px; position: absolute; left: 30px; top: 40px; overflow: auto;">
+
+                    <table>
+                        <tbody><tr>
+                                <td>
+                                    <div id="ctl00_ContentPlaceHolder1_Div6" style="text-align: left; font-size: small;">
+
+                                        <div class="col-md-12" style="text-align: left">
+                                            Name = <span id="ctl00_ContentPlaceHolder1_Label36"></span></div>
+                                        <div class="col-md-6">
+                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label41"></span></div>
+                                        <div class="col-md-6">
+                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label42"></span></div>
+                                        <div class="col-md-6">
+                                            Left Count</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label37"></span>(<span id="ctl00_ContentPlaceHolder1_Label39"></span>)</div>
+                                        <div class="col-md-6">
+                                            Right Count</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label38"></span>(<span id="ctl00_ContentPlaceHolder1_Label40"></span>)</div>
+
+                                        <div class="col-md-6">
+                                            Left Point
+                                        </div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label126"></span>(<span id="ctl00_ContentPlaceHolder1_Label128"></span>)</div>
+                                        <div class="col-md-6">
+                                            Right Point</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label127"></span>(<span id="ctl00_ContentPlaceHolder1_Label129"></span>)</div>
+
+                                        <div class="col-md-6">
+                                            Registration Date</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label171"></span></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <img id="ctl00_ContentPlaceHolder1_Image6" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                </div>
+
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel6">
+                    <a id="ctl00_ContentPlaceHolder1_TopRightLeft" class="style89"></a>
+                    <br>
+                    <a id="ctl00_ContentPlaceHolder1_HyperLink6" class="style89"></a>
+                    <br>
+
+                </span>
+                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender6_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_left_shadow"><div class="rect large bottom_left"><div class="ajax__content"></div></div></div></span></span></div></td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
+                <?php
+                                    $node = getview($treedata[10]);
+
+                                    $parentNode = getview($treedata[2]);
+                                    $id = "0-2-1";
+                                    if ($parentNode['id'] > 0)
+                                        $id = $parentNode['userId'] . "-1";
+                                    ?>
+                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                <span class="Apple-converted-space"></span><br>
+                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                <br>
+
+                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                <br>
+                <div id="ctl00_ContentPlaceHolder1_Panel9" style="display: none; width: 455px; height: 230px; position: absolute; left: 30px; top: 40px; overflow: auto;">
+
+                    <table>
+                        <tbody><tr>
+                                <td>
+                                    <div id="ctl00_ContentPlaceHolder1_Div7" style="text-align: left; font-size: small;">
+
+                                        <div class="col-md-12" style="text-align: left">
+                                            Name = <span id="ctl00_ContentPlaceHolder1_Label43"></span></div>
+                                        <div class="col-md-6">
+                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label48"></span></div>
+                                        <div class="col-md-6">
+                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label49"></span></div>
+                                        <div class="col-md-6">
+                                            Left Count</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label44"></span>(<span id="ctl00_ContentPlaceHolder1_Label46"></span>)</div>
+                                        <div class="col-md-6">
+                                            Right Count</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label45"></span>(<span id="ctl00_ContentPlaceHolder1_Label47"></span>)</div>
+
+                                        <div class="col-md-6">
+                                            Left Point</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label130"></span>(<span id="ctl00_ContentPlaceHolder1_Label132"></span>)</div>
+                                        <div class="col-md-6">
+                                            Right Point
+                                        </div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label131"></span>(<span id="ctl00_ContentPlaceHolder1_Label133"></span>)</div>
+
+                                        <div class="col-md-6">
+                                            Registration Date</div>
+                                        <div class="col-md-6">
+                                            = <span id="ctl00_ContentPlaceHolder1_Label172"></span></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <img id="ctl00_ContentPlaceHolder1_Image7" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                </td>
+                            </tr>
+                        </tbody></table>
+
+                </div>
+
+                <span class="Apple-converted-space"></span><br>
+                <span id="lblLevel7">
+                    <a id="ctl00_ContentPlaceHolder1_TopRightRight" class="style89"></a>
+                    <br>
+                    <a id="ctl00_ContentPlaceHolder1_HyperLink7" class="style89"></a>
+                    <br>
+
+                </span>
+                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender7_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_left_shadow"><div class="rect large bottom_left"><div class="ajax__content"></div></div></div></span></span></div></td>
+        </tr>
+        <tr>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l4" src="/images/tree/tree.png" height="25" width="150">
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l5" src="/images/tree/tree.png" height="25" width="150">
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l6" src="/images/tree/tree.png" height="25" width="150">
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <img id="l7" src="/images/tree/tree.png" height="25" width="150" style="padding-left: -10px">
+            </td>
+        </tr>
+        <tr>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <table width="100%">
+                    <tbody><tr>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <?php
+                                            $node = getview($treedata[5]);
+
+                                            $parentNode = getview($treedata[3]);
+                                            $id = "0-3-0";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-0";
+                                            ?>
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                <div id="ctl00_ContentPlaceHolder1_Panel10" style="display: none; width: 455px; height: 230px; position: absolute; left: 15px; top: 40px; overflow: auto;">
+
+                                    <table>
+                                        <tbody><tr>
+                                                <td>
+                                                    <div id="ctl00_ContentPlaceHolder1_Div8" style="text-align: left; font-size: small;">
+
+                                                        <div class="col-md-12" style="text-align: left">
+                                                            Name = <span id="ctl00_ContentPlaceHolder1_Label50"></span></div>
+                                                        <div class="col-md-6">
+                                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label55"></span></div>
+                                                        <div class="col-md-6">
+                                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label56"></span></div>
+                                                        <div class="col-md-6">
+                                                            Left Count</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label51"></span>(<span id="ctl00_ContentPlaceHolder1_Label53"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Count</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label52"></span>(<span id="ctl00_ContentPlaceHolder1_Label54"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Left Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label134"></span>(<span id="ctl00_ContentPlaceHolder1_Label136"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label135"></span>(<span id="ctl00_ContentPlaceHolder1_Label137"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Registration Date</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label173"></span></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <img id="ctl00_ContentPlaceHolder1_Image8" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+
+                                </div>
+
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel8">
+                                    <a id="ctl00_ContentPlaceHolder1_TopLeftLeftLeft" class="style89"></a>
+                                    <br>
+                                    <a id="ctl00_ContentPlaceHolder1_HyperLink8" class="style89"></a>
+                                    <br>
+
+                                </span>
+                                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender8_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_right_shadow"><div class="rect large bottom_right"><div class="ajax__content"></div></div></div></span></span></div></td>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <?php
+                                            $node = getview($treedata[6]);
+
+                                            $parentNode = getview($treedata[3]);
+                                            $id = "0-3-1";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-1";
+                                            ?>
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                <div id="ctl00_ContentPlaceHolder1_Panel11" style="display: none; width: 455px; height: 230px; position: absolute; left: 15px; top: 40px; overflow: auto;">
+
+                                    <table>
+                                        <tbody><tr>
+                                                <td>
+                                                    <div id="ctl00_ContentPlaceHolder1_Div9" style="text-align: left; font-size: small;">
+
+                                                        <div class="col-md-12" style="text-align: left">
+                                                            Name = <span id="ctl00_ContentPlaceHolder1_Label57"></span></div>
+                                                        <div class="col-md-6">
+                                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label62"></span></div>
+                                                        <div class="col-md-6">
+                                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label63"></span></div>
+                                                        <div class="col-md-6">
+                                                            Left Count</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label58"></span>(<span id="ctl00_ContentPlaceHolder1_Label60"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Count</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label59"></span>(<span id="ctl00_ContentPlaceHolder1_Label61"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Left Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label138"></span>(<span id="ctl00_ContentPlaceHolder1_Label140"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label139"></span>(<span id="ctl00_ContentPlaceHolder1_Label141"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Registration Date</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label174"></span></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <img id="ctl00_ContentPlaceHolder1_Image9" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+
+                                </div>
+
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel9">
+                                    <a id="ctl00_ContentPlaceHolder1_TopLeftLeftRight" class="style89"></a>
+                                    <br>
+                                    <a id="ctl00_ContentPlaceHolder1_HyperLink9" class="style89"></a>
+                                    <br>
+
+                                </span>
+                                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender9_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_right_shadow"><div class="rect large bottom_right"><div class="ajax__content"></div></div></div></span></span></div></td>
+                        </tr>
+                    </tbody></table>
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <table width="100%">
+                    <tbody><tr>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <?php
+                                            $node = getview($treedata[7]);
+                                            $parentNode = getview($treedata[4]);
+                                            $id = "0-4-0";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-0";
+                                            ?>
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                <div id="ctl00_ContentPlaceHolder1_Panel12" style="display: none; width: 455px; height: 230px; position: absolute; left: 15px; top: 40px; overflow: auto;">
+
+                                    <table>
+                                        <tbody><tr>
+                                                <td>
+                                                    <div id="ctl00_ContentPlaceHolder1_Div10" style="text-align: left; font-size: small;">
+
+                                                        <div class="col-md-12" style="text-align: left">
+                                                            Name = <span id="ctl00_ContentPlaceHolder1_Label64"></span></div>
+                                                        <div class="col-md-6">
+                                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label69"></span></div>
+                                                        <div class="col-md-6">
+                                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label70"></span></div>
+                                                        <div class="col-md-6">
+                                                            Left Count</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label65"></span>(<span id="ctl00_ContentPlaceHolder1_Label67"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Count</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label66"></span>(<span id="ctl00_ContentPlaceHolder1_Label68"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Left Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label142"></span>(<span id="ctl00_ContentPlaceHolder1_Label144"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label143"></span>(<span id="ctl00_ContentPlaceHolder1_Label145"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Registration Date</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label175"></span></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <img id="ctl00_ContentPlaceHolder1_Image10" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+
+                                </div>
+
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel10">
+                                    <a id="ctl00_ContentPlaceHolder1_TopLeftRightLeft" class="style89"></a>
+                                    <br>
+                                    <a id="ctl00_ContentPlaceHolder1_HyperLink10" class="style89"></a>
+                                    <br>
+
+                                </span>
+                                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender10_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_right_shadow"><div class="rect large bottom_right"><div class="ajax__content"></div></div></div></span></span></div></td>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <?php
+                                            $node = getview($treedata[8]);
+                                            $parentNode = getview($treedata[4]);
+                                            $id = "0-4-1";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-1";
+                                            ?>
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                <div id="ctl00_ContentPlaceHolder1_Panel13" style="display: none; width: 455px; height: 230px; position: absolute; left: 15px; top: 40px; overflow: auto;">
+
+                                    <table>
+                                        <tbody><tr>
+                                                <td>
+                                                    <div id="ctl00_ContentPlaceHolder1_Div11" style="text-align: left; font-size: small;">
+
+                                                        <div class="col-md-12" style="text-align: left">
+                                                            Name = <span id="ctl00_ContentPlaceHolder1_Label71"></span></div>
+                                                        <div class="col-md-6">
+                                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label76"></span></div>
+                                                        <div class="col-md-6">
+                                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label77"></span></div>
+                                                        <div class="col-md-6">
+                                                            Left Count
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label72"></span>(<span id="ctl00_ContentPlaceHolder1_Label74"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Count
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label73"></span>(<span id="ctl00_ContentPlaceHolder1_Label75"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Left Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label146"></span>(<span id="ctl00_ContentPlaceHolder1_Label148"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label147"></span>(<span id="ctl00_ContentPlaceHolder1_Label149"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Registration Date</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label176"></span></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <img id="ctl00_ContentPlaceHolder1_Image11" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+
+                                </div>
+
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel11">
+                                    <a id="ctl00_ContentPlaceHolder1_TopLeftRightRight" class="style89"></a>
+                                    <br>
+                                    <a id="ctl00_ContentPlaceHolder1_HyperLink11" class="style89"></a>
+                                    <br>
+
+                                </span>
+                                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender11_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_right_shadow"><div class="rect large bottom_right"><div class="ajax__content"></div></div></div></span></span></div></td>
+                        </tr>
+                    </tbody></table>
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <table width="100%">
+                    <tbody><tr>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <?php
+                                            $node = getview($treedata[11]);
+
+                                            $parentNode = getview($treedata[9]);
+                                            $id = "0-9-0";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-0";
+                                            ?>
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                <div id="ctl00_ContentPlaceHolder1_Panel14" style="display: none; width: 455px; height: 230px; position: absolute; left: 30px; top: 40px; overflow: auto;">
+
+                                    <table>
+                                        <tbody><tr>
+                                                <td>
+                                                    <div id="ctl00_ContentPlaceHolder1_Div12" style="text-align: left; font-size: small;">
+
+                                                        <div class="col-md-12" style="text-align: left">
+                                                            Name = <span id="ctl00_ContentPlaceHolder1_Label78"></span></div>
+                                                        <div class="col-md-6">
+                                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label83"></span></div>
+                                                        <div class="col-md-6">
+                                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label84"></span></div>
+                                                        <div class="col-md-6">
+                                                            Left Count
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label79"></span>(<span id="ctl00_ContentPlaceHolder1_Label81"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Count
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label80"></span>(<span id="ctl00_ContentPlaceHolder1_Label82"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Left Point
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label150"></span>(<span id="ctl00_ContentPlaceHolder1_Label152"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label151"></span>(<span id="ctl00_ContentPlaceHolder1_Label153"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Registration Date</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label177"></span></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <img id="ctl00_ContentPlaceHolder1_Image12" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+
+                                </div>
+
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel12">
+                                    <a id="ctl00_ContentPlaceHolder1_TopRightLeftLeft" class="style89"></a>
+                                    <br>
+                                    <a id="ctl00_ContentPlaceHolder1_HyperLink12" class="style89"></a>
+                                    <br>
+
+                                </span>
+                                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender12_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_left_shadow"><div class="rect large bottom_left"><div class="ajax__content"></div></div></div></span></span></div></td>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <?php
+                                            $node = getview($treedata[12]);
+
+                                            $parentNode = getview($treedata[9]);
+                                            $id = "0-9-1";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-1";
+                                            ?>
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                <div id="ctl00_ContentPlaceHolder1_Panel15" style="display: none; width: 455px; height: 230px; position: absolute; left: 30px; top: 40px; overflow: auto;">
+
+                                    <table>
+                                        <tbody><tr>
+                                                <td>
+                                                    <div id="ctl00_ContentPlaceHolder1_Div13" style="text-align: left; font-size: small;">
+
+                                                        <div class="col-md-12" style="text-align: left">
+                                                            Name = <span id="ctl00_ContentPlaceHolder1_Label85"></span></div>
+                                                        <div class="col-md-6">
+                                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label90"></span></div>
+                                                        <div class="col-md-6">
+                                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label91"></span></div>
+                                                        <div class="col-md-6">
+                                                            Left Count</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label86"></span>(<span id="ctl00_ContentPlaceHolder1_Label88"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Count
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label87"></span>(<span id="ctl00_ContentPlaceHolder1_Label89"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Left Point
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label154"></span>(<span id="ctl00_ContentPlaceHolder1_Label156"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Point
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label155"></span>(<span id="ctl00_ContentPlaceHolder1_Label157"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Registration Date</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label178"></span></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <img id="ctl00_ContentPlaceHolder1_Image13" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+
+                                </div>
+
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel13">
+                                    <a id="ctl00_ContentPlaceHolder1_TopRightLeftRight" class="style89"></a>
+                                    <br>
+                                    <a id="ctl00_ContentPlaceHolder1_HyperLink13" class="style89"></a>
+                                    <br>
+
+                                </span>
+                                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender13_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_left_shadow"><div class="rect large bottom_left"><div class="ajax__content"></div></div></div></span></span></div></td>
+                        </tr>
+                    </tbody></table>
+            </td>
+            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
+                <table width="100%">
+                    <tbody><tr>
+                            <td align="left" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <?php
+                                            $node = getview($treedata[13]);
+
+                                            $parentNode = getview($treedata[10]);
+                                            $id = "0-10-0";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-0";
+                                            ?>
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                <div id="ctl00_ContentPlaceHolder1_Panel16" style="display: none; width: 455px; height: 230px; position: absolute; left: 30px; top: 40px; overflow: auto;">
+
+                                    <table>
+                                        <tbody><tr>
+                                                <td>
+                                                    <div id="ctl00_ContentPlaceHolder1_Div14" style="text-align: left; font-size: small;">
+
+                                                        <div class="col-md-12" style="text-align: left">
+                                                            Name = <span id="ctl00_ContentPlaceHolder1_Label92"></span></div>
+                                                        <div class="col-md-6">
+                                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label97"></span></div>
+                                                        <div class="col-md-6">
+                                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label98"></span></div>
+                                                        <div class="col-md-6">
+                                                            Left Count
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label93"></span>(<span id="ctl00_ContentPlaceHolder1_Label95"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Count
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label94"></span>(<span id="ctl00_ContentPlaceHolder1_Label96"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Left Point
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label158"></span>(<span id="ctl00_ContentPlaceHolder1_Label160"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Point
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label159"></span>(<span id="ctl00_ContentPlaceHolder1_Label161"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Registration Date</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label179"></span></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <img id="ctl00_ContentPlaceHolder1_Image14" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+
+                                </div>
+
+                                <span class="Apple-converted-space"></span><br>
+                                <span id="lblLevel14">
+                                    <a id="ctl00_ContentPlaceHolder1_TopRightRightLeft" class="style89"></a>
+                                    <br>
+                                    <a id="ctl00_ContentPlaceHolder1_HyperLink14" class="style89"></a>
+                                    <br>
+
+                                </span>
+                                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender14_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_left_shadow"><div class="rect large bottom_left"><div class="ajax__content"></div></div></div></span></span></div></td>
+                            <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
+                                <?php
+                                            $node = getview($treedata[14]);
+
+                                            $parentNode = getview($treedata[10]);
+                                            $id = "0-10-1";
+                                            if ($parentNode['id'] > 0)
+                                                $id = $parentNode['userId'] . "-1";
+                                            ?>
+                                <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
+                                <span class="Apple-converted-space"></span><br>
+                                <a id="ctl00_ContentPlaceHolder1_TopLeft" class="style89"><?= $node['userId']; ?></a>
+                                <br>
+
+                                <a id="ctl00_ContentPlaceHolder1_HyperLink2" class="style89"><?= $node['firstName']; ?></a>
+                                <br>
+                                <div id="ctl00_ContentPlaceHolder1_Panel17" style="display: none; width: 455px; height: 230px; position: absolute; left: 30px; top: 40px; overflow: auto;">
+
+                                    <table>
+                                        <tbody><tr>
+                                                <td>
+                                                    <div id="ctl00_ContentPlaceHolder1_Div15" style="text-align: left; font-size: small;">
+
+                                                        <div class="col-md-12" style="text-align: left">
+                                                            Name = <span id="ctl00_ContentPlaceHolder1_Label99"></span></div>
+                                                        <div class="col-md-6">
+                                                            Sponsor Id = <span id="ctl00_ContentPlaceHolder1_Label104"></span></div>
+                                                        <div class="col-md-6">
+                                                            Pin Amount = <span id="ctl00_ContentPlaceHolder1_Label105"></span></div>
+                                                        <div class="col-md-6">
+                                                            Left Count</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label100"></span>(<span id="ctl00_ContentPlaceHolder1_Label102"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Count</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label101"></span>(<span id="ctl00_ContentPlaceHolder1_Label103"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Left Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label162"></span>(<span id="ctl00_ContentPlaceHolder1_Label164"></span>)</div>
+                                                        <div class="col-md-6">
+                                                            Right Point</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label163"></span>(<span id="ctl00_ContentPlaceHolder1_Label165"></span>)</div>
+
+                                                        <div class="col-md-6">
+                                                            Registration Date</div>
+                                                        <div class="col-md-6">
+                                                            = <span id="ctl00_ContentPlaceHolder1_Label180"></span></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <img id="ctl00_ContentPlaceHolder1_Image15" src="/images/tree/emp.png" style="height:75px;width:75px;border-width:0px;border-radius: 50px">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <span class="Apple-converted-space"><br>
+                                    <a id="ctl00_ContentPlaceHolder1_TopRightRightRight" style="font-size: medium"></a>
+                                    <br>
+                                    <a id="ctl00_ContentPlaceHolder1_HyperLink15" class="style89"></a>
+                                    <br>
+
+                                </span>
+                                <div id="ctl00_ContentPlaceHolder1_BalloonPopupExtender15_balloonPopup" class="ajax__balloon_popup" style="display: none; position: absolute; visibility: hidden;"><span class="rect"><span class=" large"><div class="rect large bottom_left_shadow"><div class="rect large bottom_left"><div class="ajax__content"></div></div></div></span></span></div></td>
+                        </tr>
+                    </tbody></table>
+            </td>
+        </tr>
+    </tbody></table>
+
+
+<div id="ctl00_ContentPlaceHolder1_Panel2">
+
+    <table class="nav-justified">
+        <tbody><tr>
+                <td>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                     <table width="100%" style="background: #FFFFFF;">
+                        <tbody><tr>
+                                <td align="center">
+                                    <img height="36" width="36" src="/images/tree/twopv.png">
+                                    <br>
+                                    Paid Pin
+                                </td>
+                                <td align="center">
+<!--                                    <img height="36" width="36" src="/images/tree/zeropv.png">
+                                    <br>
+                                    UnPaid Pin-->
+                                </td>
+                                <td align="center">
+                                    <img height="36" width="36" src="/images/tree/user-red.png">
+                                    <br>
+                                    UnPaid Pin
+                                </td>
+                                <td align="center">
+                                    <img height="36" width="36" src="/images/tree/yellow.png">
+                                    <br>
+                                    Block
+                                </td>
+                                <td align="center">
+                                    <img height="36" width="36" src="/images/tree/vacant.png">
+                                    <br>
+                                    vacant
+                                </td>
+                            </tr>
+                        </tbody></table>
+                </td>
+            </tr>
+            <tr>
+<!--                <td style="color: #FF0000">
+                    Note.: Please do not refresh the page again and again and do not press back.
+                    <br>
+                </td>-->
+            </tr>
+        </tbody></table>
+
+</div>
+<div id="frm"></div>
+<script>
+                    function getnextTree(id, pid) {
+        var action = (id == 0) ? "/registration/registration/registration" : "/dashboard/dashboard/maintree";
+        var trgt = (id == 0) ? '_blank' : '_self';
+
+        var newForm = $('<form>', {
+            'action': action,
+            'target': trgt,
+            'method': 'post'
+        }).append($('<input>', {
+            'name': 'id',
+            'value': id,
+            'type': 'hidden'
+        }));
+        $("#frm").append(newForm);
+
+        var parent = pid.split("-");
+        if (parent[0] == '0') {
+            console.log("no parent");
+            return false;
+        } else {
+            newForm.append($('<input>', {
+                'name': 'pid',
+                'value': parent[0],
+                'type': 'hidden'
+            }));
+            newForm.append($('<input>', {
+                'name': 'ChildNode',
+                'value': parent[1],
+                'type': 'hidden'
+            }));
+        }
+
+        newForm.submit();
+    }
+    
+    $("#treeTop").click(function(){
+    window.location="/dashboard/dashboard/maintree";
+    });
+    
+    function treeBack(id){
+         var newForm = $('<form>', {
+            'action': "/dashboard/dashboard/maintree",
+            'target': '_self',
+            'method': 'post'
+        }).append($('<input>', {
+            'name': 'backId',
+            'value': id,
+            'type': 'hidden'
+        }));
+        $("#frm").append(newForm);
+         newForm.submit();
+    }
+   $("#Search").click(function(){
+       
+       var searchUserId= $("#searchUserId").val();
+   if(searchUserId!=""){ 
+         var newForm = $('<form>', {
+            'action': "/dashboard/dashboard/maintree",
+            'target': '_self',
+            'method': 'post'
+        }).append($('<input>', {
+            'name': 'searchUserId',
+            'value': searchUserId,
+            'type': 'hidden'
+        }));
+        $("#frm").append(newForm);
+         newForm.submit();
+         }
+    })
+</script>

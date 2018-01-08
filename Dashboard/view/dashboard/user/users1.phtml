@@ -1,0 +1,113 @@
+<?php
+$title = 'All Users';
+$this->headTitle($title);
+?>
+<div class="container">
+    
+    <div class="btn-group col-sm-12 pull-right" role="group" >
+                        <button onclick="tdcustomsearch('All')" type="button" class="btn btn-default ">All</button>
+                        <button onclick="tdcustomsearch('2')" type="button" class="btn btn-default presentLine">Un Paid</button>
+                        <button onclick="tdcustomsearch('1')" type="button" class="btn btn-default unpaidFulldayLine">Active</button>
+                        <button onclick="tdcustomsearch('0')" type="button" class="btn btn-default unpaidHalfdayLine">Bloked</button>
+                    </div>
+  
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="userList">
+                            <thead>
+                                <tr>
+                                    <th>Sr</th>
+                                    <th>id</th>
+                                    <th>User Id</th>
+                                    <th>Name</th>
+                                    <th>Parent</th>
+                                    <th>sponcerBy</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    
+    </div>
+</div>
+
+<link href="/datatable/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+ 
+<script src="/datatable/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/datatable/dataTables.bootstrap.min.js" type="text/javascript"></script>
+
+<script>
+                                var category = "";
+
+td = $('#userList').DataTable({
+                                // stateSave: true,
+                                responsive: true,
+                                "language": {
+                                    "processing": '<div class="LoadingMsg"><img src="/images/loading.gif">&nbsp; Loading....</div>',
+//                                    "info": "of _TOTAL_ entries.",
+//                                    "lengthMenu": "Showing _MENU_",
+                                },
+                                "processing": true,
+//                                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                                "lengthMenu": [[10, 25, 50], [10, 25, 50]],
+                                "pageLength": 10,
+                                "serverSide": true,
+                                "ajax": {
+                                    "url": "/dashboard/user/userserverside",
+                                    "data": function (post) {
+                                        post.category = category;
+                                    },
+                                },
+                                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+//                                        console.log(aData);
+                                    var $nRow = $(nRow); // cache the row wrapped up in jQuery
+                                    //$("#userList_length").css('float', 'left');
+                                    //$("#userList_info").css('float', 'left');
+                                    //$("#userList_info").css('margin', '0 0 0 5px');
+                                },
+                                        "columnDefs": [
+                                        {
+                                            "targets": [0],
+                                            "orderable": false,
+                                            "searchable": false,
+                                        },
+                                        {
+                                            "targets": [1],
+                                            "visible": false,},
+                                        {
+                                            "targets": [2],
+                                            "mRender":function(data,type,alldata){
+                                    
+                                    
+                                    return "<a href='/dashboard/dashboard/profile/"+data+"' >"+data+"</a>";
+                                            }
+                                        },
+                                        {
+                                            "targets": [6],
+                                            "searchable": false,
+                                            "mRender":function(data,type,alldata){
+                                    var $statusR="";            
+                                    if (data == 1) {
+                                        $statusR = "<span class='label label-success col-sm-10'>Active</span>";
+                                    } else if (data == 0) {
+                                        $statusR = "<span class='label label-danger col-sm-10'>Blocked</span>";
+                                    } else if (data == 2) {
+                                        $statusR = "<span class='label label-primary col-sm-10'>Un Paid</span>";
+                                    }
+                                    return $statusR;
+                                            }
+                                        },
+                                    ],
+
+        //                                "sDom": '<"top">rt<"bottom listingTableFooter"<"listingPageCountDiv"li><"clear"><"listingPaginationDiv"p>><"clear">',
+                                "order": [[1, 'desc']],
+                            });
+                            
+                            // for buttons get data by category
+                            function tdcustomsearch(sval) {
+                                category = 'All' == sval ? '' : sval;
+                                td.draw();
+                            }
+
+</script>

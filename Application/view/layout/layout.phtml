@@ -1,0 +1,116 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('GDM | '. $this->translate('Pvt Ltd'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath('css/responsive.css')) 
+                        ->prependStylesheet($this->basePath('css/style_front.css')) 
+                        ->prependStylesheet($this->basePath('css/prettyPhoto.css')) 
+                        ->prependStylesheet($this->basePath('css/animate.min.css')) 
+//                        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                        ->prependStylesheet($this->basePath('css/font-awesome.min.css')) 
+                        ->prependStylesheet($this->basePath('css/bootstrap.min.css')) 
+                ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath('js/main.js'))
+            ->prependFile($this->basePath('js/wow.min.js'))
+            ->prependFile($this->basePath('js/jquery.isotope.min.js'))
+            ->prependFile($this->basePath('js/jquery.prettyPhoto.js'))
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery.js'))
+        ; ?>
+
+    </head>
+    <body>
+       <header id="header">
+        <nav class="navbar navbar-fixed-top" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <div class="col-sm-2 hidden-xs"><img width="200px;" height="15px;" class="img img-responsive" alt="" src="/images/GDM-LOGO.png">
+                    </div>
+                    <div class="col-sm-10">
+                        <button style="background-color: #0b7fe2;" data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    
+                        <a href="/" class=""> <b class="brand-name">Grow Dream Maker</b><br><i class="brand-name-small">Marketing Pvt.Ltd</i></a>
+                    </div>
+                </div>
+				
+                <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li class="<?php if($indexNo == 1)echo 'active' ?>"><a href="/">Home</a></li>
+                        <li class="<?php if($indexNo == 2)echo 'active' ?>"><a href="/application/index/aboutus">About Us</a></li>
+                        <!--<li class="<?php if($indexNo == 3)echo 'active' ?>"><a href="services.php">Services</a></li>-->
+                        <li class="<?php if($indexNo == 4)echo 'active' ?>"><a href="/application/index/product">Products</a></li>
+                        <!--<li class="<?php if($indexNo == 5)echo 'active' ?>"><a href="blog.php">Blog</a></li>--> 
+                        <li class="<?php if($indexNo == 6)echo 'active' ?>"><a href="/application/index/contactus">Contact</a></li>                        
+                        <li class="<?php if($indexNo == 7)echo 'active' ?>"><a href="/signin">Login</a></li>                        
+                    </ul>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+		
+    </header><!--/header-->
+        <!--<div class="">-->
+            <?php echo $this->content; ?>
+            <hr>
+<!--            <footer>
+                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+            </footer>-->
+        <!--</div>  /container -->
+        <?php echo $this->inlineScript() ?>
+         <div class="top-bar">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="social">
+                                    <ul class="social-share">
+                                        <li><a href="https://www.facebook.com/GROW-DREAM-MAKER-157133998225938/" target="blank"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li> 
+                                        <!--<li><a href="#"><i class="fa fa-dribbble"></i></a></li>-->
+                                        <!--<li><a href="#"><i class="fa fa-skype"></i></a></li>-->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--/.container-->
+                </div><!---/.top-bar-->
+                
+<footer id="footer" class="midnight-blue">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?php echo date('Y') ?>&copy; Grow Dream Maker Pvt. Ltd. All Rights Reserved.
+<!--                        <div class="credits">
+                            <a href="https://bootstrapmade.com/"></a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                        </div>-->
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="pull-right">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Faq</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer><!--/#footer-->
+    </body>
+</html>

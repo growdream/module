@@ -1,0 +1,111 @@
+<?php
+$title = 'All Users';
+$this->headTitle($title);
+?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <div class="row" style="padding: 20px;">
+                        <table class="table table-bordered">
+                            <legend>All Users At Left</legend>
+                            <thead>
+                                <tr>
+                                    <th>Sr</th>
+                                    <th>User Id</th>
+                                    <th>Name</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                /* userarray
+                                 * 1: id
+                                 * 2: user_id
+                                 * 3: firstName
+                                 * 4: status
+                                 */
+                                foreach ($userAtLeft as $key => $value) {
+                                    echo "<tr>";
+                                    foreach ($value as $key1 => $value1) {
+                                        echo "<td>" . $value1 . "</td>";
+                                    }
+                                    echo "</tr>";
+                                }
+
+
+//                                $r = 0;
+//                                for ($i = 0; $i < count($userAtLeft); $i++) {
+//                                    echo('<tr>');
+//                                    echo('<td>' . ++$r . '</td>');
+//                                    echo('<td>' . $userAtLeft[$i][1] . '</td>');
+////                                    echo('<td>' . ucfirst($userAtLeft[$i][3]) . ' ' . ucfirst($userAtLeft[$i]['lastName']) . '</td>');
+//                                    echo('<td>' . ucfirst($userAtLeft[$i][3]) .'</td>');
+////                                    if($userAtLeft[$i]['node']== 0){
+////                                        echo '';
+////                                        echo('<td>Left</td>');
+////                                    }else if($userAtLeft[$i]['node']== 1){
+////                                        echo('<td>Right</td>');
+////                                    }
+//                                    echo('</tr>');
+//                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <div class="row" style="padding: 20px;">
+                        <table class="table table-bordered">
+                            <legend>All Users At Right</legend>
+                            <thead>
+                                <tr>
+                                    <th>Sr</th>
+                                    <th>User Id</th>
+                                    <th>Name</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                  <?php
+                                /* userarray
+                                 * 1: id
+                                 * 2: user_id
+                                 * 3: firstName
+                                 * 4: status
+                                 */
+                                foreach ($userAtRight as $key => $value) {
+                                    echo "<tr>";
+                                    foreach ($value as $key1 => $value1) {
+                                        echo "<td>" . $value1 . "</td>";
+                                    }
+                                    echo "</tr>";
+                                }
+//                                $r = 0;
+//                                for ($i = 0; $i < count($userAtRight); $i++) {
+//                                    echo('<tr>');
+//                                    echo('<td>' . ++$r . '</td>');
+//                                    echo('<td>' . $userAtRight[$i]['user_id'] . '</td>');
+//                                    echo('<td>' . ucfirst($userAtRight[$i]['firstName']) . ' ' . ucfirst($userAtRight[$i]['lastName']) . '</td>');
+//                                    if ($userAtRight[$i]['node'] == 0) {
+//                                        echo '';
+//                                        echo('<td>Left</td>');
+//                                    } else if ($userAtRight[$i]['node'] == 1) {
+//                                        echo('<td>Right</td>');
+//                                    }
+//                                    echo('</tr>');
+//                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
