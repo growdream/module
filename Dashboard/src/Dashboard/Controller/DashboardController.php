@@ -396,7 +396,7 @@ class DashboardController extends AbstractActionController {
                 $ChangeUserPassword->setData($request->getPost());
                 if ($ChangeUserPassword->isValid()) {
                     
-                if ($data['pass'] == $data['cpass']) {
+                if ($data['pass'] == $data['cpass']) { 
                     
                     $user->password= $this->cm->bcryptPass($data['pass']);
                     $this->em->flush();
