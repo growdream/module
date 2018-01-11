@@ -556,7 +556,9 @@ die;
         $form = new \Dashboard\Form\PersonalForm($em);
         if($uId>1){
         $userEn = $em->getRepository('\Dashboard\Entity\PersonalEntity')->findOneBy(array('uId' => $uId));
+        if($userEn){
         $form->bind($userEn);
+        }
         }
         $request = $this->getRequest();
         $msg = "";
