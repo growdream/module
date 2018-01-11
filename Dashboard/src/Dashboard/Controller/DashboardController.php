@@ -672,6 +672,15 @@ die;
         die;
         die;
     }
+    
+    
+    public function invoiceAction() {
+         $userdata = $this->_checkIfUserIsLoggedIn();
+         $this->layout()->setVariable('UserSession', $userdata);
+         
+         return new ViewModel(["user" => $userdata]);
+    }
+
 
     public function globaltreeAction() {
 
