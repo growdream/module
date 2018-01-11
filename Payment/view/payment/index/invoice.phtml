@@ -1,0 +1,168 @@
+<?php 
+$paymentarr ;
+        $user;
+        $personalInfo;
+?>
+<div class="row">
+    <div class="col-lg-10">
+        <section class="panel">
+            <div class="panel-body">
+                <div class="" id="print" style="border: 1px solid #bbb;">
+                    <table class="table-responsive table-centered" cellpadding="2" width="100%;">
+                        <tr>
+                            <th colspan="8" class="tdheadmain" style="text-transform: uppercase" >Growdreammaker Pvt. Ltd.</th>
+                        </tr>
+                        <tr>
+                            <td colspan="8" align="center"  style="border-bottom:  1px solid #ccc; padding-bottom: 10px; ">
+                                office address <br>
+                                Commission Statement
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="tdhead" style="border-bottom:1px solid #ccc; border-right: 1px solid #ccc;">Distributor Details</td>
+
+                            <td colspan="4" class="tdhead"  style="border-bottom:1px solid #ccc;">Payout Details</td>
+                        </tr>
+                        <tr>
+                            <td>Distributor Name :</td>
+                            <td colspan="3"  style="border-right:1px solid #ccc;"><?=$user->firstName." ".$user->middleName." ".$user->lastName?></td>
+                            <td>Week Payout No. :</td>
+                            <td colspan="3">1545</td>
+                        </tr>
+                        <tr>
+                            <td>Distributor Id :</td>
+                            <td colspan="3" style="border-right:1px solid #ccc;"><?=$user->user_id?></td>
+                            <td>Period :</td>
+                            <td colspan="3">11-01-2018 To 23-01-2018</td>
+                        </tr>
+                        <tr>
+                            <td>Address :</td>
+                            <td colspan="3" style="border-right:1px solid #ccc;"> <?=$personalInfo->address?></td>
+                            <td></td>
+                            <td colspan="3" style="border-right:1px solid #ccc;"></td>
+                        </tr>   
+                        <tr>
+                            <td>Mobile No. :</td>
+                            <td colspan="3" style="border-right:1px solid #ccc;"><?=$user->mobile?></td>
+                            <td></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td>City :</td>
+                            <td colspan="3" style="border-right:1px solid #ccc;"><?=$personalInfo->city?></td>
+                            <td></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td>State :</td>
+                            <td colspan="3" style="border-right:1px solid #ccc;"><?=$personalInfo->state?></td>
+                            <td></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td>Pin Code :</td>
+                            <td colspan="3" style="border-right:1px solid #ccc;"><?=$personalInfo->postalCode?></td>
+                            <td></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" class="tdheadmain" style="border: 1px solid #ccc;">PAYOUT DETAILS</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border-bottom:1px solid #ccc; border-right: 1px solid #ccc;"><strong>Commission(s)</strong></td>
+                            <td colspan="2" style="border-bottom:1px solid #ccc; border-right: 1px solid #ccc;"><strong>Amount(in INR)</strong></td>
+                            <td colspan="2" style="border-bottom:1px solid #ccc; border-right: 1px solid #ccc;"><strong>Deduction(s)</strong></td>
+                            <td colspan="2" style="border-bottom:1px solid #ccc;"><strong>Amount(In INR)</strong></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="border-right:1px solid #ccc;">Binary Commission</th>
+                            <td colspan="2" style="border-right:1px solid #ccc;"><?=$paymentarr->amounttopay?></td>
+                            <th colspan="2" style="border-right:1px solid #ccc;">ADMIN CHARGE</th>
+                            <td colspan="2"><?=$paymentarr->admincharges?></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="border-right:1px solid #ccc;">Direct Binary Commission</th>
+                            <td colspan="2" style="border-right:1px solid #ccc;"> 0</td>
+                            <th colspan="2" style="border-right:1px solid #ccc;">TDS</th>
+                            <td colspan="2"><?=$paymentarr->tds?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <th colspan="2" style="border-right:1px solid #ccc;">Re-Purchase</th>
+                            <td colspan="2"> <?=$paymentarr->repurchase?> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border-right:1px solid #ccc;"> </td>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <th colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc;border-bottom:1px solid #ccc;">Total</th>
+                            <td colspan="2" style="border-bottom: 1px solid #ccc;border-top:1px solid #ccc;"> <?=($paymentarr->repurchase+$paymentarr->admincharges+$paymentarr->tds)?> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <th colspan="2" style="border-right:1px solid #ccc;">Amount Payable (In INR)</th>
+                            <td colspan="2"> <?=$paymentarr->amounttopay?> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <th colspan="2" style="border-right:1px solid #ccc;"> Brought Forward (In INR)</th>
+                            <td colspan="2"> 0.00 </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <th colspan="2" style="border-right:1px solid #ccc;"> Total Amount Payable (In INR)</th>
+                            <th colspan="2"> 0.00 </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <td colspan="2" style="border-right:1px solid #ccc;"></td>
+                            <th colspan="2" style="border-right:1px solid #ccc;"> Carried Forward (In INR)</th>
+                            <td colspan="2"> 0.00 </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc;"> Total </th>
+                            <td colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc;"> <?=($paymentarr->amounttopay+0)?> </td>
+                            <th colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc;"> Net Payable (In INR)</th>
+                            <td colspan="2" style="border-top:1px solid #ccc;"> 0.00</td>
+                        </tr>
+                        <tr>
+
+                            <td colspan="8" align="right" style="border-top:1px solid #ccc; padding: 5px;">*This is computer generated statement, no signature required.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<style>
+    *{
+        text-transform: capitalize !important;
+    }
+    .bordered-panel{
+        border: 2px solid #006;
+    }
+
+    .tdheadmain,  .tdhead{
+        font-size: 17px;
+        text-align: center;
+        color: #000;
+        font-weight: bold;
+        padding: 10px;
+    }
+
+    th{
+        color: #000!important;
+        padding: 2px 10px;
+    }
+    td{
+        padding: 2px 10px;
+    }
+    strong
+    {
+        color: darkred;
+    }
+</style>

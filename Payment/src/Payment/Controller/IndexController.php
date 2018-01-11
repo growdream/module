@@ -225,6 +225,7 @@ class IndexController extends AbstractActionController {
         $success = 0;
         if ($request->isPost()) {
             $data = $request->getPost();
+//            echo "<pre>"; print_r ($data); echo "</pre>"; die;
             $mydetails = $this->showPersonalProfile($data['user_id']);
             $data['user_id'] = $mydetails->user_id;
             $data['uId'] = $mydetails->id;
@@ -287,6 +288,26 @@ class IndexController extends AbstractActionController {
         echo json_encode($result);
         exit;
     }
+    
+      
+    public function invoiceAction() {
+         $userdata = $this->_checkIfUserIsLoggedIn();
+         $em=$this->em;
+         $this->layout()->setVariable('UserSession', $userdata);
+          $request = $this->getRequest();
+           if ($request->isPost()) {
+           $data = $request->getPost();
+          $paymentarr = $em->getRepository("\Payment\Entity\Payment")->find($data['id']);
+          $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $paymentarr->uId));
+          $personalInfo = $em->getRepository('Dashboard\Entity\PersonalEntity')->findOneBy(array('uId' => $paymentarr->uId));
+//          echo "<pre>"; print_r ($paymentarr); echo "</pre>"; die;
+         return new ViewModel(["user" => $user,"paymentarr"=>$paymentarr,"personalInfo"=>$personalInfo]);
+           }else{
+               echo "error"; die;
+           }
+    }
+
+    
 
     /*   FIND USER'S LEFT AND RIGHT TREE SEPARATELY */
 

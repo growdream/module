@@ -75,7 +75,7 @@ class Payment implements InputFilterAwareInterface
     
     
      /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     protected $amounttopay;
     
@@ -83,6 +83,21 @@ class Payment implements InputFilterAwareInterface
      * @ORM\Column(type="integer")
      */
     protected $loss_on_capping;
+    
+     /**
+     * @ORM\Column(type="float")
+     */
+    protected $repurchase;
+        
+     /**
+     * @ORM\Column(type="float")
+     */
+    protected $admincharges;
+            
+     /**
+     * @ORM\Column(type="float")
+     */
+    protected $tds;
     
     /**
      * @ORM\Column(type="integer")
@@ -151,6 +166,9 @@ class Payment implements InputFilterAwareInterface
         $this->tot_bv = $last_tot_bv; //// paid 
         $this->amounttopay = $data['amounttopay'];
         $this->loss_on_capping = $data['lapsoncap'];
+        $this->repurchase = $data['repurchase'];
+        $this->admincharges = $data['admincharges'];
+        $this->tds = $data['tds'];
         $this->actualPayment = $data['actualPayment'];
         $this->status = 1;  
         $this->created_at = date("Y-m-d H:i:s");

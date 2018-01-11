@@ -83,7 +83,8 @@ $this->headTitle($title);
             {
                 "mRender": function (data, type, row) {                   
                     if (row[11] == 1) {
-                        return "Paid" + ' &nbsp; <a href=javascript:; class="icon_printer" style="font-size-adjust:0.9"></a>';
+                        
+                        return "Paid" + ' &nbsp; <a href=javascript:; class="icon_printer" id="'+row[1]+'" style="font-size-adjust:0.9"></a>';
                     } else {
                         return "Pending";
                     }
@@ -95,6 +96,17 @@ $this->headTitle($title);
     });
 
 $(document).on("click",".icon_printer", function(){
-alert("Invoice comming Soon")
+ 
+ var form = document.createElement("form");
+    var element1 = document.createElement("input");   
+
+    form.method = "POST";
+    form.action = "invoice";   
+
+    element1.value=$(this).attr("id");
+    element1.name="id";
+    form.appendChild(element1);   
+    document.body.appendChild(form); 
+    form.submit();
 });
 </script>

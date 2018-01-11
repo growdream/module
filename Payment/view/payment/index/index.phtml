@@ -21,9 +21,9 @@ foreach ($userAtRight as $key => $value) {
     $totalBvR += $value['baseValue'];
     $totalPriceR += $value['price'];
     ++$lscountR;
-} 
+}
 
-$payarrcount = count($payarr)-1;
+$payarrcount = count($payarr) - 1;
 ?>
 
 <div class="container-fluid"  style="padding: 20px;">
@@ -79,107 +79,111 @@ $payarrcount = count($payarr)-1;
     </div>
 </div>
 
-<?php  
-if($userdata->Id==1){
- ?>
-<div class="container-fluid"  style="padding: 20px;"> 
+<?php
+if ($userdata->Id == 1) {
+    ?>
+    <div class="container-fluid"  style="padding: 20px;"> 
 
-    <div  class="col-lg-12">
-        <div class="col-lg-12 col-sm-12">
-            <div style="display: none" >
-                <form action="makepayment" method="post" id="myform">
-                    
-                    <input type="text" name="user_id" id="user_id" value="0">
-                    <input type="text" name="lhs_count" id="lhs_count" value="0">
-                    <input type="text" name="rhs_count" id="rhs_count" value="0">
-                    <input type="text" name="lhs_bv" id="lhs_bv" value="<?= $totalBvL ?>">
-                    <input type="text" name="rhs_bv" id="rhs_bv" value="<?= $totalBvR ?>"> 
-                    <input type="text" name="pay_least_bv" id="pay_least_bv" value=""> 
-                    <input type="text" name="lapsoncap" id="lapsoncap" value=""> 
-                    <input type="text" name="amounttopay" id="amounttopay" value=""> 
-                    <input type="text" name="actualPayment" id="actualPayment" value=""> 
-                    
-                    <input type="submit" name="submit" id="submit" id="submit" >
-                    <input type="reset" name="reset" id="reset" id="reset" >
-                </form>  
-            </div>
-            <section class="panel">
-                <div class="panel-body table-responsive">
-                    <table class="table table-bordered ta dt-responsive nowrap" id="alluser" width="100%">
-                        <legend>Users and Payments</legend>
-                        <thead>
-                            <tr>
-                                <th>Sr</th>
-                                <th>User Id</th>
-                                <th>Name</th>
-                                
-                                <th>Total Left Join</th>
-                                <th>Total Right Join</th>
-                                
-                                <th>Total Left Bv</th>
-                                <th>Total Left Amount</th>
-                                <th>Left Business</th>
-                                <th>Total Right Bv</th>
-                                <th>Total Right Amount</th>
-                                <th>Right Business</th>
-                                <th>Actual Payment</th>
-                                <th>Admin (10%)</th>
-                                <th>Re-purchase (5%) </th>
-                                <th>TDS (5%)</th>
-                                <th>Total Joining</th>                                
-                                <th>Biz Amount</th>
-                                <th>Amount to Pay</th>
-                                <th>Laps On Cap</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            /* userarray
-                             * 1: id
-                             * 2: user_id
-                             * 3: firstName
-                             * 3: Product
-                             * 4: status
-                             */
-                            $rscount = 1;
-                            foreach ($payarr as $key => $value) {
-                                if($payarrcount+1 == $rscount){
-                                    break;
-                                } 
-                                $statusR = "";
-                                echo "<tr class='".$value['user_id']."'>"; 
-                                echo "<td>" . $rscount . "</td>";
-                                echo "<td class='user_id'>" . $value['user_id'] . "</td>";
-                                echo "<td>" . $value['fullName'] . "</td>";
-                                echo "<td  class='lscountL'>" . $value['lscountL'] . "</td>";
-                                echo "<td  class='lscountR'>" . $value['lscountR'] . "</td>"; 
-                                
-                                echo "<td class='totalBvL'>" . $value['totalBvL'] . "</td>";
-                                echo "<td class='totalPriceL'>" . $value['totalPriceL'] . "</td>";
-                                echo "<td>" . $value['totalbiznessL'] . "</td>";
-                                echo "<td class='totalBvR'>" . $value['totalBvR'] . "</td>";
-                                echo "<td class='totalPriceR'>" . $value['totalPriceR'] . "</td>";
-                                echo "<td>" . $value['totalbiznessR'] . "</td>";
-                                echo "<td  class='actualPayment'>" . $value['actualPayment'] . "</td>";
-                                echo "<td>" . ( Round(($value['willPay'] * .10), 2)) . "</td>";
-                                echo "<td>" . ( Round(($value['willPay'] * .05), 2)) . "</td>";
-                                echo "<td>" . ( Round(($value['willPay'] * .05), 2)) . "</td>";
-                                echo "<td> ".$value['totalcountLR']." </td>"; 
-                                
-                                $payit1 = $value['willPay'] - Round(($value['willPay'] * .20), 2);
-                                echo "<td class='willPay'>" . $payit1 . "</td>";
-                               
-                                $amounttopay= ($payit1>50000)?50000:($payit1);
-                                echo "<td class='amounttopay'>" . $amounttopay. "</td>";
-                                
-                                $lapsoncap = ($payit1>50000)?($payit1-50000):0 ;
-                                echo "<td class='lapsoncap'>" .$lapsoncap . "</td>";
-                                echo "<td> <button class='btn btn-success' id='".$value['user_id']."' onclick=makepayment(this.id) > Make Payment</button> </td>"; 
-                                
-                                echo "</tr>";
-                                $rscount++;
-                            }
+        <div  class="col-lg-12">
+            <div class="col-lg-12 col-sm-12">
+                <div style="display: none" >
+                    <form action="makepayment" method="post" id="myform">
+
+                        <input type="text" name="user_id" id="user_id" value="0">
+                        <input type="text" name="lhs_count" id="lhs_count" value="0">
+                        <input type="text" name="rhs_count" id="rhs_count" value="0">
+                        <input type="text" name="lhs_bv" id="lhs_bv" value="<?= $totalBvL ?>">
+                        <input type="text" name="rhs_bv" id="rhs_bv" value="<?= $totalBvR ?>"> 
+                        <input type="text" name="pay_least_bv" id="pay_least_bv" value=""> 
+                        <input type="text" name="lapsoncap" id="lapsoncap" value=""> 
+                        <input type="text" name="amounttopay" id="amounttopay" value=""> 
+                        <input type="text" name="actualPayment" id="actualPayment" value=""> 
+                        <input type="text" name="repurchase" id="repurchase" value=""> 
+                        <input type="text" name="admincharges" id="admincharges" value=""> 
+                        <input type="text" name="tds" id="tds" value=""> 
+
+                        <input type="submit" name="submit" id="submit" id="submit" >
+                        <input type="reset" name="reset" id="reset" id="reset" >
+                    </form>  
+                </div>
+                <section class="panel">
+                    <div class="panel-body table-responsive">
+                        <table class="table table-bordered ta dt-responsive nowrap" id="alluser" width="100%">
+                            <legend>Users and Payments</legend>
+                            <thead>
+                                <tr>
+                                    <th>Sr</th>
+                                    <th>User Id</th>
+                                    <th>Name</th>
+
+                                    <th>Total Left Join</th>
+                                    <th>Total Right Join</th>
+
+                                    <th>Total Left Bv</th>
+                                    <th>Total Left Amount</th>
+                                    <th>Left Business</th>
+                                    <th>Total Right Bv</th>
+                                    <th>Total Right Amount</th>
+                                    <th>Right Business</th>
+                                    <th>Actual Payment</th>
+                                    <th>Admin (10%)</th>
+                                    <th>Re-purchase (5%) </th>
+                                    <th>TDS (5%)</th>
+                                    <th>Total Joining</th>                                
+                                    <th>Biz Amount</th>
+                                    <th>Amount to Pay</th>
+                                    <th>Laps On Cap</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                /* userarray
+                                 * 1: id
+                                 * 2: user_id
+                                 * 3: firstName
+                                 * 3: Product
+                                 * 4: status
+                                 */
+                                $rscount = 1;
+                                foreach ($payarr as $key => $value) {
+                                    if ($payarrcount + 1 == $rscount) {
+                                        break;
+                                    }
+                                    
+                                    $amounttopay = ($value['willPay'] > 50000) ? 50000 : ($value['willPay']);
+                                    $lapsoncap = ($value['willPay'] > 50000) ? ($value['willPay'] - 50000) : 0;
+                                    
+                                    $statusR = "";
+                                    echo "<tr class='" . $value['user_id'] . "'>";
+                                    echo "<td>" . $rscount . "</td>";
+                                    echo "<td class='user_id'>" . $value['user_id'] . "</td>";
+                                    echo "<td>" . $value['fullName'] . "</td>";
+                                    echo "<td  class='lscountL'>" . $value['lscountL'] . "</td>";
+                                    echo "<td  class='lscountR'>" . $value['lscountR'] . "</td>";
+
+                                    echo "<td class='totalBvL'>" . $value['totalBvL'] . "</td>";
+                                    echo "<td class='totalPriceL'>" . $value['totalPriceL'] . "</td>";
+                                    echo "<td>" . $value['totalbiznessL'] . "</td>";
+                                    echo "<td class='totalBvR'>" . $value['totalBvR'] . "</td>";
+                                    echo "<td class='totalPriceR'>" . $value['totalPriceR'] . "</td>";
+                                    echo "<td>" . $value['totalbiznessR'] . "</td>";
+                                    echo "<td  class='actualPayment'>" . $value['actualPayment'] . "</td>";
+                                    echo "<td class='admincharges'>" . ( Round(($amounttopay * .10), 2)) . "</td>";
+                                    echo "<td class='repurchase'>" . ( Round(($amounttopay * .05), 2)) . "</td>";
+                                    echo "<td class='tds'>" . ( Round(($amounttopay * .05), 2)) . "</td>";
+                                    echo "<td> " . $value['totalcountLR'] . " </td>";
+
+                                    echo "<td class='willPay'>" . $amounttopay . "</td>";
+                                    $payit1 = $amounttopay - Round(($amounttopay * .20), 2); 
+                                    echo "<td class='amounttopay'>" . $payit1 . "</td>";
+ 
+                                    echo "<td class='lapsoncap'>" . $lapsoncap . "</td>";
+                                    echo "<td> <button class='btn btn-success' id='" . $value['user_id'] . "' onclick=makepayment(this.id) > Make Payment</button> </td>";
+
+                                    echo "</tr>";
+                                    $rscount++;
+                                }
 //                                    echo "<tr>"
 //                                    . "<th>&nbsp;</th>"
 //                                    . "<th>&nbsp;</th>"
@@ -189,15 +193,15 @@ if($userdata->Id==1){
 //                                    . "<th>$totalPriceR</th>"
 //                                    . "<th>&nbsp;</th>"
 //                                    . "</tr>";
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
-</div>
-<?php
+    <?php
 }
 ?>
 
@@ -213,45 +217,52 @@ if($userdata->Id==1){
     $(document).ready(function () {
         $('#alluser1').DataTable({
             responsive: true,
-    columnDefs: [
-        { responsivePriority: 1, targets: 1 }, 
-        { responsivePriority: 2, targets: -1 }, 
-        { responsivePriority: 3, targets: -2 },
-        { responsivePriority: 4, targets: -3 },
-        { responsivePriority: 5, targets: -4 },  
-        { responsivePriority: 6, targets: -5 },  
-    ]
+            columnDefs: [
+                {responsivePriority: 1, targets: 1},
+                {responsivePriority: 2, targets: -1},
+                {responsivePriority: 3, targets: -2},
+                {responsivePriority: 4, targets: -3},
+                {responsivePriority: 5, targets: -4},
+                {responsivePriority: 6, targets: -5},
+            ]
         });
     });
- 
+
     $(document).find('#pageHeading').html('All User');
-    
-    function makepayment(id){
-         $('#reset').trigger('click');
-        if(confirm("Are sure to make this payment? ")){
-          var user_id = ($("."+id +" .user_id").text());
-          var totalBvL = parseFloat($("."+id +" .totalBvL").text());
-          var totalBvR = parseFloat($("."+id +" .totalBvR").text());
-          var totalPriceL = parseFloat($("."+id +" .totalPriceL").text());
-          var totalPriceR = parseFloat($("."+id +" .totalPriceR").text());
-          var lapsoncap = parseFloat($("."+id +" .lapsoncap").text());
-          var amounttopay = parseFloat($("."+id +" .amounttopay").text());
-          var lscountR = parseFloat($("."+id +" .lscountR").text());
-          var lscountL = parseFloat($("."+id +" .lscountL").text());
-          var actualPayment = parseFloat($("."+id +" .actualPayment").text());
-          $("#user_id").val(user_id);
-          $("#lhs_bv").val(totalBvL);
-          $("#rhs_bv").val(totalBvR);
-          $("#amounttopay").val(amounttopay);
-          $("#lhs_count").val(lscountL);
-          $("#rhs_count").val(lscountR);
-          $("#lapsoncap").val(lapsoncap);
-          $("#actualPayment").val(actualPayment);
-          $("#pay_least_bv").val((totalBvL>totalBvR)?totalBvR:totalBvL);
-          
-           $('#submit').trigger('click');
-      }
-        
+
+    function makepayment(id) {
+        $('#reset').trigger('click');
+        if (confirm("Are sure to make this payment? ")) {
+            var user_id = ($("." + id + " .user_id").text());
+            var totalBvL = parseFloat($("." + id + " .totalBvL").text());
+            var totalBvR = parseFloat($("." + id + " .totalBvR").text());
+            var totalPriceL = parseFloat($("." + id + " .totalPriceL").text());
+            var totalPriceR = parseFloat($("." + id + " .totalPriceR").text());
+            var lapsoncap = parseFloat($("." + id + " .lapsoncap").text());
+            var amounttopay = parseFloat($("." + id + " .amounttopay").text());
+            var lscountR = parseFloat($("." + id + " .lscountR").text());
+            var lscountL = parseFloat($("." + id + " .lscountL").text());
+            var actualPayment = parseFloat($("." + id + " .actualPayment").text());
+            var admincharges = parseFloat($("." + id + " .admincharges").text());
+            var repurchase = parseFloat($("." + id + " .repurchase").text());
+            var tds = parseFloat($("." + id + " .tds").text());
+            
+            
+            $("#user_id").val(user_id);
+            $("#lhs_bv").val(totalBvL);
+            $("#rhs_bv").val(totalBvR);
+            $("#amounttopay").val(amounttopay);
+            $("#lhs_count").val(lscountL);
+            $("#rhs_count").val(lscountR);
+            $("#lapsoncap").val(lapsoncap);
+            $("#actualPayment").val(actualPayment);
+            $("#admincharges").val(admincharges);
+            $("#repurchase").val(repurchase);
+            $("#tds").val(tds);
+            $("#pay_least_bv").val((totalBvL > totalBvR) ? totalBvR : totalBvL);
+
+            $('#submit').trigger('click');
+        }
+
     }
 </script>
- 
