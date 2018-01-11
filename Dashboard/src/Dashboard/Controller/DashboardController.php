@@ -496,56 +496,7 @@ die;
       }
      */
     
-    /*
-      public function personalAction() {
-      $user = $this->_checkIfUserIsLoggedIn();
-      $uId = $user->Id;
-      $em = $this->getEntityManager();
-      $this->layout()->setVariable('UserSession', $userdata);
-      $form = new \Dashboard\Form\PersonalForm($em);
-      $request = $this->getRequest();
-      $msg = "";
-      if ($request->isPost()) {
-      $data = $request->getPost();
-      $data['uId']=$uIdForInfo;
-      $user1 = $em->getRepository('\Registration\Entity\Registration')->findOneBy(array('user_id' => $request->isPost('user_id')));
-      echo "asdasda";print_r($data); die;
-      $uIdForInfo=      $user1->id;
-      $responce = $request->getPost();
-      $PersonalEntity = new \Dashboard\Entity\PersonalEntity();
-      $form->setInputFilter($PersonalEntity->getInputFilter());
-      $form->setData($request->getPost());
-      if ($form->isValid()) {
-
-      $PersonalEntity->populate($data);
-      $userarr =  $em->getRepository("\Dashboard\Entity\PersonalEntity")->findOneBy(array('uId' => $uIdForInfo));
-      if(!$userarr){
-      $PersonalEntity->populate($data);
-      $em->persist($PersonalEntity);
-      }else{
-      $userarr->populate($data);
-      }
-      $em->flush();
-      $form = new \Dashboard\Form\PersonalForm($em);
-      $msg="success";
-      }else{
-      //                    echo "<pre>"; print_r ($form->getMessages()); echo "</pre>"; die;
-      }
-      }
-      $userdata = $this->_checkIfUserIsLoggedIn();
-      $this->layout()->setVariable('UserSession', $userdata);
-      return new ViewModel(array("form"=>$form,"uId"=>$uId,"msg"=>$msg));
-      }
-
-      public function userlistserversideAction(){
-      $request = $this->getRequest();
-      $data= $request->getPost();
-      $response = $this->getResponse();
-      print_r($data); die;
-
-      }
-     */
-
+     
     public function personalAction() {
         $user = $this->_checkIfUserIsLoggedIn();
         $uId = $user->Id;
