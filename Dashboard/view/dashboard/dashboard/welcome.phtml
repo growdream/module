@@ -1,0 +1,66 @@
+<?= print_r($welcomeData); 
+$t = [$user->id, $user->user_id, $user->globalpostion, $user->firstName, $user->middleName, $user->lastName, $user->email, $user->created_at, $user->status, $user->sponserId];
+?>
+<div class="row">
+    <div class="col-lg-10">
+        <section class="panel">
+            <div class="panel-body">
+                <div class="welcomeForm">
+                    <div class="fromInner">
+                        <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                            <div class="col-sm-3 col-xs-3">
+                                <img class="img-thumbnail" src="/images/GDM-LOGO.png" alt="" height="150px" width="150px"/>
+                            </div>
+                            <div class="col-sm-8 col-xs-8" style="text-align: center;"><h1 class="logo">Grow Dream Maker Pvt. Ltd.</h1></div>
+                        </div>
+                        <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                            <label style="background: #0062cc; width: 100%; font-size: 1.5em; text-align: center; color: #FFFFFF; margin-top: 20px;">Welcome Letter</label>
+                        </div>
+                        <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                            <div class="col-sm-12">
+                                <h2>Name : <strong  class="text-danger"><?php echo $welcomeData[0][3] ." ". $welcomeData[0][4]." ".$welcomeData[0][5]; ?>.</strong></h2>
+                            </div>
+                            <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12" style="padding-bottom: 10px; border-bottom: 2px solid #080;">
+                                &ensp;&ensp;&ensp;<h4>Welcome to the family of Grow Dream Maker Pvt. Ltd.
+                                    You have been enrolled successfully to the Family of Grow Dream Maker Pvt. Ltd. with the following details : </h4><br/>
+                                <h3 class="text-center text-danger"><u>Hearty Welcomes To Grow Dream Maker Pvt. Ltd.</u></h3>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12" style="padding-top:10px;">
+                            <table class="table-responsive" style="margin-left: 20px;">
+                                <tr><th>Member Id :</th><td><?php echo $welcomeData[0][1]; ?></td>
+                                    <th>Sponsor Id :</th><td><?php echo $welcomeData[0][8]; ?></td></tr>
+                                <tr><th>Parent Id :</th><td><?php echo $welcomeData[0][9]; ?></td>
+                                    <th>Position :</th><td><?php echo $welcomeData[0][3]; ?></td></tr>
+                                <tr><th>Full Name :</th><td><?php echo $welcomeData[0][3]; ?></td></tr>
+                                <tr><th>Father/Husband<br>Name :</th><td><?php echo $welcomeData[0][3]; ?></td></tr>
+                                <tr><th>Address :</th><td><?php echo $welcomeData[0][3]; ?></td></tr>
+                                <tr><th>City :</th><td><?php echo "Aurangabad"; ?></td>
+                                    <th>Pin Code :</th><td><?php echo "431001"; ?></td></tr>
+                                <tr> <th>State :</th><td><?php echo "Maharashtra MH"; ?></td></tr>
+                                <tr><th>PAN No :</th><td><?php echo $welcomeData[0][3]; ?></td></tr>
+                                <tr><th>Mobile No. :</th><td><?php echo $welcomeData[0][10]; ?></td></tr>
+                                <tr><th>Date Of Registration :</th><td><?php echo $welcomeData[0][7]; ?></td></tr>
+                                <tr><th>Product with Registration :</th><td><?php echo $welcomeData[0][11]; ?></td></tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+                            <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12" style="margin-top: 10px; border-top: 2px solid #080;">
+                                <h4 style="text-align: right; color: #007aff;">Grow Dream Maker Pvt. Ltd.</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<style type="text/css">
+    .welcomeForm{
+        border: 2px solid #080;
+    }
+    .fromInner{
+        padding: 10px;
+    }
+</style>
