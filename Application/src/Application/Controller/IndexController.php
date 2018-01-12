@@ -63,4 +63,7 @@ class IndexController extends AbstractActionController {
         $this->layout()->setVariable('indexNo', 6);
     }
 
+    public function legalAction() { 
+        $this->layout()->setVariable('indexNo', 7);
+}
 }
