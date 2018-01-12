@@ -582,7 +582,7 @@ die;
         //$treedata = $this->findLeftRightCount(0, $treedata[0][0], $treedata);
 //         print_r($welcomeData);         die();
 
-        unset($userdata->password);  // Removed Password from Session
+        unset($userdata->password);  // Removed Password from Session 
 
         $this->layout()->setVariable('UserSession', $userdata);
         return new ViewModel(["user" => $user, "welcomeData" => $welcomeData]);
