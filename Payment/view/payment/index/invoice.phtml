@@ -66,7 +66,7 @@ $paymentarr ;
                             <td colspan="3"></td>
                         </tr>
                         <tr>
-                            <td colspan="8" class="tdheadmain" style="border: 1px solid #ccc;">PAYOUT DETAILS</td>
+                            <td colspan="8" class="tdheadmain" style="border: 1px solid #ccc;">PAYOUT DETAILS </td>
                         </tr>
                         <tr>
                             <td colspan="2" style="border-bottom:1px solid #ccc; border-right: 1px solid #ccc;"><strong>Commission(s)</strong></td>
@@ -76,57 +76,57 @@ $paymentarr ;
                         </tr>
                         <tr>
                             <th colspan="2" style="border-right:1px solid #ccc;">Binary Commission</th>
-                            <td colspan="2" style="border-right:1px solid #ccc;"><?=$paymentarr->amounttopay?></td>
+                            <td colspan="2" style="border-right:1px solid #ccc; text-align: right;"><?=$paymentarr->amounttopay?></td>
                             <th colspan="2" style="border-right:1px solid #ccc;">ADMIN CHARGE</th>
-                            <td colspan="2"><?=$paymentarr->admincharges?></td>
+                            <td colspan="2" class="" Style="text-align: right;"><?=$paymentarr->admincharges?></td>
                         </tr>
                         <tr>
                             <th colspan="2" style="border-right:1px solid #ccc;">Direct Binary Commission</th>
                             <td colspan="2" style="border-right:1px solid #ccc;"> 0</td>
                             <th colspan="2" style="border-right:1px solid #ccc;">TDS</th>
-                            <td colspan="2"><?=$paymentarr->tds?></td>
+                            <td colspan="2" Style="text-align: right;"><?=$paymentarr->tds?></td>
                         </tr>
                         <tr>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <th colspan="2" style="border-right:1px solid #ccc;">Re-Purchase</th>
-                            <td colspan="2"> <?=$paymentarr->repurchase?> </td>
+                            <td colspan="2" Style="text-align: right;"> <?=$paymentarr->repurchase?> </td>
                         </tr>
                         <tr>
                             <td colspan="2" style="border-right:1px solid #ccc;"> </td>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
-                            <th colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc;border-bottom:1px solid #ccc;">Total</th>
-                            <td colspan="2" style="border-bottom: 1px solid #ccc;border-top:1px solid #ccc;"> <?=($paymentarr->repurchase+$paymentarr->admincharges+$paymentarr->tds)?> </td>
+                            <th colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc;border-bottom:1px solid #ccc; text-align: right;">Total</th>
+                            <td colspan="2" style="border-bottom: 1px solid #ccc;border-top:1px solid #ccc; text-align: right;"> <?=($paymentarr->repurchase+$paymentarr->admincharges+$paymentarr->tds)?> </td>
                         </tr>
                         <tr>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <th colspan="2" style="border-right:1px solid #ccc;">Amount Payable (In INR)</th>
-                            <td colspan="2"> <?=$paymentarr->amounttopay?> </td>
+                            <td colspan="2" Style="text-align: right;"> <?=$paymentarr->amounttopay?> </td>
                         </tr>
                         <tr>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <th colspan="2" style="border-right:1px solid #ccc;"> Brought Forward (In INR)</th>
-                            <td colspan="2"> 0.00 </td>
+                            <td colspan="2" Style="text-align: right;"> 0.00 </td>
                         </tr>
                         <tr>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <th colspan="2" style="border-right:1px solid #ccc;"> Total Amount Payable (In INR)</th>
-                            <th colspan="2"> 0.00 </td>
+                            <th colspan="2" Style="text-align: right;"> 0.00 </td>
                         </tr>
                         <tr>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <td colspan="2" style="border-right:1px solid #ccc;"></td>
                             <th colspan="2" style="border-right:1px solid #ccc;"> Carried Forward (In INR)</th>
-                            <td colspan="2"> 0.00 </td>
+                            <td colspan="2" Style="text-align: right;"> 0.00 </td>
                         </tr>
                         <tr>
                             <th colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc;"> Total </th>
-                            <td colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc;"> <?=($paymentarr->amounttopay)?> </td>
+                            <td colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc; text-align: right;"> <?=($paymentarr->amounttopay)?> </td>
                             <th colspan="2" style="border-right:1px solid #ccc;border-top:1px solid #ccc;"> Net Payable (In INR)</th>
-                            <td colspan="2" style="border-top:1px solid #ccc;"> <?=($paymentarr->amounttopay)?></td>
+                            <td colspan="2" style="border-top:1px solid #ccc; text-align: right;font-weight: bolder;"> <?=($paymentarr->amounttopay)?></td>
                         </tr>
                         <tr>
 
