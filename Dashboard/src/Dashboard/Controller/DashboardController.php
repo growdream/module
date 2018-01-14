@@ -577,8 +577,11 @@ die;
             $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $uId));
 //            print_r($user); die("user data");
         }
+        $prsnlInfoArr = $em->getRepository("\Dashboard\Entity\PersonalEntity")->findOneBy(array('uId' => $uId));
+            $user1 = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $prsnlInfoArr->parentId));
+         $prsnlInfoArr->parentId=$user1->user_id;
         $welcomeData = [];
-        $welcomeData[] = [$user->id, $user->user_id, $user->globalpostion, $user->firstName, $user->middleName, $user->lastName, $user->email, $user->created_at, $user->sponserId, $user->parent, $user->mobileNo, $user->product];
+        $welcomeData = [$user,$prsnlInfoArr];
         //$treedata = $this->findLeftRightCount(0, $treedata[0][0], $treedata);
 //         print_r($welcomeData);         die();
 
