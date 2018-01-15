@@ -578,8 +578,7 @@ die;
 //            print_r($user); die("user data");
         }
         $prsnlInfoArr = $em->getRepository("\Dashboard\Entity\PersonalEntity")->findOneBy(array('uId' => $uId));
-            $user1 = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $prsnlInfoArr->parentId));
-         $prsnlInfoArr->parentId=$user1->user_id;
+         
         $welcomeData = [];
         $welcomeData = [$user,$prsnlInfoArr];
         //$treedata = $this->findLeftRightCount(0, $treedata[0][0], $treedata);

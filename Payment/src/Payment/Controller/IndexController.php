@@ -252,6 +252,8 @@ class IndexController extends AbstractActionController {
     
     public function paymentreleasedatserverAction() {
         $userdata = $this->_checkIfUserIsLoggedIn();
+        
+       $uId = $userdata->Id;
         $request = $this->getRequest();
           $table = [
             ['tb' => 'Payment\Entity\Payment', 'alise' => 'p'],
@@ -272,8 +274,10 @@ class IndexController extends AbstractActionController {
             array('db' => "p.status", 'dt' => 11),
            
         );
-
-        $where = "";
+$where ="";
+if($uId>1){
+        $where = " r.id = $uId ";
+    }
 //$where = [$wherestring, "groupby" => "a.aer_id"];
         //echo $where;      
         $datatableobjec = new Datatableresponse1($this->getEntityManager());
