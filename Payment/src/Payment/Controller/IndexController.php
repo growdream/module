@@ -158,7 +158,7 @@ class IndexController extends AbstractActionController {
 //            if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && $lscountR != $lscountL) {
              $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
             
-            if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && ($willpay != $actualPayment)) {
+            if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && (($willpay != $actualPayment) && ($willpay-$actualPayment)>1200 )) {
                
                 $payarr[$PayCount]['lscountL'] = $lscountL;
                 $payarr[$PayCount]['lscountR'] = $lscountR;
