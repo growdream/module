@@ -82,6 +82,10 @@ function getview($data) {
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings   </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">                    
                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >

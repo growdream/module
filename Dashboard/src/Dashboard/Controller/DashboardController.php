@@ -198,12 +198,13 @@ class DashboardController extends AbstractActionController {
 //        $treedata[0]['right'] = $this->hasright($treedata[0][0]); //right
         $treedata[] = $this->hasleft($treedata[0][0]);
         $treedata[] = $this->hasright($treedata[0][0]);
+        
         $treedata = $this->findLeftRightCount(0, $treedata[0][0], $treedata);
 
         $treedata[] = $this->hasleft($treedata[1][0]);
         $treedata[] = $this->hasright($treedata[1][0]);
         $treedata = $this->findLeftRightCount(1, $treedata[1][0], $treedata);
-
+        
         $treedata[] = $this->hasleft($treedata[3][0]);
         $treedata[] = $this->hasright($treedata[3][0]);
         $treedata = $this->findLeftRightCount(3, $treedata[3][0], $treedata);
@@ -260,8 +261,7 @@ class DashboardController extends AbstractActionController {
         $treedata[] = $this->hasleft($treedata[15][0]);
         $treedata[] = $this->hasright($treedata[15][0]);
         $treedata = $this->findLeftRightCount(15, $treedata[15][0], $treedata);
-
-
+ 
 //
 //        echo "<pre>";
 //        print_r($treedata);
@@ -296,6 +296,7 @@ class DashboardController extends AbstractActionController {
         $treedata[] = [$user->id, $user->user_id, $user->globalpostion, $user->firstName, $user->status];
         $treedata[] = $this->hasleft($treedata[0][0]); //left
         $treedata[] = $this->hasright($treedata[0][0]); //right
+        
 
         $treedata[] = $this->hasleft($treedata[1][0]);
         $treedata[] = $this->hasright($treedata[1][0]);
@@ -702,11 +703,13 @@ die;
         $em = $this->getEntityManager();
         $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $uId));
         $user1 = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('parent' => $user->user_id, "node" => 0));
+        $product = $em->getRepository('Registration\Entity\Product')->findOneBy(array("id" => $user1->product));
+       
         if ($user1) {
             //echo "<br> LevalL - ".++$this->levalL;
             //echo " $user->firstName Left - $user1->firstName";
 //            return [$user1->id, $user1->user_id, $user1->globalpostion, $user1->firstName, $user1->status, $user1->created_at, $user1->sponserId];
-            return [$user1->id, $user1->user_id, $user1->globalpostion, $user1->firstName, $user1->status, $user1->lastName, $user1->created_at, $user1->sponserId];
+            return [$user1->id, $user1->user_id, $user1->globalpostion, $user1->firstName, $user1->status, $user1->lastName, $user1->created_at, $user1->sponserId, $user1->bvrate, $product->baseValue, $product->price];
         } else {
             return 0;
         }
@@ -719,10 +722,11 @@ die;
         $em = $this->getEntityManager();
         $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $uId));
         $user1 = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('parent' => $user->user_id, "node" => 1));
+         $product = $em->getRepository('Registration\Entity\Product')->findOneBy(array("id" => $user1->product));
         if ($user1) {
             //echo "<br> LevalR - ".++$this->levalR;
             //echo " $user->firstName right - $user1->firstName";
-            return [$user1->id, $user1->user_id, $user1->globalpostion, $user1->firstName, $user1->status, $user1->lastName, $user1->created_at, $user1->sponserId];
+           return [$user1->id, $user1->user_id, $user1->globalpostion, $user1->firstName, $user1->status, $user1->lastName, $user1->created_at, $user1->sponserId, $user1->bvrate, $product->baseValue, $product->price];
         } else {
             return 0;
         }
@@ -743,6 +747,8 @@ die;
     public function findLeftRightCount($ls, $uId, $treedata) {
         $this->leftChlidDataArr = array();
         $this->rightChlidDataArr = array();
+        $leftBvCount = 0;
+        $rightBvCount = 0;
         $leftNode = $this->hasleft($uId);
         $rightNode = $this->hasright($uId);
         $this->leftChlidDataArr[] = $leftNode;
@@ -751,8 +757,18 @@ die;
         $this->callme($rightNode[0], 1);
         $userAtLeft = array_filter($this->leftChlidDataArr);
         $userAtRight = array_filter($this->rightChlidDataArr);
+        foreach ($userAtLeft as $key => $value) {
+            $leftBvCount +=$value[9];
+        }
+        foreach ($userAtRight as $key => $value) {
+            $rightBvCount +=$value[9];
+        }
+        $treedata[$ls]['leftbvcount'] = $leftBvCount;
+        $treedata[$ls]['rightbvcount'] = $rightBvCount;
+        
         $treedata[$ls]['left'] = count($userAtLeft);
         $treedata[$ls]['right'] = count($userAtRight);
+        
         return $treedata;
     }
 
