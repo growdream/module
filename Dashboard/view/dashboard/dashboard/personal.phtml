@@ -58,8 +58,8 @@
                             <option value="1">Married</option>
                             <option value="2">Other</option>
                         </select>-->
-                        
-                         <?php echo $this->formRow($form->get('maritalStatus')); ?>
+
+                        <?php echo $this->formRow($form->get('maritalStatus')); ?>
 
                     </div>
 
@@ -84,7 +84,7 @@
                     <div class="form-group col-sm-6">
                         <label> State :</label>
 <!--                            <input type="text" class="form-control" id="" placeholder="Auto ID">-->
- 
+
                         <?php echo $this->formRow($form->get('state')); ?>
                         <?php echo $this->formElementErrors($form->get('state')); ?>  
                     </div>
@@ -164,13 +164,24 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label>Relation With Nominee :</label>
-                          <?php echo $this->formRow($form->get('relation')); ?>
+                        <?php echo $this->formRow($form->get('relation')); ?>
                         <?php echo $this->formElementErrors($form->get('relation')); ?>  
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <input type="reset" id="reset" value="reset" style="display:none" >
-                <button type="submit" class="btn btn-danger">Submit</button>
+                <!-- terms and cond. with JavaScript - added on 15.01.18 -->
+                <div class="col-sm-12 col-xs-12">
+                    <input type="reset" id="reset" value="reset" style="display:none" >
+                    <p class="help-block">
+                        <input type="checkbox" name="terms" id="terms" onchange="activateButton(this)">  I Agree Terms & Conditions
+                    </p>
+                    <div class="form-group col-sm-6">
+                        <label></label>
+                        <!--<input type="text" class="form-control" id="" placeholder="Name of Bank">-->
+                        <button type="submit" id="submit" name="submit" class="btn btn-danger" disabled="">Submit</button> 
+                    </div>
+                </div>
+                <!--/.End terms and cond. with JavaScript-->
                 <?php echo $this->form()->closeTag(); ?>
             </div>
         </section>
@@ -195,7 +206,7 @@
         });
 
         $("#user_id").blur(function () {
-            var ui= $(this).val();
+            var ui = $(this).val();
             $('#reset').trigger("click");
             $("#user_id").val(ui);
             $.ajax({
@@ -215,7 +226,21 @@
 
     });
 
+// ***** disable submit button ****** //
+    function disableSubmit() {
+        document.getElementById("submit").disabled = true;
+    }
 
+    function activateButton(element) {
+
+        if (element.checked) {
+            document.getElementById("submit").disabled = false;
+        } else {
+            document.getElementById("submit").disabled = true;
+        }
+
+    }
+    // **** /.End disable submit button **** //
 </script>
 
 <style>
