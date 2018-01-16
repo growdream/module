@@ -120,8 +120,8 @@ $this->headTitle($title);
 <link href="/admin/sweetalert/jquery.sweet-modal.min.css" rel="stylesheet" type="text/css"/>
 <script src="/admin/sweetalert/jquery.sweet-modal.min.js" type="text/javascript"></script>
 <script>
-    $(document).ready(function () {
         var td;
+    $(document).ready(function () {
         td = $('#topuptable').DataTable({
             // stateSave: true,
             responsive: true,
@@ -209,7 +209,8 @@ $this->headTitle($title);
                 data: {productId: $('#product').val(), epin: $('#epin').val(), topup_uid:$("#modaluserid").val()},
                 type: 'POST',
                 success: function (data, textStatus, jqXHR) {
-//                   self.location.reload();
+                   self.location.reload();
+ 
                   $.sweetModal("Topup successfully");
                     $('#myModal').modal('toggle');
                 }
