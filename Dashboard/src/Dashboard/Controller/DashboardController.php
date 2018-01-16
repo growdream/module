@@ -727,7 +727,7 @@ die;
             //echo "<br> LevalR - ".++$this->levalR;
             //echo " $user->firstName right - $user1->firstName";
            return [$user1->id, $user1->user_id, $user1->globalpostion, $user1->firstName, $user1->status, $user1->lastName, $user1->created_at, $user1->sponserId, $user1->bvrate, $product->baseValue, $product->price];
-        } else {
+        } else {   
             return 0;
         }
     }
