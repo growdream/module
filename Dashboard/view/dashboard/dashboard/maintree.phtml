@@ -1,4 +1,5 @@
 <?php   
+//   echo "<pre>"; print_r ($treedata); echo "</pre>"; die;
 function getview($data) {
     $icnon = array('yellow.png', 'twopv.png','user-red.png');
     $result = [];
@@ -16,13 +17,19 @@ function getview($data) {
         $result['firstName'] = $data[3];
         $result['lastName'] = $data[5];
         $result['created_at'] = $data[6];
-        $result['sponserId'] = $data[7];
+        $result['sponserId'] = ($data[7])?$data[7]:"NA";
         $result['left'] = $data['left'];
         $result['right'] = $data['right'];
-        // print_r($result); die("result");
+        
+        $result['rightbvcount'] = $data['rightbvcount'];
+        $result['leftbvcount'] = $data['leftbvcount'];
+        
     }
+ 
     return $result;
+    
 }
+
 ?>
 
 <table align="center" style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 10px;
@@ -73,9 +80,9 @@ function getview($data) {
                 ?>
                  <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                   <?php if($node['status']!=null){ echo "data-toggle='popover'";  ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
@@ -119,14 +126,18 @@ function getview($data) {
             <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
                  <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'"; ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
@@ -151,14 +162,18 @@ function getview($data) {
             <td align="center" colspan="2" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;">
                <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'";  ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
@@ -192,14 +207,18 @@ function getview($data) {
             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
                 <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'";  ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -231,14 +250,18 @@ function getview($data) {
             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
                 <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'";  ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">                 
                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -274,14 +297,18 @@ function getview($data) {
             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
                 <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'";  ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -314,14 +341,18 @@ function getview($data) {
             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="25%">
                <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'"; ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>"> 
                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" ><img src="/images/tree/<?= $node['icon']; ?>" style="height:36px;width:36px;border-width:0px;"></a>
@@ -370,14 +401,18 @@ function getview($data) {
                             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
                                 <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'";  ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                        <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -410,14 +445,18 @@ function getview($data) {
                             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
                                <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'"; ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -456,14 +495,18 @@ function getview($data) {
                             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
                                 <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'";  ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -496,14 +539,18 @@ function getview($data) {
                             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
                               <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'";  ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -543,14 +590,18 @@ function getview($data) {
                             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
                               <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'";  ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"  <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -583,14 +634,18 @@ function getview($data) {
                             <td align="center" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
                                 <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'"; ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -630,14 +685,18 @@ function getview($data) {
                             <td align="left" style="font-size: 10px; color: rgb(0, 0, 0); font-family: Verdana;" width="50%">
                                 <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'"; ?>
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>"
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?> 
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
@@ -670,14 +729,18 @@ function getview($data) {
                                             ?>
                                            <b                     
                     data-html="true" 
-                    data-toggle="popover" 
+                    <?php if($node['status']!=null){ echo "data-toggle='popover'"; ?>  
                     data-trigger="focus" 
-                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" 
+                    title="<b>Name</b> - <b style='color:red;'><?= ucfirst($node['firstName']).' '.ucfirst($node['lastName']); ?></b>" <?php } ?>
                     data-content="<div><table class='table'>
                         <tr><td>Id  </td><td>: <?= $node['userId']; ?></td></tr>
                         <tr><td>Joining Date  </td><td>: <?= $node['created_at']; ?></td></tr>
                         <tr><td>Left Joinings  </td><td>: <?= $node['left']; ?></td></tr>
                         <tr><td>Right Joinings  </td><td>: <?= $node['right']; ?></td></tr>
+                        
+                        <tr><td>Left BV  </td><td>: <?= $node['leftbvcount']; ?></td></tr>
+                        <tr><td>Right BV </td><td>: <?= $node['rightbvcount']; ?></td></tr>
+                        
                         <tr><td>Sponcer Id  </td><td>: <?= $node['sponserId']; ?></td></tr>
                     </table></div>">
                                 <a href="javascript:void(0)" onclick="getnextTree(<?= $node['id']; ?>, '<?= $id; ?>')" >
