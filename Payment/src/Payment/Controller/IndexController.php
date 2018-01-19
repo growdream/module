@@ -294,6 +294,174 @@ if($uId>1){
     }
     
       
+      public function paymentAlertMsgsAction() {
+
+        $userdata = $this->_checkIfUserIsLoggedIn();
+//        echo $userdata->user_id;
+        $leftNode = $this->hasleft($userdata->Id);
+        $rightNode = $this->hasright($userdata->Id);
+        $this->leftChlidDataArr[] = $leftNode;
+        $this->rightChlidDataArr[] = $rightNode;
+        $this->callme($leftNode['id'], 0);
+        $this->callme($rightNode['id'], 1);
+        $userAtLeft1 = array_filter($this->leftChlidDataArr);
+        $userAtRight1 = array_filter($this->rightChlidDataArr);
+        $datas[] = array(
+            'id' => $userdata->Id,
+            'user_id' => '',
+            'globalpostion' => '',
+            'firstName' => '',
+            'status' => '',
+            'lastName' => '',
+            'gender' => '',
+            'epin' => 0,
+            'refral_Id' => 0,
+            'productName' => '',
+            'baseValue' => 0,
+            'price' => 0,
+            'pStatus' => 0,
+        );
+        array_push($datas, array_merge($userAtLeft1, $userAtRight1));
+        $arrm = array();
+        foreach ($datas as $key1 => $id1) {
+
+            foreach ($id1 as $key => $id) {
+                if (is_array($id))
+                    $arrm [] = $id;
+            }
+        }
+        $arrm [] = $datas[0];
+
+
+        $payarr = array();
+        /* =======  */
+        $em = $this->getEntityManager();
+
+//          $qb = $em->createQueryBuilder();
+//                 $qb->select("r.id,r.user_id,r.firstName,r.lastName")
+//                ->from("Registration\Entity\Registration", "r")
+//                ;
+//        $datas = $qb->getQuery()->getArrayResult();
+//        echo "<pre>"; print_r ($datas); echo "</pre>"; die;
+        $PayCount = 0;
+
+        foreach ($arrm as $key => $id) {
+
+            unset($this->rightChlidDataArr);
+            unset($this->leftChlidDataArr);
+
+            $lhs_count = 0;
+            $rhs_count = 0;
+            $lhs_bv = 0;
+            $rhs_bv = 0;
+            $tot_bv = 0;
+            $actualPayment = 0;
+            $qb = $em->createQueryBuilder();
+            $qb->select("p")
+                    ->from("Payment\Entity\Payment", "p")
+                    ->where("p.uId = " . $id['id'])
+                    ->orderBy('p.id', 'DESC')
+                    ->setMaxResults(1);
+            $PaymentArr = $qb->getQuery()->getArrayResult();
+            if ($PaymentArr) {
+                $tot_bv = $PaymentArr[0]['tot_bv'];
+                $actualPayment = $PaymentArr[0]['actualPayment'];
+                $lhs_count = $PaymentArr[0]['lhs_count'];
+                $rhs_count = $PaymentArr[0]['rhs_count'];
+                $lhs_bv = $PaymentArr[0]['lhs_bv'];
+                $rhs_bv = $PaymentArr[0]['lhs_bv'];
+            }
+
+            $leftNode = $this->hasleft($id['id']);
+            $rightNode = $this->hasright($id['id']);
+            $this->leftChlidDataArr[] = $leftNode;
+            $this->rightChlidDataArr[] = $rightNode;
+            $this->callme($leftNode['id'], 0);
+            $this->callme($rightNode['id'], 1);
+            $userAtLeft = array_filter($this->leftChlidDataArr);
+            $userAtRight = array_filter($this->rightChlidDataArr);
+
+            $totalPriceL = 0;
+            $totalBvL = 0;
+            $totalPriceR = 0;
+            $totalBvR = 0;
+            $lscountL = 0;
+            $lscountR = 0;
+            $totalbiznessL = 0;
+            $totalbiznessR = 0;
+            foreach ($userAtLeft as $key => $value) {
+                // $totalPriceL += $value['price'];
+                if ($value['baseValue']) {
+                    $totalBvL += $value['baseValue'];
+                    $totalPriceL += $value['price'];
+                    $totalbiznessL += $value['bizness'];
+                    ++$lscountL;
+                }
+            }
+            foreach ($userAtRight as $key => $value) {
+                // $totalPriceR += $value['price'];
+                if ($value['baseValue']) {
+                    $totalBvR += $value['baseValue'];
+                    $totalPriceR += $value['price'];
+                    $totalbiznessR += $value['bizness'];
+                    ++$lscountR;
+                }
+            }
+//       echo $id['id']." <br>"; 
+//       echo "bvl : $totalBvL, total price: $totalPriceL , count: $lscountL :==: bvl : $totalBvR, total price: $totalPriceR , count: $lscountR";
+//            if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && $lscountR != $lscountL) {
+             $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+            
+            if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && (($willpay != $actualPayment) && ($willpay-$actualPayment)>1200 )) {
+               
+                $payarr[$PayCount]['lscountL'] = $lscountL;
+                $payarr[$PayCount]['lscountR'] = $lscountR;
+                $payarr[$PayCount]['totalcountLR'] = $lscountL + $lscountR;
+                $payarr[$PayCount]['totalbiznessR'] = $totalbiznessR;
+                $payarr[$PayCount]['totalbiznessL'] = $totalbiznessL;
+                
+                if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && ($lscountR + $lscountL) >= 3) {
+                    $payarr[$PayCount]['id'] = $id['id'];
+                    $payarr[$PayCount]['user_id'] = $id['user_id'];
+                    $payarr[$PayCount]['fullName'] = $id['firstName'] . " " . $id['lastName'];
+                    $payarr[$PayCount]['mobileNo'] = $id['mobileNo'];
+                    $payarr[$PayCount]['totalBvL'] = $totalBvL;
+                    $payarr[$PayCount]['totalPriceL'] = $totalPriceL;
+//                $payarr[$PayCount]['lscountL'] = $lscountL;
+                    $payarr[$PayCount]['totalBvR'] = $totalBvR;
+                    $payarr[$PayCount]['totalPriceR'] = $totalPriceR;
+//                $payarr[$PayCount]['lscountR'] = $lscountR;
+                    $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+                    $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
+
+                    $paddi = intVal($bvpadd / 100) + intVal(($bvpadd % 100) / 50);
+
+                    $willDeductForPadding = $willpay - (($paddi * 10) * $id['bvrate']) + $paddi;
+
+                    $payarr[$PayCount]['willPay'] = $willDeductForPadding - $actualPayment;
+                    $payarr[$PayCount]['actualPayment'] = $willpay;
+                    $payarr[$PayCount]['payit'] = $payarr[$PayCount]['willPay'] - Round(($payarr[$PayCount]['willPay'] * .20), 2);
+
+                    $PayCount++;
+                }
+            }
+        }
+
+//   echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
+
+        /* =======  */
+
+echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
+        $this->layout()->setVariable('UserSession', $userdata);
+        return new ViewModel([
+            "userdata" => $userdata,
+            "userAtRight" => $userAtRight1,
+            "userAtLeft" => $userAtLeft1,
+            "payarr" => $payarr,
+        ]);
+    }
+    
+    
     public function invoiceAction() {
          $userdata = $this->_checkIfUserIsLoggedIn();
          $em=$this->em;
@@ -367,6 +535,7 @@ if($uId>1){
                         . "u.user_id,"
                         . "u.firstName,"
                         . "u.lastName,"
+                        . "u.mobileNo,"
                         . "u.node,"
                         . "u.globalpostion,"
                         . "u.status,"
@@ -392,7 +561,7 @@ if($uId>1){
             $user1 = $user1[0];
 //echo "<br> LevalL - ".++$this->levalL;
 //echo " $user->firstName Left - $user1->firstName";
-            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
+            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'mobileNo' => $user1['mobileNo'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
         } else {
             return 0;
         }
@@ -411,6 +580,7 @@ if($uId>1){
                         . "u.user_id,"
                         . "u.firstName,"
                         . "u.lastName,"
+                        . "u.mobileNo,"
                         . "u.node,"
                         . "u.globalpostion,"
                         . "u.status,"
@@ -436,7 +606,7 @@ if($uId>1){
             $user1 = $user1[0];
 //echo "<br> LevalL - ".++$this->levalL;
 //echo " $user->firstName Left - $user1->firstName";
-            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
+            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'mobileNo' => $user1['mobileNo'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
         } else {
             return 0;
         }
