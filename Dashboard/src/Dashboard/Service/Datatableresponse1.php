@@ -4,14 +4,6 @@ namespace Dashboard\Service;
 
 use Doctrine\ORM\Query\Expr\Join;
 
-/*
- * this is for data table
- * get parameter from action and fetch the data from table 
- * return data in json encode
- * created by Navin
- * 
- * can use agrigate functions  
- */
 
 class Datatableresponse1 {
 
