@@ -23,7 +23,7 @@ foreach ($userAtRight as $key => $value) {
     ++$lscountR;
 }
 
-$payarrcount = count($payarr) - 1;
+$payarrcount = count($payarr); 
 ?>
 
 <div class="container-fluid"  style="padding: 20px;">
@@ -34,36 +34,36 @@ $payarrcount = count($payarr) - 1;
 
                     <div class="panel-body">
                         <div class="col-lg-6">
-                            <div class="col-lg-4">Total Left Joining </div><div class="col-lg-8">: &nbsp; <?= $payarr[$payarrcount]['lscountL'] ?></div>
-                            <div class="col-lg-4">Total Left BV's </div><div class="col-lg-8">: &nbsp; <?= $payarr[$payarrcount]['totalBvL'] ?></div>
-                            <div class="col-lg-4">Total Left Amount </div><div class="col-lg-8">:  &nbsp; ₹  &nbsp; <?= $payarr[$payarrcount]['totalPriceL'] ?></div>
+                            <div class="col-lg-4">Total Left Joining </div><div class="col-lg-8">: &nbsp; <?= $payarr[0]['lscountL'] ?></div>
+                            <div class="col-lg-4">Total Left BV's </div><div class="col-lg-8">: &nbsp; <?= $payarr[0]['totalBvL'] ?></div>
+                            <div class="col-lg-4">Total Left Amount </div><div class="col-lg-8">:  &nbsp; ₹  &nbsp; <?= $payarr[0]['totalPriceL'] ?></div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="col-lg-4">Total Right Joining </div><div class="col-lg-8">: &nbsp; <?= $payarr[$payarrcount]['lscountR'] ?></div>
-                            <div class="col-lg-4">Total Right BV's </div><div class="col-lg-8">: &nbsp; <?= $payarr[$payarrcount]['totalBvR'] ?></div>
-                            <div class="col-lg-4">Total Right Amount </div><div class="col-lg-8">:  &nbsp; ₹  &nbsp; <?= $payarr[$payarrcount]['totalPriceR'] ?></div>
+                            <div class="col-lg-4">Total Right Joining </div><div class="col-lg-8">: &nbsp; <?= $payarr[0]['lscountR'] ?></div>
+                            <div class="col-lg-4">Total Right BV's </div><div class="col-lg-8">: &nbsp; <?= $payarr[0]['totalBvR'] ?></div>
+                            <div class="col-lg-4">Total Right Amount </div><div class="col-lg-8">:  &nbsp; ₹  &nbsp; <?= $payarr[0]['totalPriceR'] ?></div>
                         </div>
 
                         <div class="clearfix"></div>
                         <div class="col-lg-12" style="margin-top: 20px; ">
-                            <div class="col-lg-2">   Total Basic Amount </div><div class="col-lg-10">:  &nbsp; ₹  &nbsp; <?= $payarr[$payarrcount]['willPay'] ?>
+                            <div class="col-lg-2">   Total Basic Amount </div><div class="col-lg-10">:  &nbsp; ₹  &nbsp; <?= $payarr[0]['willPay'] ?>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="col-lg-2">
-                                Admin &nbsp;&nbsp; ( 10% ) </div><div class="col-lg-10"> :  &nbsp; ₹  &nbsp; <?php echo Round(($payarr[$payarrcount]['willPay'] * .10), 2) ?>
+                                Admin &nbsp;&nbsp; ( 10% ) </div><div class="col-lg-10"> :  &nbsp; ₹  &nbsp; <?php echo Round(($payarr[0]['willPay'] * .10), 2) ?>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="col-lg-2"> Repurchase &nbsp;&nbsp; ( 5% ) </div><div class="col-lg-10">:  &nbsp; ₹  &nbsp; <?php echo Round(($payarr[$payarrcount]['willPay'] * .05), 2) ?>
+                            <div class="col-lg-2"> Repurchase &nbsp;&nbsp; ( 5% ) </div><div class="col-lg-10">:  &nbsp; ₹  &nbsp; <?php echo Round(($payarr[0]['willPay'] * .05), 2) ?>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="col-lg-2"> TDS &nbsp;&nbsp; ( 5% )  </div><div class="col-lg-10">:  &nbsp; ₹  &nbsp; <?php echo Round(($payarr[$payarrcount]['willPay'] * .05), 2) ?>
+                            <div class="col-lg-2"> TDS &nbsp;&nbsp; ( 5% )  </div><div class="col-lg-10">:  &nbsp; ₹  &nbsp; <?php echo Round(($payarr[0]['willPay'] * .05), 2) ?>
                             </div>
                         </div>
                         <?php
-                        $payit = $payarr[$payarrcount]['willPay'] - Round(($payarr[$payarrcount]['willPay'] * .20), 2);
+                        $payit = $payarr[0]['willPay'] - Round(($payarr[0]['willPay'] * .20), 2);
                         ?>
                         <div class="col-lg-12"> 
                             <div class="col-lg-2">Total Amount   </div><div class="col-lg-10">:  &nbsp; ₹  &nbsp; <?= $payit ?>
@@ -147,9 +147,9 @@ if ($userdata->Id == 1) {
                                  */
                                 $rscount = 1;
                                 foreach ($payarr as $key => $value) {
-                                    if ($payarrcount + 1 == $rscount) {
-                                        break;
-                                    }
+//                                    if ($payarrcount + 1 == $rscount) {
+//                                        break;
+//                                    }
                                     
                                     $amounttopay = ($value['willPay'] > 50000) ? 50000 : ($value['willPay']);
                                     $lapsoncap = ($value['willPay'] > 50000) ? ($value['willPay'] - 50000) : 0;
