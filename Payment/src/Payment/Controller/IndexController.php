@@ -440,7 +440,11 @@ if($uId>1){
 
                     $payarr[$PayCount]['willPay'] = $willDeductForPadding - $actualPayment;
                     $payarr[$PayCount]['actualPayment'] = $willpay;
-                    $payarr[$PayCount]['payit'] = $payarr[$PayCount]['willPay'] - Round(($payarr[$PayCount]['willPay'] * .20), 2);
+                     $amounttopay = ($payarr[$PayCount]['willPay'] > 50000) ? 50000 : ($payarr[$PayCount]['willPay']);
+                     $lapsoncap = ($payarr[$PayCount]['willPay'] > 50000) ? ($payarr[$PayCount]['willPay'] - 50000) : 0;
+                    $payit1 = $amounttopay - Round(($amounttopay * .20), 2); 
+                    
+                    $payarr[$PayCount]['payit'] = $payit1;
 
                     $PayCount++;
                 }
@@ -451,14 +455,12 @@ if($uId>1){
 
         /* =======  */
 
-echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
-        $this->layout()->setVariable('UserSession', $userdata);
-        return new ViewModel([
-            "userdata" => $userdata,
-            "userAtRight" => $userAtRight1,
-            "userAtLeft" => $userAtLeft1,
-            "payarr" => $payarr,
-        ]);
+        foreach ($payarr as $key => $value) {
+//echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
+       $str = "<br><br> congratulations ".$value['fullName'].", Your weekly payout generated successfully, with amount Rs. ".$value['payit'].", Please check payment, Growdreammaker.com, Cutting is applicable." ;
+       echo "<br>( => )".strlen($str);
+        }
+        die;
     }
     
     
