@@ -42,8 +42,7 @@ class IndexController extends AbstractActionController {
 
     public function indexAction() {
 
-        $userdata = $this->_checkIfUserIsLoggedIn();
-//        echo $userdata->user_id;
+        $userdata = $this->_checkIfUserIsLoggedIn(); 
         $leftNode = $this->hasleft($userdata->Id);
         $rightNode = $this->hasright($userdata->Id);
         $this->leftChlidDataArr[] = $leftNode;
@@ -54,11 +53,11 @@ class IndexController extends AbstractActionController {
         $userAtRight1 = array_filter($this->rightChlidDataArr);
         $datas[] = array(
             'id' => $userdata->Id,
-            'user_id' => '',
+            'user_id' => $userdata->user_id,
             'globalpostion' => '',
-            'firstName' => '',
+            'firstName' => $userdata->firstName,
             'status' => '',
-            'lastName' => '',
+            'lastName' => $userdata->lastName,
             'gender' => '',
             'epin' => 0,
             'refral_Id' => 0,
@@ -66,9 +65,10 @@ class IndexController extends AbstractActionController {
             'baseValue' => 0,
             'price' => 0,
             'pStatus' => 0,
-        );
+        ); 
         array_push($datas, array_merge($userAtLeft1, $userAtRight1));
         $arrm = array();
+         $arrm [] = $datas[0]; 
         foreach ($datas as $key1 => $id1) {
 
             foreach ($id1 as $key => $id) {
@@ -76,9 +76,8 @@ class IndexController extends AbstractActionController {
                     $arrm [] = $id;
             }
         }
-        $arrm [] = $datas[0];
-
-
+        
+  
         $payarr = array();
         /* =======  */
         $em = $this->getEntityManager();
@@ -153,10 +152,36 @@ class IndexController extends AbstractActionController {
                     ++$lscountR;
                 }
             }
-//       echo $id['id']." <br>"; 
-//       echo "bvl : $totalBvL, total price: $totalPriceL , count: $lscountL :==: bvl : $totalBvR, total price: $totalPriceR , count: $lscountR";
+//       echo $id['id']." = "; 
+//       echo "bvl : $totalBvL, total price: $totalPriceL , count: $lscountL :==: bvl : $totalBvR, total price: $totalPriceR , count: $lscountR <br>";
 //            if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && $lscountR != $lscountL) {
              $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+             
+             /* ======== My Info============  */
+              $myInfo['lscountL'] = $lscountL;
+                $myInfo['lscountR'] = $lscountR;
+                $myInfo['totalcountLR'] = $lscountL + $lscountR;
+                $myInfo['totalbiznessR'] = $totalbiznessR;
+                $myInfo['totalbiznessL'] = $totalbiznessL;
+                 $myInfo['id'] = $id['id'];
+                    $myInfo['user_id'] = $id['user_id'];
+                    $myInfo['fullName'] = $id['firstName'] . " " . $id['lastName'];
+                    $myInfo['totalBvL'] = $totalBvL;
+                    $myInfo['totalPriceL'] = $totalPriceL;
+//                $myInfo['lscountL'] = $lscountL;
+                    $myInfo['totalBvR'] = $totalBvR;
+                    $myInfo['totalPriceR'] = $totalPriceR;
+//                $myInfo['lscountR'] = $lscountR;
+                    $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+                    $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
+
+                    $paddi = intVal($bvpadd / 100) + intVal(($bvpadd % 100) / 50);
+
+                    $willDeductForPadding = $willpay - (($paddi * 10) * $id['bvrate']) + $paddi;
+
+                    $payarr[$PayCount]['willPay'] = $willDeductForPadding - $actualPayment;
+                    $payarr[$PayCount]['actualPayment'] = $willpay;
+             /* ======== My Info============  */
             
             if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && (($willpay != $actualPayment) && ($willpay-$actualPayment)>1200 )) {
                
@@ -190,8 +215,7 @@ class IndexController extends AbstractActionController {
                 }
             }
         }
-
-//   echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
+ 
 
         /* =======  */
 
@@ -202,6 +226,7 @@ class IndexController extends AbstractActionController {
             "userAtRight" => $userAtRight1,
             "userAtLeft" => $userAtLeft1,
             "payarr" => $payarr,
+            "myInfo" => $myInfo,
         ]);
     }
 
@@ -308,11 +333,11 @@ if($uId>1){
         $userAtRight1 = array_filter($this->rightChlidDataArr);
         $datas[] = array(
             'id' => $userdata->Id,
-            'user_id' => '',
+            'user_id' => $userdata->user_id,
             'globalpostion' => '',
-            'firstName' => '',
+            'firstName' => $userdata->firstName,
             'status' => '',
-            'lastName' => '',
+            'lastName' => $userdata->lastName,
             'gender' => '',
             'epin' => 0,
             'refral_Id' => 0,
@@ -320,9 +345,10 @@ if($uId>1){
             'baseValue' => 0,
             'price' => 0,
             'pStatus' => 0,
-        );
+        ); 
         array_push($datas, array_merge($userAtLeft1, $userAtRight1));
         $arrm = array();
+         $arrm [] = $datas[0]; 
         foreach ($datas as $key1 => $id1) {
 
             foreach ($id1 as $key => $id) {
@@ -454,11 +480,12 @@ if($uId>1){
 //   echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
 
         /* =======  */
-
+        
+$i=0;
         foreach ($payarr as $key => $value) {
 //echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
-       $str = "<br><br> congratulations ".$value['fullName'].", Your weekly payout generated successfully, with amount Rs. ".$value['payit'].", Please check payment, Growdreammaker.com, Cutting is applicable." ;
-       echo "<br>( => )".strlen($str);
+       $str = "Congrats ".$value['user_id'].", Your weekly payout generated successfully, with amount Rs ".$value['payit'].", Please check payment, Cutting is applicable." ;
+       
         }
         die;
     }
