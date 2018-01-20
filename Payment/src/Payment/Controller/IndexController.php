@@ -89,7 +89,7 @@ class IndexController extends AbstractActionController {
 //        $datas = $qb->getQuery()->getArrayResult();
 //        echo "<pre>"; print_r ($datas); echo "</pre>"; die;
         $PayCount = 0;
-
+$first = 0;
         foreach ($arrm as $key => $id) {
 
             unset($this->rightChlidDataArr);
@@ -158,12 +158,13 @@ class IndexController extends AbstractActionController {
              $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
              
              /* ======== My Info============  */
+             if($first==0){
               $myInfo['lscountL'] = $lscountL;
                 $myInfo['lscountR'] = $lscountR;
                 $myInfo['totalcountLR'] = $lscountL + $lscountR;
                 $myInfo['totalbiznessR'] = $totalbiznessR;
                 $myInfo['totalbiznessL'] = $totalbiznessL;
-                 $myInfo['id'] = $id['id'];
+                $myInfo['id'] = $id['id'];
                     $myInfo['user_id'] = $id['user_id'];
                     $myInfo['fullName'] = $id['firstName'] . " " . $id['lastName'];
                     $myInfo['totalBvL'] = $totalBvL;
@@ -179,8 +180,10 @@ class IndexController extends AbstractActionController {
 
                     $willDeductForPadding = $willpay - (($paddi * 10) * $id['bvrate']) + $paddi;
 
-                    $payarr[$PayCount]['willPay'] = $willDeductForPadding - $actualPayment;
-                    $payarr[$PayCount]['actualPayment'] = $willpay;
+                   $myInfo['willPay'] = $willDeductForPadding - $actualPayment;
+                    $myInfo['actualPayment'] = $willpay;
+                    $first++;
+             }
              /* ======== My Info============  */
             
             if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && (($willpay != $actualPayment) && ($willpay-$actualPayment)>1200 )) {
@@ -218,8 +221,7 @@ class IndexController extends AbstractActionController {
  
 
         /* =======  */
-
-
+ 
         $this->layout()->setVariable('UserSession', $userdata);
         return new ViewModel([
             "userdata" => $userdata,
@@ -484,8 +486,9 @@ if($uId>1){
 $i=0;
         foreach ($payarr as $key => $value) {
 //echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
+         
        $str = "Congrats ".$value['user_id'].", Your weekly payout generated successfully, with amount Rs ".$value['payit'].", Please check payment, Cutting is applicable." ;
-       
+       echo "<br>".$i++." ".$str;
         }
         die;
     }
