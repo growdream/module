@@ -212,7 +212,7 @@ else if(!empty($error1)){
                 echo $this->form()->openTag($form);
                 ?>
                 
-                <div class="row">
+                <div class="row <?php if($ulogin->Id != 1)echo 'hidden'; ?>">
                     <div class="col-md-4">
                         <div class="form-group">
                             <?php echo $this->formHidden($form->get('refral_Id')); ?>
