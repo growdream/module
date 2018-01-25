@@ -217,7 +217,9 @@ else if(!empty($error1)){
                         <div class="form-group">
                             <?php echo $this->formHidden($form->get('refral_Id')); ?>
                             <label>First Name</label>
-                            <?php echo $this->formRow($form->get('firstName')->setAttribute("id","firstName")); ?>
+                            <?php echo $this->formRow($form->get('firstName')
+                                    ->setAttribute("id","firstName")
+                                    ->setAttribute("class","form-control text-danger")); ?>
                             <input type="hidden" name="id" id="id" />
                         </div>
                     </div>

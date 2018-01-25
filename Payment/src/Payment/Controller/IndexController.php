@@ -42,6 +42,287 @@ class IndexController extends AbstractActionController {
 
     public function indexAction() {
 
+        $userdata = $this->_checkIfUserIsLoggedIn(); 
+        $leftNode = $this->hasleft($userdata->Id);
+        $rightNode = $this->hasright($userdata->Id);
+        $this->leftChlidDataArr[] = $leftNode;
+        $this->rightChlidDataArr[] = $rightNode;
+        $this->callme($leftNode['id'], 0);
+        $this->callme($rightNode['id'], 1);
+        $userAtLeft1 = array_filter($this->leftChlidDataArr);
+        $userAtRight1 = array_filter($this->rightChlidDataArr);
+        $datas[] = array(
+            'id' => $userdata->Id,
+            'user_id' => $userdata->user_id,
+            'globalpostion' => '',
+            'firstName' => $userdata->firstName,
+            'status' => '',
+            'lastName' => $userdata->lastName,
+            'gender' => '',
+            'epin' => 0,
+            'refral_Id' => 0,
+            'productName' => '',
+            'baseValue' => 0,
+            'price' => 0,
+            'pStatus' => 0,
+        ); 
+        array_push($datas, array_merge($userAtLeft1, $userAtRight1));
+        $arrm = array();
+         $arrm [] = $datas[0]; 
+        foreach ($datas as $key1 => $id1) {
+
+            foreach ($id1 as $key => $id) {
+                if (is_array($id))
+                    $arrm [] = $id;
+            }
+        }
+        
+  
+        $payarr = array();
+        /* =======  */
+        $em = $this->getEntityManager();
+
+//          $qb = $em->createQueryBuilder();
+//                 $qb->select("r.id,r.user_id,r.firstName,r.lastName")
+//                ->from("Registration\Entity\Registration", "r")
+//                ;
+//        $datas = $qb->getQuery()->getArrayResult();
+//        echo "<pre>"; print_r ($datas); echo "</pre>"; die;
+        $PayCount = 0;
+$first = 0;
+        foreach ($arrm as $key => $id) {
+
+            unset($this->rightChlidDataArr);
+            unset($this->leftChlidDataArr);
+
+            $lhs_count = 0;
+            $rhs_count = 0;
+            $lhs_bv = 0;
+            $rhs_bv = 0;
+            $tot_bv = 0;
+            $actualPayment = 0;
+            $qb = $em->createQueryBuilder();
+            $qb->select("p")
+                    ->from("Payment\Entity\Payment", "p")
+                    ->where("p.uId = " . $id['id'])
+                    ->orderBy('p.id', 'DESC')
+                    ->setMaxResults(1);
+            $PaymentArr = $qb->getQuery()->getArrayResult();
+            if ($PaymentArr) {
+                $tot_bv = $PaymentArr[0]['tot_bv'];
+                $actualPayment = $PaymentArr[0]['actualPayment'];
+                $lhs_count = $PaymentArr[0]['lhs_count'];
+                $rhs_count = $PaymentArr[0]['rhs_count'];
+                $lhs_bv = $PaymentArr[0]['lhs_bv'];
+                $rhs_bv = $PaymentArr[0]['lhs_bv'];
+            }
+
+            $leftNode = $this->hasleft($id['id']);
+            $rightNode = $this->hasright($id['id']);
+            $this->leftChlidDataArr[] = $leftNode;
+            $this->rightChlidDataArr[] = $rightNode;
+            $this->callme($leftNode['id'], 0);
+            $this->callme($rightNode['id'], 1);
+            $userAtLeft = array_filter($this->leftChlidDataArr);
+            $userAtRight = array_filter($this->rightChlidDataArr);
+
+            $totalPriceL = 0;
+            $totalBvL = 0;
+            $totalPriceR = 0;
+            $totalBvR = 0;
+            $lscountL = 0;
+            $lscountR = 0;
+            $totalbiznessL = 0;
+            $totalbiznessR = 0;
+            foreach ($userAtLeft as $key => $value) {
+                // $totalPriceL += $value['price'];
+                if ($value['baseValue']) {
+                    $totalBvL += $value['baseValue'];
+                    $totalPriceL += $value['price'];
+                    $totalbiznessL += $value['bizness'];
+                    ++$lscountL;
+                }
+            }
+            foreach ($userAtRight as $key => $value) {
+                // $totalPriceR += $value['price'];
+                if ($value['baseValue']) {
+                    $totalBvR += $value['baseValue'];
+                    $totalPriceR += $value['price'];
+                    $totalbiznessR += $value['bizness'];
+                    ++$lscountR;
+                }
+            }
+//       echo $id['id']." = "; 
+//       echo "bvl : $totalBvL, total price: $totalPriceL , count: $lscountL :==: bvl : $totalBvR, total price: $totalPriceR , count: $lscountR <br>";
+//            if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && $lscountR != $lscountL) {
+             $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+             
+             /* ======== My Info============  */
+             if($first==0){
+              $myInfo['lscountL'] = $lscountL;
+                $myInfo['lscountR'] = $lscountR;
+                $myInfo['totalcountLR'] = $lscountL + $lscountR;
+                $myInfo['totalbiznessR'] = $totalbiznessR;
+                $myInfo['totalbiznessL'] = $totalbiznessL;
+                $myInfo['id'] = $id['id'];
+                    $myInfo['user_id'] = $id['user_id'];
+                    $myInfo['fullName'] = $id['firstName'] . " " . $id['lastName'];
+                    $myInfo['totalBvL'] = $totalBvL;
+                    $myInfo['totalPriceL'] = $totalPriceL;
+//                $myInfo['lscountL'] = $lscountL;
+                    $myInfo['totalBvR'] = $totalBvR;
+                    $myInfo['totalPriceR'] = $totalPriceR;
+//                $myInfo['lscountR'] = $lscountR;
+                    $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+                    $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
+
+                    $paddi = intVal($bvpadd / 100) + intVal(($bvpadd % 100) / 50);
+
+                    $willDeductForPadding = $willpay - (($paddi * 10) * $id['bvrate']) + $paddi;
+
+                   $myInfo['willPay'] = $willDeductForPadding - $actualPayment;
+                    $myInfo['actualPayment'] = $willpay;
+                    $first++;
+             }
+             /* ======== My Info============  */
+            
+            if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && (($willpay != $actualPayment) && ($willpay-$actualPayment)>1200 )) {
+               
+                $payarr[$PayCount]['lscountL'] = $lscountL;
+                $payarr[$PayCount]['lscountR'] = $lscountR;
+                $payarr[$PayCount]['totalcountLR'] = $lscountL + $lscountR;
+                $payarr[$PayCount]['totalbiznessR'] = $totalbiznessR;
+                $payarr[$PayCount]['totalbiznessL'] = $totalbiznessL;
+                
+                if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && ($lscountR + $lscountL) >= 3) {
+                    $payarr[$PayCount]['id'] = $id['id'];
+                    $payarr[$PayCount]['user_id'] = $id['user_id'];
+                    $payarr[$PayCount]['fullName'] = $id['firstName'] . " " . $id['lastName'];
+                    $payarr[$PayCount]['totalBvL'] = $totalBvL;
+                    $payarr[$PayCount]['totalPriceL'] = $totalPriceL;
+//                $payarr[$PayCount]['lscountL'] = $lscountL;
+                    $payarr[$PayCount]['totalBvR'] = $totalBvR;
+                    $payarr[$PayCount]['totalPriceR'] = $totalPriceR;
+//                $payarr[$PayCount]['lscountR'] = $lscountR;
+                    $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+                    $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
+
+                    $paddi = intVal($bvpadd / 100) + intVal(($bvpadd % 100) / 50);
+
+                    $willDeductForPadding = $willpay - (($paddi * 10) * $id['bvrate']) + $paddi;
+
+                    $payarr[$PayCount]['willPay'] = $willDeductForPadding - $actualPayment;
+                    $payarr[$PayCount]['actualPayment'] = $willpay;
+
+                    $PayCount++;
+                }
+            }
+        }
+ 
+
+        /* =======  */
+ 
+        $this->layout()->setVariable('UserSession', $userdata);
+        return new ViewModel([
+            "userdata" => $userdata,
+            "userAtRight" => $userAtRight1,
+            "userAtLeft" => $userAtLeft1,
+            "payarr" => $payarr,
+            "myInfo" => $myInfo,
+        ]);
+    }
+
+    public function finduserbyuseridAction() {
+        $request = $this->getRequest();
+        $data = $_GET['term'];
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select("r.user_id")
+                ->from("Registration\Entity\Registration", "r")
+                ->where("r.user_id LIKE '%" . $data . "%'");
+        $datas = $qb->getQuery()->getArrayResult();
+        echo json_encode($datas);
+        exit;
+    }
+
+    public function makepaymentAction() {
+        $userdata = $this->_checkIfUserIsLoggedIn();
+        $request = $this->getRequest();
+        $success = 0;
+        if ($request->isPost()) {
+            $data = $request->getPost();
+//            echo "<pre>"; print_r ($data); echo "</pre>"; die;
+            $mydetails = $this->showPersonalProfile($data['user_id']);
+            $data['user_id'] = $mydetails->user_id;
+            $data['uId'] = $mydetails->id;
+         
+            $paymentEntity = new \Payment\Entity\Payment();
+            $paymentEntity->exchangeArray($this->em, $data);
+            $this->em->persist($paymentEntity);
+            $this->em->flush();
+            $success = 1;
+             return $this->redirect()->toUrl('/payment/payment/index');
+        }
+        echo $success;
+        die;
+    }
+
+    public function paymentreleasedAction() {
+        $userdata = $this->_checkIfUserIsLoggedIn();
+        $request = $this->getRequest();
+      return new ViewModel([
+            "data" => "Payment",
+        ]);
+       
+    }
+    
+    public function paymentreleasedatserverAction() {
+        $userdata = $this->_checkIfUserIsLoggedIn();
+        
+       $uId = $userdata->Id;
+        $request = $this->getRequest();
+          $table = [
+            ['tb' => 'Payment\Entity\Payment', 'alise' => 'p'],
+            ['tb' => '\Registration\Entity\Registration', 'alise' => 'r', 'on' => "r.id = p.uId", 'join' => 'inner'],
+        ];
+
+        $columns = array(
+            array('db' => "p.id", 'dt' => 1),
+            array('db' => "r.user_id", 'dt' => 2),
+            array('db' => "concat(r.firstName,' ', r.lastName)", 'dt' => 3, "as" => "name"),
+            array('db' => "p.lhs_count", 'dt' => 4),
+            array('db' => "p.rhs_count", 'dt' => 5),
+            array('db' => "p.lhs_bv", 'dt' => 6),
+            array('db' => "p.rhs_bv", 'dt' => 7),
+            array('db' => "p.amounttopay", 'dt' => 8),
+            array('db' => "p.tot_bv", 'dt' => 9),
+            array('db' => "p.created_at", 'dt' => 10),
+            array('db' => "p.status", 'dt' => 11),
+           
+        );
+$where ="";
+if($uId>1){
+        $where = " r.id = $uId ";
+    }
+//$where = [$wherestring, "groupby" => "a.aer_id"];
+        //echo $where;      
+        $datatableobjec = new Datatableresponse1($this->getEntityManager());
+        $result = $datatableobjec->complex($_GET, $table, $columns, $where);
+        $start = $_REQUEST['start'];
+        $start++;
+
+        foreach ($result['data'] as &$res) {
+            $res[0] = (string) $start;
+            $start++;
+        }
+        echo json_encode($result);
+        exit;
+    }
+    
+      
+      public function paymentAlertMsgsAction() {
+
         $userdata = $this->_checkIfUserIsLoggedIn();
 //        echo $userdata->user_id;
         $leftNode = $this->hasleft($userdata->Id);
@@ -54,11 +335,11 @@ class IndexController extends AbstractActionController {
         $userAtRight1 = array_filter($this->rightChlidDataArr);
         $datas[] = array(
             'id' => $userdata->Id,
-            'user_id' => '',
+            'user_id' => $userdata->user_id,
             'globalpostion' => '',
-            'firstName' => '',
+            'firstName' => $userdata->firstName,
             'status' => '',
-            'lastName' => '',
+            'lastName' => $userdata->lastName,
             'gender' => '',
             'epin' => 0,
             'refral_Id' => 0,
@@ -66,9 +347,10 @@ class IndexController extends AbstractActionController {
             'baseValue' => 0,
             'price' => 0,
             'pStatus' => 0,
-        );
+        ); 
         array_push($datas, array_merge($userAtLeft1, $userAtRight1));
         $arrm = array();
+         $arrm [] = $datas[0]; 
         foreach ($datas as $key1 => $id1) {
 
             foreach ($id1 as $key => $id) {
@@ -170,6 +452,7 @@ class IndexController extends AbstractActionController {
                     $payarr[$PayCount]['id'] = $id['id'];
                     $payarr[$PayCount]['user_id'] = $id['user_id'];
                     $payarr[$PayCount]['fullName'] = $id['firstName'] . " " . $id['lastName'];
+                    $payarr[$PayCount]['mobileNo'] = $id['mobileNo'];
                     $payarr[$PayCount]['totalBvL'] = $totalBvL;
                     $payarr[$PayCount]['totalPriceL'] = $totalPriceL;
 //                $payarr[$PayCount]['lscountL'] = $lscountL;
@@ -185,6 +468,11 @@ class IndexController extends AbstractActionController {
 
                     $payarr[$PayCount]['willPay'] = $willDeductForPadding - $actualPayment;
                     $payarr[$PayCount]['actualPayment'] = $willpay;
+                     $amounttopay = ($payarr[$PayCount]['willPay'] > 50000) ? 50000 : ($payarr[$PayCount]['willPay']);
+                     $lapsoncap = ($payarr[$PayCount]['willPay'] > 50000) ? ($payarr[$PayCount]['willPay'] - 50000) : 0;
+                    $payit1 = $amounttopay - Round(($amounttopay * .20), 2); 
+                    
+                    $payarr[$PayCount]['payit'] = $payit1;
 
                     $PayCount++;
                 }
@@ -194,106 +482,18 @@ class IndexController extends AbstractActionController {
 //   echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
 
         /* =======  */
-
-
-        $this->layout()->setVariable('UserSession', $userdata);
-        return new ViewModel([
-            "userdata" => $userdata,
-            "userAtRight" => $userAtRight1,
-            "userAtLeft" => $userAtLeft1,
-            "payarr" => $payarr,
-        ]);
-    }
-
-    public function finduserbyuseridAction() {
-        $request = $this->getRequest();
-        $data = $_GET['term'];
-        $em = $this->getEntityManager();
-
-        $qb = $em->createQueryBuilder();
-        $qb->select("r.user_id")
-                ->from("Registration\Entity\Registration", "r")
-                ->where("r.user_id LIKE '%" . $data . "%'");
-        $datas = $qb->getQuery()->getArrayResult();
-        echo json_encode($datas);
-        exit;
-    }
-
-    public function makepaymentAction() {
-        $userdata = $this->_checkIfUserIsLoggedIn();
-        $request = $this->getRequest();
-        $success = 0;
-        if ($request->isPost()) {
-            $data = $request->getPost();
-//            echo "<pre>"; print_r ($data); echo "</pre>"; die;
-            $mydetails = $this->showPersonalProfile($data['user_id']);
-            $data['user_id'] = $mydetails->user_id;
-            $data['uId'] = $mydetails->id;
+        
+$i=0;
+        foreach ($payarr as $key => $value) {
+//echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
          
-            $paymentEntity = new \Payment\Entity\Payment();
-            $paymentEntity->exchangeArray($this->em, $data);
-            $this->em->persist($paymentEntity);
-            $this->em->flush();
-            $success = 1;
-             return $this->redirect()->toUrl('/payment/payment/index');
+       $str = "Congrats ".$value['user_id'].", Your weekly payout generated successfully, with amount Rs ".$value['payit'].", Please check payment, Cutting is applicable." ;
+       echo "<br>".$i++." ".$str;
         }
-        echo $success;
         die;
     }
-
-    public function paymentreleasedAction() {
-        $userdata = $this->_checkIfUserIsLoggedIn();
-        $request = $this->getRequest();
-      return new ViewModel([
-            "data" => "Payment",
-        ]);
-       
-    }
     
-    public function paymentreleasedatserverAction() {
-        $userdata = $this->_checkIfUserIsLoggedIn();
-        
-       $uId = $userdata->Id;
-        $request = $this->getRequest();
-          $table = [
-            ['tb' => 'Payment\Entity\Payment', 'alise' => 'p'],
-            ['tb' => '\Registration\Entity\Registration', 'alise' => 'r', 'on' => "r.id = p.uId", 'join' => 'inner'],
-        ];
-
-        $columns = array(
-            array('db' => "p.id", 'dt' => 1),
-            array('db' => "r.user_id", 'dt' => 2),
-            array('db' => "concat(r.firstName,' ', r.lastName)", 'dt' => 3, "as" => "name"),
-            array('db' => "p.lhs_count", 'dt' => 4),
-            array('db' => "p.rhs_count", 'dt' => 5),
-            array('db' => "p.lhs_bv", 'dt' => 6),
-            array('db' => "p.rhs_bv", 'dt' => 7),
-            array('db' => "p.amounttopay", 'dt' => 8),
-            array('db' => "p.tot_bv", 'dt' => 9),
-            array('db' => "p.created_at", 'dt' => 10),
-            array('db' => "p.status", 'dt' => 11),
-           
-        );
-$where ="";
-if($uId>1){
-        $where = " r.id = $uId ";
-    }
-//$where = [$wherestring, "groupby" => "a.aer_id"];
-        //echo $where;      
-        $datatableobjec = new Datatableresponse1($this->getEntityManager());
-        $result = $datatableobjec->complex($_GET, $table, $columns, $where);
-        $start = $_REQUEST['start'];
-        $start++;
-
-        foreach ($result['data'] as &$res) {
-            $res[0] = (string) $start;
-            $start++;
-        }
-        echo json_encode($result);
-        exit;
-    }
     
-      
     public function invoiceAction() {
          $userdata = $this->_checkIfUserIsLoggedIn();
          $em=$this->em;
@@ -367,6 +567,7 @@ if($uId>1){
                         . "u.user_id,"
                         . "u.firstName,"
                         . "u.lastName,"
+                        . "u.mobileNo,"
                         . "u.node,"
                         . "u.globalpostion,"
                         . "u.status,"
@@ -392,7 +593,7 @@ if($uId>1){
             $user1 = $user1[0];
 //echo "<br> LevalL - ".++$this->levalL;
 //echo " $user->firstName Left - $user1->firstName";
-            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
+            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'mobileNo' => $user1['mobileNo'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
         } else {
             return 0;
         }
@@ -411,6 +612,7 @@ if($uId>1){
                         . "u.user_id,"
                         . "u.firstName,"
                         . "u.lastName,"
+                        . "u.mobileNo,"
                         . "u.node,"
                         . "u.globalpostion,"
                         . "u.status,"
@@ -436,7 +638,7 @@ if($uId>1){
             $user1 = $user1[0];
 //echo "<br> LevalL - ".++$this->levalL;
 //echo " $user->firstName Left - $user1->firstName";
-            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
+            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'mobileNo' => $user1['mobileNo'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
         } else {
             return 0;
         }
