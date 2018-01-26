@@ -26,6 +26,7 @@ class IndexController extends AbstractActionController {
     protected $levelL = 0;
     protected $levelR = 0;
     protected $tree = [];
+    const MinAmountToPay = 600;
 
     /**
      * Returns an instance of the Doctrine entity manager loaded from the service 
@@ -42,7 +43,7 @@ class IndexController extends AbstractActionController {
 
     public function indexAction() {
 
-        $userdata = $this->_checkIfUserIsLoggedIn(); 
+        $userdata = $this->_checkIfUserIsLoggedIn();
         $leftNode = $this->hasleft($userdata->Id);
         $rightNode = $this->hasright($userdata->Id);
         $this->leftChlidDataArr[] = $leftNode;
@@ -65,10 +66,10 @@ class IndexController extends AbstractActionController {
             'baseValue' => 0,
             'price' => 0,
             'pStatus' => 0,
-        ); 
+        );
         array_push($datas, array_merge($userAtLeft1, $userAtRight1));
         $arrm = array();
-         $arrm [] = $datas[0]; 
+        $arrm [] = $datas[0];
         foreach ($datas as $key1 => $id1) {
 
             foreach ($id1 as $key => $id) {
@@ -76,8 +77,8 @@ class IndexController extends AbstractActionController {
                     $arrm [] = $id;
             }
         }
-        
-  
+
+
         $payarr = array();
         /* =======  */
         $em = $this->getEntityManager();
@@ -89,7 +90,7 @@ class IndexController extends AbstractActionController {
 //        $datas = $qb->getQuery()->getArrayResult();
 //        echo "<pre>"; print_r ($datas); echo "</pre>"; die;
         $PayCount = 0;
-$first = 0;
+        $first = 0;
         foreach ($arrm as $key => $id) {
 
             unset($this->rightChlidDataArr);
@@ -155,45 +156,52 @@ $first = 0;
 //       echo $id['id']." = "; 
 //       echo "bvl : $totalBvL, total price: $totalPriceL , count: $lscountL :==: bvl : $totalBvR, total price: $totalPriceR , count: $lscountR <br>";
 //            if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && $lscountR != $lscountL) {
-             $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
-             
-             /* ======== My Info============  */
-             if($first==0){
-              $myInfo['lscountL'] = $lscountL;
+            $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+
+            /* ======== My Info============  */
+            if ($first == 0) {
+                $myInfo['lscountL'] = $lscountL;
                 $myInfo['lscountR'] = $lscountR;
                 $myInfo['totalcountLR'] = $lscountL + $lscountR;
                 $myInfo['totalbiznessR'] = $totalbiznessR;
                 $myInfo['totalbiznessL'] = $totalbiznessL;
                 $myInfo['id'] = $id['id'];
-                    $myInfo['user_id'] = $id['user_id'];
-                    $myInfo['fullName'] = $id['firstName'] . " " . $id['lastName'];
-                    $myInfo['totalBvL'] = $totalBvL;
-                    $myInfo['totalPriceL'] = $totalPriceL;
+                $myInfo['user_id'] = $id['user_id'];
+                $myInfo['fullName'] = $id['firstName'] . " " . $id['lastName'];
+                $myInfo['totalBvL'] = $totalBvL;
+                $myInfo['totalPriceL'] = $totalPriceL;
 //                $myInfo['lscountL'] = $lscountL;
-                    $myInfo['totalBvR'] = $totalBvR;
-                    $myInfo['totalPriceR'] = $totalPriceR;
+                $myInfo['totalBvR'] = $totalBvR;
+                $myInfo['totalPriceR'] = $totalPriceR;
 //                $myInfo['lscountR'] = $lscountR;
-                    $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
-                    $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
+                $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+                $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
 
-                    $paddi = intVal($bvpadd / 100) + intVal(($bvpadd % 100) / 50);
+                $paddi = $paddi = intVal(($bvpadd / 100)) + (($bvpadd > 50) ? 1 : 0);
 
-                    $willDeductForPadding = $willpay - (($paddi * 10) * $id['bvrate']) + $paddi;
+                $willDeductForPadding = $willpay - (($paddi * 10) * $id['bvrate']) + $paddi;
 
-                   $myInfo['willPay'] = $willDeductForPadding - $actualPayment;
-                    $myInfo['actualPayment'] = $willpay;
-                    $first++;
-             }
-             /* ======== My Info============  */
-            
-            if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && (($willpay != $actualPayment) && ($willpay-$actualPayment)>1200 )) {
-               
+                $myInfo['willPay'] = $willDeductForPadding - $actualPayment;
+                $myInfo['actualPayment'] = $willpay;
+                $first++;
+            }
+            /* ======== My Info============  */
+
+            $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
+
+            $paddi = intVal(($bvpadd / 100)) + (($bvpadd > 50) ? 1 : 0);
+
+            $willDeductForPadding = ($willpay - $actualPayment) - (($paddi * 10) * $id['bvrate']) + $paddi;
+            $willDeductForPadding = $willDeductForPadding - (($paddi * 10) * $id['bvrate']) + $paddi;
+
+            if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && ($willDeductForPadding >= self::MinAmountToPay )) {
+
                 $payarr[$PayCount]['lscountL'] = $lscountL;
                 $payarr[$PayCount]['lscountR'] = $lscountR;
                 $payarr[$PayCount]['totalcountLR'] = $lscountL + $lscountR;
                 $payarr[$PayCount]['totalbiznessR'] = $totalbiznessR;
                 $payarr[$PayCount]['totalbiznessL'] = $totalbiznessL;
-                
+
                 if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && ($lscountR + $lscountL) >= 3) {
                     $payarr[$PayCount]['id'] = $id['id'];
                     $payarr[$PayCount]['user_id'] = $id['user_id'];
@@ -204,24 +212,19 @@ $first = 0;
                     $payarr[$PayCount]['totalBvR'] = $totalBvR;
                     $payarr[$PayCount]['totalPriceR'] = $totalPriceR;
 //                $payarr[$PayCount]['lscountR'] = $lscountR;
-                    $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
-                    $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
+                    // $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
 
-                    $paddi = intVal($bvpadd / 100) + intVal(($bvpadd % 100) / 50);
 
-                    $willDeductForPadding = $willpay - (($paddi * 10) * $id['bvrate']) + $paddi;
-
-                    $payarr[$PayCount]['willPay'] = $willDeductForPadding - $actualPayment;
+                    $payarr[$PayCount]['willPay'] = $willDeductForPadding;
                     $payarr[$PayCount]['actualPayment'] = $willpay;
 
                     $PayCount++;
                 }
             }
         }
- 
 
         /* =======  */
- 
+
         $this->layout()->setVariable('UserSession', $userdata);
         return new ViewModel([
             "userdata" => $userdata,
@@ -256,13 +259,13 @@ $first = 0;
             $mydetails = $this->showPersonalProfile($data['user_id']);
             $data['user_id'] = $mydetails->user_id;
             $data['uId'] = $mydetails->id;
-         
+
             $paymentEntity = new \Payment\Entity\Payment();
             $paymentEntity->exchangeArray($this->em, $data);
             $this->em->persist($paymentEntity);
             $this->em->flush();
             $success = 1;
-             return $this->redirect()->toUrl('/payment/payment/index');
+            return $this->redirect()->toUrl('/payment/payment/index');
         }
         echo $success;
         die;
@@ -271,18 +274,17 @@ $first = 0;
     public function paymentreleasedAction() {
         $userdata = $this->_checkIfUserIsLoggedIn();
         $request = $this->getRequest();
-      return new ViewModel([
+        return new ViewModel([
             "data" => "Payment",
         ]);
-       
     }
-    
+
     public function paymentreleasedatserverAction() {
         $userdata = $this->_checkIfUserIsLoggedIn();
-        
-       $uId = $userdata->Id;
+
+        $uId = $userdata->Id;
         $request = $this->getRequest();
-          $table = [
+        $table = [
             ['tb' => 'Payment\Entity\Payment', 'alise' => 'p'],
             ['tb' => '\Registration\Entity\Registration', 'alise' => 'r', 'on' => "r.id = p.uId", 'join' => 'inner'],
         ];
@@ -299,12 +301,11 @@ $first = 0;
             array('db' => "p.tot_bv", 'dt' => 9),
             array('db' => "p.created_at", 'dt' => 10),
             array('db' => "p.status", 'dt' => 11),
-           
         );
-$where ="";
-if($uId>1){
-        $where = " r.id = $uId ";
-    }
+        $where = "";
+        if ($uId > 1) {
+            $where = " r.id = $uId ";
+        }
 //$where = [$wherestring, "groupby" => "a.aer_id"];
         //echo $where;      
         $datatableobjec = new Datatableresponse1($this->getEntityManager());
@@ -319,10 +320,10 @@ if($uId>1){
         echo json_encode($result);
         exit;
     }
-    
-      
-      public function paymentAlertMsgsAction() {
 
+    /// SMS (MSG) TO CUSTOMER of Payment 
+   public function paymentAlertMsgsAction() {
+//die("STOP ! karun ghay");
         $userdata = $this->_checkIfUserIsLoggedIn();
 //        echo $userdata->user_id;
         $leftNode = $this->hasleft($userdata->Id);
@@ -439,8 +440,15 @@ if($uId>1){
 //       echo "bvl : $totalBvL, total price: $totalPriceL , count: $lscountL :==: bvl : $totalBvR, total price: $totalPriceR , count: $lscountR";
 //            if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && $lscountR != $lscountL) {
              $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
-            
-            if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && (($willpay != $actualPayment) && ($willpay-$actualPayment)>1200 )) {
+            $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
+
+            $paddi = intVal(($bvpadd / 100)) + (($bvpadd > 50) ? 1 : 0);
+
+            $willDeductForPadding = ($willpay - $actualPayment) - (($paddi * 10) * $id['bvrate']) + $paddi;
+            $willDeductForPadding = $willDeductForPadding - (($paddi * 10) * $id['bvrate']) + $paddi;
+
+            if ((($rhs_count != $lscountR) || ($lhs_count != $lscountL)) && ($willDeductForPadding >= self::MinAmountToPay )) {
+
                
                 $payarr[$PayCount]['lscountL'] = $lscountL;
                 $payarr[$PayCount]['lscountR'] = $lscountR;
@@ -459,14 +467,8 @@ if($uId>1){
                     $payarr[$PayCount]['totalBvR'] = $totalBvR;
                     $payarr[$PayCount]['totalPriceR'] = $totalPriceR;
 //                $payarr[$PayCount]['lscountR'] = $lscountR;
-                    $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
-                    $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
-
-                    $paddi = intVal($bvpadd / 100) + intVal(($bvpadd % 100) / 50);
-
-                    $willDeductForPadding = $willpay - (($paddi * 10) * $id['bvrate']) + $paddi;
-
-                    $payarr[$PayCount]['willPay'] = $willDeductForPadding - $actualPayment;
+                    
+                    $payarr[$PayCount]['willPay'] = $willDeductForPadding;
                     $payarr[$PayCount]['actualPayment'] = $willpay;
                      $amounttopay = ($payarr[$PayCount]['willPay'] > 50000) ? 50000 : ($payarr[$PayCount]['willPay']);
                      $lapsoncap = ($payarr[$PayCount]['willPay'] > 50000) ? ($payarr[$PayCount]['willPay'] - 50000) : 0;
@@ -482,36 +484,37 @@ if($uId>1){
 //   echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
 
         /* =======  */
-        
+//        $sms=new sms();
 $i=0;
         foreach ($payarr as $key => $value) {
 //echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
-         
+       $mobile="91".$value['mobileNo'];
        $str = "Congrats ".$value['user_id'].", Your weekly payout generated successfully, with amount Rs ".$value['payit'].", Please check payment, Cutting is applicable." ;
-       echo "<br>".$i++." ".$str;
+     echo "<br>".$str;  
+//        $param=["mobile"=>$mobile,"message"=>urlencode($str)];
+//        $sms->sendSms($param);
         }
-        die;
-    }
-    
-    
-    public function invoiceAction() {
-         $userdata = $this->_checkIfUserIsLoggedIn();
-         $em=$this->em;
-         $this->layout()->setVariable('UserSession', $userdata);
-          $request = $this->getRequest();
-           if ($request->isPost()) {
-           $data = $request->getPost();
-          $paymentarr = $em->getRepository("\Payment\Entity\Payment")->find($data['id']);
-          $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $paymentarr->uId));
-          $personalInfo = $em->getRepository('Dashboard\Entity\PersonalEntity')->findOneBy(array('uId' => $paymentarr->uId));
-//          echo "<pre>"; print_r ($paymentarr); echo "</pre>"; die;
-         return new ViewModel(["user" => $user,"paymentarr"=>$paymentarr,"personalInfo"=>$personalInfo]);
-           }else{
-               echo "error"; die;
-           }
+        
+        die("ssss");
     }
 
-    
+    public function invoiceAction() {
+        $userdata = $this->_checkIfUserIsLoggedIn();
+        $em = $this->em;
+        $this->layout()->setVariable('UserSession', $userdata);
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $data = $request->getPost();
+            $paymentarr = $em->getRepository("\Payment\Entity\Payment")->find($data['id']);
+            $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $paymentarr->uId));
+            $personalInfo = $em->getRepository('Dashboard\Entity\PersonalEntity')->findOneBy(array('uId' => $paymentarr->uId));
+//          echo "<pre>"; print_r ($paymentarr); echo "</pre>"; die;
+            return new ViewModel(["user" => $user, "paymentarr" => $paymentarr, "personalInfo" => $personalInfo]);
+        } else {
+            echo "error";
+            die;
+        }
+    }
 
     /*   FIND USER'S LEFT AND RIGHT TREE SEPARATELY */
 
