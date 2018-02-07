@@ -148,19 +148,20 @@ public function submitSponsorAction() {
             $epin= $posteddata['epin'];
             $status= 1;
             $topup_uid=$posteddata['topup_uid'];
-            if($productId>0 && $epin>0 && $topup_uid>0) {
+            if($productId>0 && $epin>0 && $topup_uid>0 ) {
          $em = $this->getEntityManager();
           $qb = $em->createQueryBuilder();
            $q = $qb->update('\Registration\Entity\Registration', 'user')                        
                         ->set('user.epin', ':epin') 
                         ->set('user.product', ':productId')                          
                         ->set('user.status', ':status')                          
-                        ->where("user.id = $topup_uid")                          
+                        ->where("user.id = $topup_uid AND user.product != ".$this->nullProduct($productId))                          
                         ->setParameter('epin', $epin)
                         ->setParameter('productId', $productId)
                         ->setParameter('status', $status)
                         ->getQuery();
                 $p = $q->execute();
+                
                 
          $qb = $em->createQueryBuilder();
            $q = $qb->update('\Registration\Entity\Epin', 'ep')                        
@@ -176,6 +177,10 @@ public function submitSponsorAction() {
         exit;
     }
 
+    function nullProduct($productId){
+        return = 12; 
+    }
+    
     public function noBvUsers() {
         $qb = $this->em->createQueryBuilder();
         $qb->select("u.id,"
