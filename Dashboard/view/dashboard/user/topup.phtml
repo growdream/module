@@ -147,6 +147,7 @@ $this->headTitle($title);
         $(document).on('click','.addtopup', function () {
             $('#modaluserid').empty();
             $('#product').val('');
+            $('#product option[value="12"]').remove();
             $('#epin').empty();
             $('#modaluserid').val($(this).attr('uId'));
              $('#myModal').modal('show');
