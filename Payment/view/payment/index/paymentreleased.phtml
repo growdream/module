@@ -54,12 +54,12 @@ $this->headTitle($title);
     td = $('#userList').DataTable({
         // stateSave: true,
         responsive: true,
-         dom: 'Bfrtip',
+         dom: 'lfBsrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ],
         "language": {
-            "processing": '<div class="LoadingMsg"><img src="/images/loading.gif">&nbsp; Loading....</div>',
+            "processing": '<div class="LoadingMsg"><img src="/images/loading.gif" width="35">&nbsp; Loading....</div>',
            // "info": "of _TOTAL_ entries.",
             "lengthMenu": "Showing _MENU_",
         },
@@ -121,3 +121,7 @@ $(document).on("click",".icon_printer", function(){
     form.submit();
 });
 </script>
+<style>
+  .dt-buttons{ padding: 10px;}
+</style>
+    
