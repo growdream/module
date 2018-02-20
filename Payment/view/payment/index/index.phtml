@@ -87,7 +87,8 @@ if ($userdata->Id == 1) {
         <div  class="col-lg-12">
             <div class="col-lg-12 col-sm-12" style="overflow: auto">
                 <div style="display: none" >
-                    <form action="makepayment" method="post" id="myform">
+                    <!--<form action="makepayment" method="post" id="myform">-->
+                    <form id="myform">
 
                         <input type="text" name="user_id" id="user_id" value="0">
                         <input type="text" name="lhs_count" id="lhs_count" value="0">
@@ -102,7 +103,8 @@ if ($userdata->Id == 1) {
                         <input type="text" name="admincharges" id="admincharges" value=""> 
                         <input type="text" name="tds" id="tds" value=""> 
 
-                        <input type="submit" name="submit" id="submit" id="submit" >
+                        <!--<input type="submit" name="submit" id="submit" id="submit" >-->
+                        <!--<button id="submit" name="button">Submit</button>-->
                         <input type="reset" name="reset" id="reset" id="reset" >
                     </form>  
                 </div>
@@ -179,7 +181,7 @@ if ($userdata->Id == 1) {
                                     echo "<td class='amounttopay'>" . $payit1 . "</td>";
  
                                     echo "<td class='lapsoncap'>" . $lapsoncap . "</td>";
-                                    echo "<td> <button class='btn btn-success' id='" . $value['user_id'] . "' onclick=makepayment(this.id) > Make Payment</button> </td>";
+                                    echo "<td> <button class='btn btn-success mkpayment' id='" . $value['user_id'] . "' onclick=makepayment(this.id) > Make Payment</button> </td>";
 
                                     echo "</tr>";
                                     $rscount++;
@@ -233,7 +235,8 @@ if ($userdata->Id == 1) {
 
     function makepayment(id) {
         $('#reset').trigger('click');
-        if (confirm("Are sure to make this payment? ")) {
+//        if (confirm("Are sure to make this payment? ")) {
+        if (1) {
             var user_id = ($("." + id + " .user_id").text());
             var totalBvL = parseFloat($("." + id + " .totalBvL").text());
             var totalBvR = parseFloat($("." + id + " .totalBvR").text());
@@ -262,8 +265,33 @@ if ($userdata->Id == 1) {
             $("#tds").val(tds);
             $("#pay_least_bv").val((totalBvL > totalBvR) ? totalBvR : totalBvL);
 
-            $('#submit').trigger('click');
+//            $('#submit').trigger('click');
+sumbitform();
         }
 
     }
 </script>
+ <script>
+      $(function () {
+$( ".mkpayment" ).each(function( index ) {
+   index.trigger('click');
+});
+      
+         
+ function sumbitform(){
+          e.preventDefault();
+
+          $.ajax({
+            type: 'post',
+//            async: false,
+            url: 'makepayment',
+            data: $('#myform').serialize(),
+            success: function () {
+              console.log('form was submitted');
+            }
+          });
+
+    }
+
+      });
+    </script>
