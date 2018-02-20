@@ -1,0 +1,89 @@
+<?php
+//$imgFile = "/images/certificate.png"; 
+//echo "<pre>"; print_r ($welcomeData); echo "</pre>"; die; 
+
+$name = "Suraj Khandale";
+$userId = $welcomeData[0]->user_id;
+$imgFile = "/images/certificate.png"; // Blank certiface
+$img_name = $welcomeData[0]->user_id;
+$date = date_format(date_create($welcomeData[0]->created_at), "d-M-Y");
+$img_name = $img_name . ".png";
+
+
+if (file_exists($imgFile)) {
+// creating image 
+    $img = imagecreatefrompng('/images/certificate.png');
+// Creating Color Codes
+    $black = imagecolorallocate($img, 0, 0, 0);
+    $grey = imagecolorallocate($img, 128, 128, 128);
+    $bg_color = imagecolorallocate($img, 255, 255, 255);
+// Fonts Path
+    $font = 'fonts/pt-serif/PTF76F.ttf';
+    $fontDate = 'fonts/pt-serif/PTF75F.ttf';
+    
+// Adding the text on image
+    imagefttext($img, 23, 0, 355, 346, $black, $font, $name);
+    imagefttext($img, 13, 0, 185, 550, $black, $fontDate, $name);
+    imagefttext($img, 12, 0, 189, 576, $black, $fontDate, $userId);
+    imagefttext($img, 12, 0, 189, 600, $black, $fontDate, $date);
+
+    imagepng($img, $img_name);
+    
+}
+?>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <div class="panel-body">
+                <div class="welcomeForm">
+                    <div class="fromInner">
+                        <div class="container">
+                            <table class="table table-borderless" id="certificate" width="100%">
+                                <tr>
+                                    <td>
+                                        <img src="<?php echo $imgFile; ?>">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<style type="text/css">
+    .welcomeForm{
+        border: 1px solid #ccc;
+    }
+    .fromInner{
+        padding: 10px;
+    }
+    div{
+        margin: 3px 0;
+    }
+</style>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="/datatable/dataTables.bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" />
+
+<script>
+    td = $('#certificate').DataTable({
+        // stateSave: true,
+        responsive: true,
+        dom: 'lfBsrtip',
+        buttons: [
+            'pdf', 'print'
+        ],
+    });
+    </script>
