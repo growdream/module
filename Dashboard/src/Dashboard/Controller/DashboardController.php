@@ -591,41 +591,57 @@ die;
         return new ViewModel(["user" => $user, "welcomeData" => $welcomeData]);
     }
 
-    public function testAction() {
-//        $this->treedata=[];
-//        $this->treedata[]=1;
-        $this->callme(2);
-//        print_r($this->treedata);
-//        die;
-//        print_r($this->treedata);
-//        $this->haschild(2);
-//        $gp=3;
-//        $start=3;
-//        $count=$start+14;
-//        
-//        $treeData=array();
-//        for($i=0;$i<4;$i++){
-//            $k=pow(2,$i);
-//            $index=0;
-//         for($j=1;$j<=$k;$j++){
-//           echo ", ". $index;
-//           $index++;
-//        }   
-//        echo "<br>";
-////        $index++;
-//        }
-//        
-////        for($i=$start;$i<=$count;$i++){
-////            $x=  $this->hasglobalposition($i);
-////            $treeData[$index] =  $this->hasglobalposition($x);
-////            $index++;
-////        }
-        ////        }
-        ksort($this->treedata);
-        echo "<pre>";
-        print_r($this->treedata);
-        echo "</pre>";
-        die;
+    public function testAction() { 
+         $em = $this->getEntityManager();
+        $sponsor = "GDM937025";
+        $DirectpinArr = $em->getRepository('Registration\Entity\Directpin')->findOneBy(array('userId' => $sponsor));
+        echo "<pre>"; print_r ($DirectpinArr); echo "</pre>";  
+        echo (count($DirectpinArr)>0)?0:1; // 0= Already Exists Not TO proceed, 1= Not Exists  Allow to Proceed
+        $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('user_id' => $sponsor));
+        $UserGP = $user->globalpostion;
+
+        $qb = $em->createQueryBuilder();
+        $qb->select("u.globalpostion")
+                ->from("Registration\Entity\Registration", "u")
+                // ->leftJoin("Registration\Entity\Registration", "uu", "WITH", "uu.sponserId = u.sponserId")
+                ->where("u.sponserId='" . $sponsor . "'");
+        $GpArray = $qb->getQuery()->getArrayResult();
+        $GpArray = array_column($GpArray, 'globalpostion');
+         $leftSideUser = 0;
+        $rightSideUser = 0;
+        echo "<pre>"; print_r ($GpArray); echo "</pre>"; 
+        //$UserGP = 25;
+        //$GpArray = [201, 414];
+        foreach ($GpArray as $lastGP) {
+            for ($i = 0; $i < 64; $i++) {
+                $defth = $i;
+                $x = pow(2, $defth);
+                $stratNo = $x * $UserGP;
+                $endNo = ($x * $UserGP + $x - 1);
+                if ($lastGP >= $stratNo && $lastGP <= $endNo) {
+                    if ($lastGP < (($x * $UserGP ) + ($x / 2))) {
+                        $leftSideUser = $lastGP;
+                    }
+                    if ($lastGP >= (($x * $UserGP ) + ($x / 2))) {
+                        $rightSideUser = $lastGP;
+                    }
+                }
+                if ($lastGP < $endNo) {
+                    break;
+                }
+            }
+        }
+        $Dpin = new \Registration\Entity\Directpin($em);
+                $pinUser = $em->getRepository("Registration\Entity\Registration")->findOneBy(array('user_id' => $data['userId']));
+                $data['uId'] =$sponsor;
+                    $data['pinId'] = "ASdasdd";                    
+                    $data['userId'] = "GDM937025";                    
+                    $Dpin->exchangeArray($data);
+                    $em->persist($Dpin);
+                $em->flush();
+                $msg = "1";
+        echo "<pre>"; echo $rightSideUser; "</pre>";  
+        echo "<pre>"; echo $leftSideUser; "</pre>"; die;
         die;
     }
     
