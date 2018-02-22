@@ -8,6 +8,7 @@ use Zend\Session\SessionManager;
 use Zend\Authentication\Storage\Session;
 use Zend\Session\Container;
 
+use Dashboard\Service\Datatableresponse1;
 class ProductController extends AbstractActionController {
 
     protected $em;
@@ -37,7 +38,44 @@ class ProductController extends AbstractActionController {
             "dataProduct" => $allProduct,
         ]);
     }
+public function allproductserversideAction() {
+        $table = [
+            ['tb' => 'Registration\Entity\Product', 'alise' => 'u'], 
+        ];
 
+        $columns = array(
+            array('db' => "u.id", 'dt' => 1),
+            array('db' => "u.productCatId", 'dt' => 2),
+            array('db' => "u.productName", 'dt' => 3),
+            array('db' => "u.description", 'dt' => 4),
+            array('db' => "u.mrp", 'dt' => 5),
+            array('db' => "u.price", 'dt' => 6),
+            array('db' => "u.baseValue", 'dt' => 7),
+            array('db' => "u.status", 'dt' => 8),
+//            array('db' => "ifnull(date_format(a.aer_in_time, '%H:%i'),'No SignIn')", 'dt' => 2, 'as' => 'intime', "order" => "a.aer_in_time"),
+        );
+
+        $where ="";
+        if($_GET['status']!=""){
+        $where = "u.status = ".$_GET['status'];
+        }
+//$where = [$wherestring, "groupby" => "a.aer_id"];
+        //echo $where;      
+        $datatableobjec = new Datatableresponse1($this->getEntityManager());
+        $result = $datatableobjec->complex($_GET, $table, $columns, $where);
+        $start = $_REQUEST['start'];
+        $start++;
+
+        foreach ($result['data'] as &$res) {
+            $res[0] = (string) $start;
+            $start++;
+        }
+        echo json_encode($result);
+        exit;
+    }
+
+    
+    
     public function allepinAction() {
         $userdata = $this->_checkIfUserIsLoggedIn();
 //        echo $userdata->user_id;
@@ -46,6 +84,31 @@ class ProductController extends AbstractActionController {
         return new ViewModel([
             "userdata" => $allPin,
         ]);
+    }
+    public function changeproductstatusAction() {
+        $userdata = $this->_checkIfUserIsLoggedIn();
+//        echo $userdata->user_id;
+         $request = $this->getRequest();
+         $data = $request->getPost(); 
+         $statusto = $data['statusto'];
+         $statusof = $data['statusof'];
+                 
+                 
+           $em = $this->getEntityManager();
+          $qb = $em->createQueryBuilder();
+          try{
+         $q = $qb->update('\Registration\Entity\Product', 'p')
+                            ->set('p.status', "'$statusto'")                            
+                            ->where("p.id = :statusof")
+                            ->setParameter('statusof', $statusof)
+                            ->getQuery();
+                    $p = $q->execute();
+                    echo "success";
+          }
+          catch(Exception $e){
+              echo "Fail";
+          }
+                    die;
     }
 
     public function userepinAction() {
