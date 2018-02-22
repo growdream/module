@@ -590,6 +590,31 @@ die;
         $this->layout()->setVariable('UserSession', $userdata);
         return new ViewModel(["user" => $user, "welcomeData" => $welcomeData]);
     }
+    
+    
+    public function certificateAction() {
+       $userdata = $this->_checkIfUserIsLoggedIn();
+        $em = $this->getEntityManager();
+        $request = $this->getRequest();
+        $uId = $userdata->Id;
+        $user = [];
+        if (empty($user)) {
+            $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $uId));
+//            print_r($user); die("user data");
+        }
+        $prsnlInfoArr = $em->getRepository("\Dashboard\Entity\PersonalEntity")->findOneBy(array('uId' => $uId));
+         
+        $welcomeData = [];
+        $welcomeData = [$user,$prsnlInfoArr];
+        //$treedata = $this->findLeftRightCount(0, $treedata[0][0], $treedata);
+//         print_r($welcomeData);         die();
+
+        unset($userdata->password);  // Removed Password from Session 
+
+        $this->layout()->setVariable('UserSession', $userdata);
+        return new ViewModel(["user" => $user, "welcomeData" => $welcomeData]);
+    }
+
 
     public function testAction() { 
          $em = $this->getEntityManager();
