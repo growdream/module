@@ -332,9 +332,10 @@ if($uId>1){
         exit;
     }
     
-      
-      public function paymentAlertMsgsAction() {
+    
+     public function paymentAlertMsgsAction() {
 //("STOP ! karun ghay");
+//die("paymentAlertMsgs");
         $userdata = $this->_checkIfUserIsLoggedIn();
 //        echo $userdata->user_id;
         $leftNode = $this->hasleft($userdata->Id);
@@ -474,6 +475,7 @@ if($uId>1){
                     $payarr[$PayCount]['id'] = $id['id'];
                     $payarr[$PayCount]['user_id'] = $id['user_id'];
                     $payarr[$PayCount]['fullName'] = $id['firstName'] . " " . $id['lastName'];
+                    $payarr[$PayCount]['firstName'] = $id['firstName'];
                     $payarr[$PayCount]['mobileNo'] = $id['mobileNo'];
                     $payarr[$PayCount]['totalBvL'] = $totalBvL;
                     $payarr[$PayCount]['totalPriceL'] = $totalPriceL;
@@ -488,7 +490,7 @@ if($uId>1){
                      $lapsoncap = ($payarr[$PayCount]['willPay'] > 50000) ? ($payarr[$PayCount]['willPay'] - 50000) : 0;
                     $payit1 = $amounttopay - Round(($amounttopay * .20), 2); 
                     
-                    $payarr[$PayCount]['payit'] = $payit1;
+                    $payarr[$PayCount]['payit'] = $amounttopay;
 
                     $PayCount++;
                 }
@@ -503,14 +505,16 @@ $i=0;
         foreach ($payarr as $key => $value) {
 //echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
        $mobile="91".$value['mobileNo'];
-       $str = "Congrats ".$value['user_id'].", Your weekly payout generated successfully, with amount Rs ".$value['payit'].", Please check payment, Cutting is applicable." ;
+       $str = "Congrats ".ucwords($value['firstName'])." - ".$value['user_id'].", Your weekly payout generated successfully, with amount Rs ".$value['payit'].", Please check payment, Cutting is applicable." ;
        
        //// UNCLOMMENT FOLLOWING CODE WHEN WANT TO PAYMENT
-       echo "<br><br>".$str;
-        //$param=["mobile"=>$mobile,"message"=>urlencode($str)];
-        //$sms->sendSms($param);
+    //echo "Please uncomment for payment ";
+    //Uncomment 2 lines to send msg
+        echo "<br><br>".$str;
+        $param=["mobile"=>$mobile,"message"=>urlencode($str)];
+        $sms->sendSms($param);
+    //End Uncomment
         }
-        
         die("ssss");
     }
     
