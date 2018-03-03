@@ -11,7 +11,6 @@ use Registration\Entity\Registration;
 use Registration\Form\RegistrationForm;
 use Dashboard\Service\Datatableresponse1;
 
-
 class UserController extends AbstractActionController {
 
     protected $em;
@@ -35,12 +34,12 @@ class UserController extends AbstractActionController {
         }
         return $this->em;
     }
-    
-        public function usersAction() {
-         $userdata = $this->_checkIfUserIsLoggedIn();
+
+    public function usersAction() {
+        $userdata = $this->_checkIfUserIsLoggedIn();
         $this->layout()->setVariable('UserSession', $userdata);
     }
-    
+
     public function userserversideAction() {
         $table = [
             ['tb' => '\Registration\Entity\Registration', 'alise' => 'u'],
@@ -50,7 +49,7 @@ class UserController extends AbstractActionController {
         $columns = array(
             array('db' => "u.id", 'dt' => 1),
             array('db' => "u.user_id", 'dt' => 2),
-            array('db' => "concat(u.firstName,' ',u.lastName)", 'dt' => 3,"as"=>"uname"),
+            array('db' => "concat(u.firstName,' ',u.lastName)", 'dt' => 3, "as" => "uname"),
             array('db' => "u.parent", 'dt' => 4),
             array('db' => "u.sponserId", 'dt' => 5),
             array('db' => "u.status", 'dt' => 6),
@@ -58,9 +57,9 @@ class UserController extends AbstractActionController {
         );
 
         $where = "";
-        
-        if($_GET['category']!=""){
-            $where = "u.status=".$_GET['category'];
+
+        if ($_GET['category'] != "") {
+            $where = "u.status=" . $_GET['category'];
         }
 //$where = [$wherestring, "groupby" => "a.aer_id"];
         //echo $where;      
@@ -77,23 +76,23 @@ class UserController extends AbstractActionController {
         exit;
     }
 
-public function submitSponsorAction() {
-        $request=  $this->getRequest();
+    public function submitSponsorAction() {
+        $request = $this->getRequest();
         $data = $request->getPost();
         $this->getEntityManager();
-        
-        $user=  $this->em->getRepository('Registration\Entity\Registration')->find($data["userid"]);
-        $sponcer=  $this->em->getRepository('Registration\Entity\Registration')->findOneBy(["user_id"=>$data["sponserId"]]);
-        if(empty($user) || empty($sponcer)){
-            echo json_encode(['success'=>"0","msg"=>"userId not available"]);
-        }
-        else{
-            $user->sponserId=strtoupper($data['sponserId']);
+
+        $user = $this->em->getRepository('Registration\Entity\Registration')->find($data["userid"]);
+        $sponcer = $this->em->getRepository('Registration\Entity\Registration')->findOneBy(["user_id" => $data["sponserId"]]);
+        if (empty($user) || empty($sponcer)) {
+            echo json_encode(['success' => "0", "msg" => "userId not available"]);
+        } else {
+            $user->sponserId = strtoupper($data['sponserId']);
             $this->em->flush();
-            echo json_encode(['success'=>"1","msg"=>"Sponcer Id Updated successfuly"]);
+            echo json_encode(['success' => "1", "msg" => "Sponcer Id Updated successfuly"]);
         }
         exit;
     }
+
     public function alluserAction() {
         $userdata = $this->_checkIfUserIsLoggedIn();
 //        echo $userdata->user_id;
@@ -121,9 +120,11 @@ public function submitSponsorAction() {
             "userAtLeft" => $userAtLeft,
         ]);
     }
-/* Created by Suraj 03-12 */
+
+    /* Created by Suraj 03-12 */
+
     public function topupAction() {
-         $userdata = $this->_checkIfUserIsLoggedIn();
+        $userdata = $this->_checkIfUserIsLoggedIn();
         $id = $userdata->Id;
         $em = $this->getEntityManager();
         $form = new RegistrationForm($em);
@@ -137,50 +138,56 @@ public function submitSponsorAction() {
             "loginuid" => $id
         ]);
     }
-    
+
     public function updatetopupAction() {
-         $userdata = $this->_checkIfUserIsLoggedIn();
+        $userdata = $this->_checkIfUserIsLoggedIn();
         $id = $userdata->Id;
         $request = $this->getRequest();
         $posteddata = $request->getPost();
-        
-            $productId=$posteddata['productId'];
-            $epin= $posteddata['epin'];
-            $status= 1;
-            $topup_uid=$posteddata['topup_uid'];
-            if($productId>0 && $epin>0 && $topup_uid>0 ) {
-         $em = $this->getEntityManager();
-          $qb = $em->createQueryBuilder();
-           $q = $qb->update('\Registration\Entity\Registration', 'user')                        
-                        ->set('user.epin', ':epin') 
-                        ->set('user.product', ':productId')                          
-                        ->set('user.status', ':status')                          
-                        ->where("user.id = $topup_uid AND user.product != ".$this->nullProduct($productId))                          
-                        ->setParameter('epin', $epin)
-                        ->setParameter('productId', $productId)
-                        ->setParameter('status', $status)
-                        ->getQuery();
-                $p = $q->execute();
-                
-                
-         $qb = $em->createQueryBuilder();
-           $q = $qb->update('\Registration\Entity\Epin', 'ep')                        
-                        ->set('ep.status', '1') 
-                        ->where("ep.id = $epin")   
-                        ->getQuery();
-                $p = $q->execute();
-                
-                echo json_encode('1'); 
-            }else{
-                 echo json_encode('2'); 
-            }
+
+        $productId = $posteddata['productId'];
+        $epin = $posteddata['epin'];
+        $status = 1;
+        $topup_uid = $posteddata['topup_uid'];
+        if ($productId > 0 && $epin > 0 && $topup_uid > 0) {
+            $em = $this->getEntityManager();
+            $qb = $em->createQueryBuilder();
+            $q = $qb->update('\Registration\Entity\Registration', 'user')
+                    ->set('user.epin', ':epin')
+                    ->set('user.product', ':productId')
+                    ->set('user.status', ':status')
+                    ->where("user.id = $topup_uid AND user.product = " . $qqq)
+                    ->setParameter('epin', $epin)
+                    ->setParameter('productId', $productId)
+                    ->setParameter('status', $status)
+                    ->getQuery();
+            $p = $q->execute();
+
+
+            $qqq = $qb->select("u.id  as productId")
+                    ->from("Registration\Entity\Product", "u")
+                    ->where("u.baseValue = 0 ");
+            //  $dataLeft = $qb->getQuery()->getArrayResult();
+
+
+            $qb = $em->createQueryBuilder();
+            $q = $qb->update('\Registration\Entity\Epin', 'ep')
+                    ->set('ep.status', '1')
+                    ->where("ep.id = $epin")
+                    ->getQuery();
+            $p = $q->execute();
+
+            echo json_encode('1');
+        } else {
+            echo json_encode('2');
+        }
         exit;
     }
 
-    function nullProduct($productId){
-        return = 12; 
+    function nullProduct($productId) {
+        echo "<script>Nitin</script>";
     }
-    
+
     public function noBvUsers() {
         $qb = $this->em->createQueryBuilder();
         $qb->select("u.id,"
@@ -207,6 +214,7 @@ public function submitSponsorAction() {
         $dataNoBv = $qb->getQuery()->getArrayResult();
         return $dataNoBv;
     }
+
     /* Created by Suraj 09-11 */
 
     public function showUsersLeft() {
