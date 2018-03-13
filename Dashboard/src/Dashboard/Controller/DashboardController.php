@@ -175,7 +175,8 @@ class DashboardController extends AbstractActionController {
         $uId = $userdata->Id;
 
         $user = [];
-        if ($request->isPost()) {
+        
+    if ($request->isPost() || $this->params()->fromRoute('id')!="") {
             $postData = $request->getPost();
             if (isset($postData['id'])) {
                 $uId = $postData['id'];
@@ -184,6 +185,9 @@ class DashboardController extends AbstractActionController {
                 $uId = $parent->parentId;
             } else if (isset($postData['searchUserId'])) {
                 $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('user_id' => $postData['searchUserId']));
+            }else if($this->params()->fromRoute('id')!=""){
+                
+                 $uId =$this->params()->fromRoute('id');
             }
         }
 //       print_r($userdata); die('111');
