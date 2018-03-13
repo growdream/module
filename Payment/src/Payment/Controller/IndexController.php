@@ -333,9 +333,11 @@ if($uId>1){
         exit;
     }
     
-      
-      public function paymentAlertMsgsAction() {
+    
+    
+     public function paymentAlertMsgsAction() {
 //("STOP ! karun ghay");
+//die("paymentAlertMsgs");
         $userdata = $this->_checkIfUserIsLoggedIn();
 //        echo $userdata->user_id;
         $leftNode = $this->hasleft($userdata->Id);
@@ -508,11 +510,13 @@ $i=0;
        $str = "Congrats ".ucwords($value['firstName'])." - ".$value['user_id'].", Your weekly payout generated successfully, with amount Rs ".$value['payit'].", Please check payment, Cutting is applicable." ;
        
        //// UNCLOMMENT FOLLOWING CODE WHEN WANT TO PAYMENT
-       echo "<br><br>".$str;
-        //$param=["mobile"=>$mobile,"message"=>urlencode($str)];
-        //$sms->sendSms($param);
+    //echo "Please uncomment for payment ";
+    //Uncomment 2 lines to send msg
+        echo "<br><br>".$str;
+        $param=["mobile"=>$mobile,"message"=>urlencode($str)];
+        $sms->sendSms($param);
+    //End Uncomment
         }
-        
         die("ssss");
     }
     
