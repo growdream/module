@@ -107,7 +107,7 @@ class RegistrationController extends AbstractActionController {
                     if ($epinarr) {
                         $epinarr->status = 1;
                        // echo $epinarr->productId; die("Suraj");
-                        if($epinarr->productId == 20){
+                        if($epinarr->productId == 22){
                             
                            $dpinarr = $em->getRepository("Registration\Entity\Directpin")->findOneBy(array('pinId' => $epinarr->pinId));  
                            $dpinarr->status = 1;
