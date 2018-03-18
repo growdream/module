@@ -27,6 +27,7 @@ class IndexController extends AbstractActionController {
     protected $levelL = 0;
     protected $levelR = 0;
     protected $tree = [];
+
     const MinAmountToPay = 1200;
 
     /**
@@ -42,7 +43,7 @@ class IndexController extends AbstractActionController {
         return $this->em;
     }
 
-     public function indexAction() {
+    public function indexAction() {
 
         $userdata = $this->_checkIfUserIsLoggedIn();
         $leftNode = $this->hasleft($userdata->Id);
@@ -103,7 +104,7 @@ class IndexController extends AbstractActionController {
             $rhs_bv = 0;
             $tot_bv = 0;
             $actualPayment = 0;
-            $pay_least_bv=0;
+            $pay_least_bv = 0;
             $qb = $em->createQueryBuilder();
             $qb->select("p")
                     ->from("Payment\Entity\Payment", "p")
@@ -180,11 +181,11 @@ class IndexController extends AbstractActionController {
                 $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
                 $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
 
-                 $paddi = intVal(($bvpadd / 100)) + (($bvpadd > 50) ? 1 : 0);
-           $willDeductForPadding1 = ($willpay) - (($paddi * 10) * $id['bvrate']) + $paddi;
-           
-            $pay_least_bv_paddi = intVal(($pay_least_bv / 100)) + (($pay_least_bv > 50) ? 1 : 0);
-           $willDeductForPadding = $willDeductForPadding1 - ($actualPayment - (($pay_least_bv_paddi * 10) * $id['bvrate']) + $pay_least_bv_paddi); 
+                $paddi = intVal(($bvpadd / 100)) + (($bvpadd > 50) ? 1 : 0);
+                $willDeductForPadding1 = ($willpay) - (($paddi * 10) * $id['bvrate']) + $paddi;
+
+                $pay_least_bv_paddi = intVal(($pay_least_bv / 100)) + (($pay_least_bv > 50) ? 1 : 0);
+                $willDeductForPadding = $willDeductForPadding1 - ($actualPayment - (($pay_least_bv_paddi * 10) * $id['bvrate']) + $pay_least_bv_paddi);
 
                 $myInfo['willPay'] = $willDeductForPadding;
                 $myInfo['actualPayment'] = $willpay;
@@ -194,24 +195,24 @@ class IndexController extends AbstractActionController {
 
             $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
 
-           $paddi = intVal(($bvpadd / 100)) + (($bvpadd > 50) ? 1 : 0);
-           $willDeductForPadding1 = ($willpay) - (($paddi * 10) * $id['bvrate']) + $paddi;
-           
+            $paddi = intVal(($bvpadd / 100)) + (($bvpadd > 50) ? 1 : 0);
+            $willDeductForPadding1 = ($willpay) - (($paddi * 10) * $id['bvrate']) + $paddi;
+
             $pay_least_bv_paddi = intVal(($pay_least_bv / 100)) + (($pay_least_bv > 50) ? 1 : 0);
-           $willDeductForPadding = $willDeductForPadding1 - ($actualPayment - (($pay_least_bv_paddi * 10) * $id['bvrate']) + $pay_least_bv_paddi); 
+            $willDeductForPadding = $willDeductForPadding1 - ($actualPayment - (($pay_least_bv_paddi * 10) * $id['bvrate']) + $pay_least_bv_paddi);
 
-           //echo "<br> - ".$id['firstName'] . " " . $id['lastName']." => ".  $willDeductForPadding." =>".(($paddi * 10) * $id['bvrate'])."=>".$willpay."->".$actualPayment;
-             if (($willDeductForPadding >= self::MinAmountToPay ) && $id['productId']!=12 ) {
+            //echo "<br> - ".$id['firstName'] . " " . $id['lastName']." => ".  $willDeductForPadding." =>".(($paddi * 10) * $id['bvrate'])."=>".$willpay."->".$actualPayment;
+            if (($willDeductForPadding >= self::MinAmountToPay ) && $id['productId'] != 12) {
 
-                
+
                 $payarr[$PayCount]['lscountL'] = $lscountL;
                 $payarr[$PayCount]['lscountR'] = $lscountR;
                 $payarr[$PayCount]['totalcountLR'] = $lscountL + $lscountR;
                 $payarr[$PayCount]['totalbiznessR'] = $totalbiznessR;
                 $payarr[$PayCount]['totalbiznessL'] = $totalbiznessL;
-              
+
                 if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && ($lscountR + $lscountL) >= 3) {
-                     
+
                     $payarr[$PayCount]['id'] = $id['id'];
                     $payarr[$PayCount]['user_id'] = $id['user_id'];
                     $payarr[$PayCount]['fullName'] = $id['firstName'] . " " . $id['lastName'];
@@ -231,9 +232,9 @@ class IndexController extends AbstractActionController {
                 }
             }
         }
- 
+
         /* =======  */
-  
+
         $this->layout()->setVariable('UserSession', $userdata);
         return new ViewModel([
             "userdata" => $userdata,
@@ -268,7 +269,7 @@ class IndexController extends AbstractActionController {
             $mydetails = $this->showPersonalProfile($data['user_id']);
             $data['user_id'] = $mydetails->user_id;
             $data['uId'] = $mydetails->id;
-         
+
             $paymentEntity = new \Payment\Entity\Payment();
             $paymentEntity->exchangeArray($this->em, $data);
             $this->em->persist($paymentEntity);
@@ -284,18 +285,17 @@ class IndexController extends AbstractActionController {
     public function paymentreleasedAction() {
         $userdata = $this->_checkIfUserIsLoggedIn();
         $request = $this->getRequest();
-      return new ViewModel([
+        return new ViewModel([
             "data" => "Payment",
         ]);
-       
     }
-    
+
     public function paymentreleasedatserverAction() {
         $userdata = $this->_checkIfUserIsLoggedIn();
-        
-       $uId = $userdata->Id;
+
+        $uId = $userdata->Id;
         $request = $this->getRequest();
-          $table = [
+        $table = [
             ['tb' => 'Payment\Entity\Payment', 'alise' => 'p'],
             ['tb' => '\Registration\Entity\Registration', 'alise' => 'r', 'on' => "r.id = p.uId", 'join' => 'inner'],
         ];
@@ -312,12 +312,11 @@ class IndexController extends AbstractActionController {
             array('db' => "p.tot_bv", 'dt' => 9),
             array('db' => "p.created_at", 'dt' => 10),
             array('db' => "p.status", 'dt' => 11),
-           
         );
-$where ="";
-if($uId>1){
-        $where = " r.id = $uId ";
-    }
+        $where = "";
+        if ($uId > 1) {
+            $where = " r.id = $uId ";
+        }
 //$where = [$wherestring, "groupby" => "a.aer_id"];
         //echo $where;      
         $datatableobjec = new Datatableresponse1($this->getEntityManager());
@@ -332,10 +331,8 @@ if($uId>1){
         echo json_encode($result);
         exit;
     }
-    
-    
-    
-     public function paymentAlertMsgsAction() {
+
+    public function paymentAlertMsgsAction() {
 //("STOP ! karun ghay");
 //die("paymentAlertMsgs");
         $userdata = $this->_checkIfUserIsLoggedIn();
@@ -362,10 +359,10 @@ if($uId>1){
             'baseValue' => 0,
             'price' => 0,
             'pStatus' => 0,
-        ); 
+        );
         array_push($datas, array_merge($userAtLeft1, $userAtRight1));
         $arrm = array();
-         $arrm [] = $datas[0]; 
+        $arrm [] = $datas[0];
         foreach ($datas as $key1 => $id1) {
 
             foreach ($id1 as $key => $id) {
@@ -455,24 +452,24 @@ if($uId>1){
 //       echo $id['id']." <br>"; 
 //       echo "bvl : $totalBvL, total price: $totalPriceL , count: $lscountL :==: bvl : $totalBvR, total price: $totalPriceR , count: $lscountR";
 //            if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && $lscountR != $lscountL) {
-           $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
+            $willpay = ($totalPriceR > $totalPriceL) ? $totalPriceL : $totalPriceR;
             $bvpadd = ($totalBvR > $totalBvL) ? $totalBvL : $totalBvR;
 
             $paddi = intVal(($bvpadd / 100)) + (($bvpadd > 50) ? 1 : 0);
-           $willDeductForPadding1 = ($willpay) - (($paddi * 10) * $id['bvrate']) + $paddi;
-           
-            $pay_least_bv_paddi = intVal(($pay_least_bv / 100)) + (($pay_least_bv > 50) ? 1 : 0);
-           $willDeductForPadding = $willDeductForPadding1 - ($actualPayment - (($pay_least_bv_paddi * 10) * $id['bvrate']) + $pay_least_bv_paddi);
-           
-              if (($willDeductForPadding >= self::MinAmountToPay ) && $id['productId']!=12 ) {
+            $willDeductForPadding1 = ($willpay) - (($paddi * 10) * $id['bvrate']) + $paddi;
 
-               
+            $pay_least_bv_paddi = intVal(($pay_least_bv / 100)) + (($pay_least_bv > 50) ? 1 : 0);
+            $willDeductForPadding = $willDeductForPadding1 - ($actualPayment - (($pay_least_bv_paddi * 10) * $id['bvrate']) + $pay_least_bv_paddi);
+
+            if (($willDeductForPadding >= self::MinAmountToPay ) && $id['productId'] != 12) {
+
+
                 $payarr[$PayCount]['lscountL'] = $lscountL;
                 $payarr[$PayCount]['lscountR'] = $lscountR;
                 $payarr[$PayCount]['totalcountLR'] = $lscountL + $lscountR;
                 $payarr[$PayCount]['totalbiznessR'] = $totalbiznessR;
                 $payarr[$PayCount]['totalbiznessL'] = $totalbiznessL;
-                
+
                 if ($lscountR != 0 && $lscountL != 0 && $totalPriceR != 0 && $totalPriceL != 0 && ($lscountR + $lscountL) >= 3) {
                     $payarr[$PayCount]['id'] = $id['id'];
                     $payarr[$PayCount]['user_id'] = $id['user_id'];
@@ -485,13 +482,13 @@ if($uId>1){
                     $payarr[$PayCount]['totalBvR'] = $totalBvR;
                     $payarr[$PayCount]['totalPriceR'] = $totalPriceR;
 //                $payarr[$PayCount]['lscountR'] = $lscountR;
-                    
+
                     $payarr[$PayCount]['willPay'] = $willDeductForPadding;
                     $payarr[$PayCount]['actualPayment'] = $willpay;
-                     $amounttopay = ($payarr[$PayCount]['willPay'] > 50000) ? 50000 : ($payarr[$PayCount]['willPay']);
-                     $lapsoncap = ($payarr[$PayCount]['willPay'] > 50000) ? ($payarr[$PayCount]['willPay'] - 50000) : 0;
-                    $payit1 = $amounttopay - Round(($amounttopay * .20), 2); 
-                    
+                    $amounttopay = ($payarr[$PayCount]['willPay'] > 50000) ? 50000 : ($payarr[$PayCount]['willPay']);
+                    $lapsoncap = ($payarr[$PayCount]['willPay'] > 50000) ? ($payarr[$PayCount]['willPay'] - 50000) : 0;
+                    $payit1 = $amounttopay - Round(($amounttopay * .20), 2);
+
                     $payarr[$PayCount]['payit'] = $amounttopay;
 
                     $PayCount++;
@@ -502,25 +499,26 @@ if($uId>1){
 //   echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
 
         /* =======  */
-        $sms=new sms();
-$i=0;
+        $sms = new sms();
+        $i = 0;
         foreach ($payarr as $key => $value) {
 //echo "<pre>"; print_r ($payarr); echo "</pre>"; die;
-       $mobile="91".$value['mobileNo'];
-       $str = "Congrats ".ucwords($value['firstName'])." - ".$value['user_id'].", Your weekly payout generated successfully, with amount Rs ".$value['payit'].", Please check payment, Cutting is applicable." ;
-       
-       //// UNCLOMMENT FOLLOWING CODE WHEN WANT TO PAYMENT
-    //echo "Please uncomment for payment ";
-    //Uncomment 2 lines to send msg
-        echo "<br><br>".$str;
-        $param=["mobile"=>$mobile,"message"=>urlencode($str)];
-        $sms->sendSms($param);
-    //End Uncomment
+            $mobile = "91" . $value['mobileNo'];
+            $str = "Congrats " . ucwords($value['firstName']) . " - " . $value['user_id'] . ", Your weekly payout generated successfully, with amount Rs " . $value['payit'] . ", Please check payment, Cutting is applicable.";
+
+            //// UNCLOMMENT FOLLOWING CODE WHEN WANT TO PAYMENT
+            //echo "Please uncomment for payment ";
+            //Uncomment 2 lines to send msg
+            echo "<br><br>" . $str;
+            $param = ["mobile" => $mobile, "message" => urlencode($str)];
+            $sms->sendSms($param);
+            //End Uncomment
         }
         die("ssss");
     }
+
     
-        public function festiveMsgsAction() {
+    public function festiveMsgsAction() {
 //die("paymentAlertMsgs");
         $userdata = $this->_checkIfUserIsLoggedIn();
 //        echo $userdata->user_id;
@@ -545,38 +543,34 @@ $i=0;
       //echo "<pre>"; print_r ($festive); echo "</pre>"; die;
             $mobile = "91" . $value['mobileNo'];
              
-            //$str = "??????????? ??? ????, ???? ??????! ?????? ?????? ???????, ???, ??????, ??????? ??? ????!! ??????????????? ???????? ????????…???? ????? ???? ?????????? ????.??.";
-            $str = "May this Happy occasion of Gudi Padwa brings countless joy, wealth, prosperity, good health to you and your family!
-
--Grow Dream Maker Marketing pvt.ltd";
+            $str = "May this Happy occasion of Gudi Padwa brings countless joy, wealth, prosperity, good health to you and your family! -Grow Dream Maker Marketing pvt.ltd";
 
             echo "<br><br>".$i++." " . $str;
             // Start Comment
-            //$param = ["mobile" => $mobile, "message" => urlencode($str)];
-            //$sms->sendSms($param);
+                    //$param = ["mobile" => $mobile, "message" => urlencode($str)];
+                    //$sms->sendSms($param);
             //End comment
         }
         die("ssss");
     }
-    
-    public function invoiceAction() {
-         $userdata = $this->_checkIfUserIsLoggedIn();
-         $em=$this->em;
-         $this->layout()->setVariable('UserSession', $userdata);
-          $request = $this->getRequest();
-           if ($request->isPost()) {
-           $data = $request->getPost();
-          $paymentarr = $em->getRepository("\Payment\Entity\Payment")->find($data['id']);
-          $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $paymentarr->uId));
-          $personalInfo = $em->getRepository('Dashboard\Entity\PersonalEntity')->findOneBy(array('uId' => $paymentarr->uId));
-//          echo "<pre>"; print_r ($paymentarr); echo "</pre>"; die;
-         return new ViewModel(["user" => $user,"paymentarr"=>$paymentarr,"personalInfo"=>$personalInfo]);
-           }else{
-               echo "error"; die;
-           }
-    }
 
-    
+    public function invoiceAction() {
+        $userdata = $this->_checkIfUserIsLoggedIn();
+        $em = $this->em;
+        $this->layout()->setVariable('UserSession', $userdata);
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $data = $request->getPost();
+            $paymentarr = $em->getRepository("\Payment\Entity\Payment")->find($data['id']);
+            $user = $em->getRepository('Registration\Entity\Registration')->findOneBy(array('id' => $paymentarr->uId));
+            $personalInfo = $em->getRepository('Dashboard\Entity\PersonalEntity')->findOneBy(array('uId' => $paymentarr->uId));
+//          echo "<pre>"; print_r ($paymentarr); echo "</pre>"; die;
+            return new ViewModel(["user" => $user, "paymentarr" => $paymentarr, "personalInfo" => $personalInfo]);
+        } else {
+            echo "error";
+            die;
+        }
+    }
 
     /*   FIND USER'S LEFT AND RIGHT TREE SEPARATELY */
 
@@ -658,7 +652,7 @@ $i=0;
             $user1 = $user1[0];
 //echo "<br> LevalL - ".++$this->levalL;
 //echo " $user->firstName Left - $user1->firstName";
-            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'mobileNo' => $user1['mobileNo'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productId' => $user1['product'],'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
+            return ['id' => $user1['id'], 'user_id' => $user1['user_id'], 'globalpostion' => $user1['globalpostion'], 'firstName' => $user1['firstName'], 'mobileNo' => $user1['mobileNo'], 'status' => $user1['status'], 'lastName' => $user1['lastName'], 'gender' => $user1['gender'], 'epin' => $user1['epin'], 'refral_Id' => $user1['refral_Id'], 'productId' => $user1['product'], 'productName' => $user1['productName'], 'baseValue' => $user1['baseValue'], 'bvrate' => $user1['bvrate'], 'price' => $user1['price'], 'pStatus' => $user1['pStatus'], 'bizness' => $user1['bizness'],];
         } else {
             return 0;
         }
