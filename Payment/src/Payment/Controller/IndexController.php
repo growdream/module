@@ -520,6 +520,41 @@ $i=0;
         die("ssss");
     }
     
+        public function festiveMsgsAction() {
+//die("paymentAlertMsgs");
+        $userdata = $this->_checkIfUserIsLoggedIn();
+//        echo $userdata->user_id;
+        /* =======  */
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select("r.id,r.user_id,r.firstName,r.lastName,r.mobileNo")
+                ->from("Registration\Entity\Registration", "r")
+                ->where("r.mobileNo != ''")
+        ;
+        $festive = $qb->getQuery()->getArrayResult();
+/*        echo "<pre>";
+        print_r($festive);
+        echo "</pre>";
+        die;
+*/
+        /* ==== SMS Part ===  */
+        $sms = new sms();
+        $i = 0;
+        foreach ($festive as $key => $value) {
+      //echo "<pre>"; print_r ($festive); echo "</pre>"; die;
+            $mobile = "91" . $value['mobileNo'];
+             
+            $str = "??????????? ??? ????, ???? ??????! ?????? ?????? ???????, ???, ??????, ??????? ??? ????!! ??????????????? ???????? ????????…???? ????? ???? ?????????? ????.??.";
+
+            echo "<br><br>".$i++." " . $str;
+            // Start Comment
+            //$param = ["mobile" => $mobile, "message" => urlencode($str)];
+            //$sms->sendSms($param);
+            //End comment
+        }
+        die("ssss");
+    }
     
     public function invoiceAction() {
          $userdata = $this->_checkIfUserIsLoggedIn();
